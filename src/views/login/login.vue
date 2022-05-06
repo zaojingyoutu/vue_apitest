@@ -82,6 +82,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
 import {message} from "ant-design-vue";
 import {Login} from '@/api/login'
 import {register_get} from '@/api/register'
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {
@@ -90,6 +91,7 @@ export default defineComponent({
   },
 
   setup() {
+     const router = useRouter();
         const modelRef = reactive({
       username: '',
       email: '',
@@ -123,7 +125,9 @@ const login = () =>Login(formState).then((res) => {
                 });
                 console.log(res.data)
                 if (res.code == 200){
-                  window.location.href="project";
+                  router.push("/project")
+
+                  // window.location.href="project";
                   localStorage.setItem('token','Bearer ' +  res.data.access_token)
 }});
 
@@ -142,6 +146,7 @@ const login = () =>Login(formState).then((res) => {
                 });
                 if (res.code == 200){
                   window.location.href="/login";
+
                 }
              console.log(res);
            });

@@ -4,6 +4,7 @@ import axios from 'axios'
 import notification from 'ant-design-vue/es/notification'
 // import { VueAxios } from './axios'
 // import { token } from '@/store/mutation-types'
+import { useRouter } from 'vue-router';
 
 // 创建 axios 实例
 const request = axios.create({
@@ -12,7 +13,6 @@ const request = axios.create({
   timeout: 10000 // 请求超时时间
 })
 request.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头信息。
-
 // 异常拦截处理器
 const errorHandler = (error) => {
   if (error.response) {
@@ -24,7 +24,9 @@ const errorHandler = (error) => {
         message: 'Forbidden',
         description: data.message
       })
-      window.location.href="/login";
+      window.location.href="#/login";
+      // const router = useRouter();
+      // router.push("/login")
 
     }
     if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
@@ -41,8 +43,9 @@ const errorHandler = (error) => {
         window.location.reload()
         // })
       }
-      window.location.href="/login";
-
+      // window.location.href="/login";
+      const router = useRouter();
+      router.push("/login")
     }
 
   }
