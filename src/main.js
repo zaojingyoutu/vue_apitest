@@ -10,7 +10,7 @@ import  layout from './layout/layout'
 import 'codemirror/lib/codemirror.css';
 
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api/';
+axios.defaults.baseURL = 'http://124.71.4.214:8000/api/';
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头信息。
 
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
