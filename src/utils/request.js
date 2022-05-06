@@ -8,7 +8,7 @@ import notification from 'ant-design-vue/es/notification'
 // 创建 axios 实例
 const request = axios.create({
   // API 请求的默认前缀
-  baseURL: 'http://124.71.4.214:8000/api/',
+  baseURL: 'https://124.71.4.214:8000/api/',
   timeout: 10000 // 请求超时时间
 })
 request.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头信息。
@@ -31,6 +31,7 @@ const errorHandler = (error) => {
       notification.error({
         message: 'Unauthorized',
         description: 'Authorization verification failed'
+
       })
       if (token) {
         // store.dispatch('Logout').then(() => {
