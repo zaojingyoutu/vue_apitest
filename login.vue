@@ -1,0 +1,181 @@
+<template>
+  <div style="position: absolute;
+    right: 40%;
+    width: 400px;
+    border: 3px solid #42b983;
+    padding: 10px;
+    top: 50%;
+    height: 300px;
+">
+    <h2>欢迎来到接口测试平台</h2><br>
+    <a-form
+    :model="formState"
+    name="normal_login"
+    class="login-form"
+    @finish="onFinish"
+    @finishFailed="onFinishFailed"
+  >
+    <a-form-item
+      label="Username"
+      name="username"
+      :rules="[{ required: true, message: 'Please input your username!' }]"
+    >
+      <a-input v-model:value="formState.username">
+        <template #prefix>
+          <UserOutlined class="site-form-item-icon" />
+        </template>
+      </a-input>
+    </a-form-item>
+
+    <a-form-item
+      label="Password"
+      name="password"
+      :rules="[{ required: true, message: 'Please input your password!' }]"
+    >
+      <a-input-password v-model:value="formState.password">
+        <template #prefix>
+          <LockOutlined class="site-form-item-icon" />
+        </template>
+      </a-input-password>
+    </a-form-item>
+
+    <div class="login-form-wrap">
+      <a-form-item name="remember" no-style>
+        <a-checkbox v-model:checked="formState.remember">Remember me</a-checkbox>
+      </a-form-item>
+      <a class="login-form-forgot" href="">Forgot password</a>
+    </div>
+
+    <a-form-item>
+      <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button" @click="login">
+        Login
+      </a-button>
+     
+    <div style="">
+      <a type="primary" @click="showModal">register now!</a>
+      <a-modal v-model:visible="visible" title="register" @ok="handleOks">
+        <div>
+          <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+    <a-form-item label="name" required>
+      <a-input v-model:value="modelRef.username" />
+    </a-form-item>
+     <a-form-item label="email" >
+      <a-input v-model:value="modelRef.email" />
+    </a-form-item>
+    <a-form-item label="password" required >
+      <a-input-password v-model:value="modelRef.password" />
+    </a-form-item>
+
+  </a-form>
+        </div>
+      </a-modal>
+    </div>
+    </a-form-item>
+  </a-form>
+  </div>
+
+</template>
+<script>
+import { defineComponent, reactive, computed ,ref} from 'vue';
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+// import axios from "axios";
+import {message} from "ant-design-vue";
+import {Login} from '@/api/login'
+import {register_get} from '@/api/register'
+
+export default defineComponent({
+  components: {
+    UserOutlined,
+    LockOutlined,
+  },
+
+  setup() {
+        const modelRef = reactive({
+      username: '',
+      email: '',
+      password: '',
+        
+    });
+
+    const formState = reactive({
+      username: '',
+      password: '',
+      remember: true,
+    });
+
+    const onFinish = values => {
+      console.log('Success:', values);
+    };
+
+    const onFinishFailed = errorInfo => {
+      console.log('Failed:', errorInfo);
+    };
+
+    const disabled = computed(() => {
+      return !(formState.username && formState.password);
+    });
+
+
+const login = () =>Login(formState).then((res) => {
+               message.success({
+                content: res.msg,
+                duration: 5
+                });
+                console.log(res.data)
+                if (res.code == 200){
+                  window.location.href="project";
+                  localStorage.setItem('token','Bearer ' +  res.data.access_token)
+}});
+
+ const visible = ref(false);
+
+    const showModal = () => {
+      visible.value = true;
+    };
+
+    const handleOk = e => {
+      console.log(e);
+       register_get(modelRef).then((res) => {
+                message.success({
+                content: res.msg,
+                duration: 5
+                });
+                if (res.code == 200){
+                  window.location.href="/login";
+                }
+             console.log(res);
+           });
+    };
+
+
+return {
+      formState,
+      onFinish,
+      onFinishFailed,
+      disabled,
+       visible,
+      showModal,
+      handleOk,
+      modelRef,
+  login,
+    };
+  },
+
+});
+</script>
+<style>
+#components-form-demo-normal-login .login-form {
+  max-width: 300px;
+}
+#components-form-demo-normal-login .login-form-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#components-form-demo-normal-login .login-form-forgot {
+  margin-bottom: 24px;
+}
+#components-form-demo-normal-login .login-form-button {
+  width: 100%;
+}
+</style>
