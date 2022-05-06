@@ -30,6 +30,8 @@ const useForm = Form.useForm;
 export default defineComponent({
 
   setup() {
+         const router = useRouter();
+
       const user = useRouter().currentRoute.value.query
 // console.log(useRouter().currentRoute.value.query.projectid)
       if (user.id != undefined){
@@ -72,7 +74,8 @@ export default defineComponent({
                 duration: 5
                 });
                 if (res.code == 200){
-                  window.location.href="/userList";
+                   router.push("/userList")
+                  // window.location.href="/userList";
                 }
              console.log(res);
            });

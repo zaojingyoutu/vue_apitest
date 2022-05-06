@@ -53,6 +53,7 @@ const useForm = Form.useForm;
 export default defineComponent({
 
   setup() {
+      const router = useRouter();
       const project = useRouter().currentRoute.value.query
 // console.log(useRouter().currentRoute.value.query.projectid)
       if (useRouter().currentRoute.value.query.id != undefined){
@@ -118,7 +119,8 @@ export default defineComponent({
                 duration: 5
                 });
                 if (res.code == 200){
-                  window.location.href="/variate_list";
+                  // window.location.href="/variate_list";
+                  router.push("/variate_list")
                 }
              console.log(res);
            });

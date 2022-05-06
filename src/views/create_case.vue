@@ -52,6 +52,8 @@ const useForm = Form.useForm;
 export default defineComponent({
 
   setup() {
+         const router = useRouter();
+
     const project = useRouter().currentRoute.value.query
 // console.log('222222222222222222',( useRouter().currentRoute.value.query.id))
     if (useRouter().currentRoute.value.query.id != undefined){
@@ -150,7 +152,9 @@ export default defineComponent({
                 duration: 5
                 });
                 if (res.code == 200){
-                  window.location.href="case?project_id=" + project.project_id ;
+                             router.push({path:'case',query:{project_id:project.project_id}})
+
+                  // window.location.href="case?project_id=" + project.project_id ;
                 }
            });
       }).catch(err => {

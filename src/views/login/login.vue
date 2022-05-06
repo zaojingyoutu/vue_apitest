@@ -146,7 +146,8 @@ const login = () =>Login(formState).then((res) => {
                 duration: 5
                 });
                 if (res.code == 200){
-                  window.location.href="/login";
+                  router.push("//login")
+                  // window.location.href="#/login";
 
                 }
              console.log(res);

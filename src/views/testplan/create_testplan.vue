@@ -192,6 +192,8 @@ const columns = [
 const useForm = Form.useForm;
 export default defineComponent({
   setup() {
+          const router = useRouter();
+
     const planid = useRouter().currentRoute.value.query;
     if (useRouter().currentRoute.value.query.id != undefined) {
       testplan_get(useRouter().currentRoute.value.query).then((res) => {
@@ -274,7 +276,8 @@ export default defineComponent({
                 duration: 5,
               });
               if (res.code == 200) {
-                window.location.href = "/testplan";
+                 router.push("/testplan")
+                // window.location.href = "/testplan";
               }
               console.log(res);
             });
