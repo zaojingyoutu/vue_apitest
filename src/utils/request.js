@@ -9,7 +9,7 @@ import { useRouter } from 'vue-router';
 // 创建 axios 实例
 const request = axios.create({
   // API 请求的默认前缀
-  baseURL: 'https://124.71.4.214:8000/api/',
+  baseURL: 'https://www.zaojingyoutu.top:8000/api/',
   timeout: 10000 // 请求超时时间
 })
 request.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头信息。
