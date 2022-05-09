@@ -3,7 +3,10 @@
 <div style="margin-right: 20px;
     margin-left: 20px;">
    <a-button  type="primary" >
-      <a href="create_projrct">Create</a>
+<!--      <a href="create_projrct">Create</a>-->
+      <router-link to="create_projrct" >
+        <a  style="color: white">Create</a>
+      </router-link>
     </a-button>
   <a-table :columns="columns" :data-source="data" :scroll="{ x: 1200, y: 700 }">
       <template #bodyCell="{ record,column,text  }">

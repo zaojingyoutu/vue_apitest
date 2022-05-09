@@ -12,11 +12,17 @@ const routes = [
 
                 path: '/create_projrct',
                 name: 'create_projrct',
+                meta: {
+                    title: '创建项目'
+                },
                 component: () => import(/* webpackChunkName: "about" */ '../views/create_projrct')
             },
             {
                 path: '/project',
                 name: 'project',
+                meta: {
+                    title: '项目列表'
+                },
                 component: () => import(/* webpackChunkName: "about" */ '../views/project')
             },
             {
@@ -30,59 +36,81 @@ const routes = [
             {
                 path: '/case',
                 name: 'caseList',
+                 meta: {
+                    title: '用例列表'
+                },
                 component: () => import(/* webpackChunkName: "about" */ '../views/case_list')
             },
 
             {
-                path: '/create_projrct',
-                name: 'create_projrct',
-                component: () => import(/* webpackChunkName: "about" */ '../views/create_projrct')
-            },
-            {
                 path: '/debug',
                 name: 'debug',
+                 meta: {
+                    title: '用例'
+                },
                 component: () => import(/* webpackChunkName: "layout" */ '../views/case/debug'),
 
             },
             {
                 path: '/variate_list',
                 name: 'variate_list',
+                 meta: {
+                    title: '变量列表'
+                },
                 component: () => import(/* webpackChunkName: "variate_list" */ '../views/variate/variate_list'),
 
             },
             {
                 path: '/create_variate',
                 name: 'create_variate',
+                 meta: {
+                    title: '创建变量'
+                },
                 component: () => import(/* webpackChunkName: "create_variate" */ '../views/variate/create_variate'),
 
             },
             {
                 path: '/create_testplan',
                 name: 'create_testplan',
+                 meta: {
+                    title: '创建测试计划'
+                },
                 component: () => import(/* webpackChunkName: "create_variate" */ '../views/testplan/create_testplan'),
 
             },
             {
                 path: '/testplan',
                 name: 'testplan',
+                 meta: {
+                    title: '测试计划列表'
+                },
                 component: () => import(/* webpackChunkName: "testplan" */ '../views/testplan/testplan'),
 
             },
             {
                 path: '/report',
                 name: 'report',
+                 meta: {
+                    title: '测试报告'
+                },
                 component: () => import(/* webpackChunkName: "report" */ '../views/report/report'),
 
             },
             {
                 path: '/userList',
                 name: 'userList',
+                 meta: {
+                    title: '用户列表'
+                },
                 component: () => import(/* webpackChunkName: "userList" */ '../views/user/userList.vue'),
 
             },
             {
                 path: '/createUser',
                 name: 'createUser',
+                 meta: {
+                    title: '创建用户'
+                },
                 component: () => import(/* webpackChunkName: "createUser" */ '../views/user/createUser.vue'),
 
             },
@@ -99,6 +127,9 @@ const routes = [
     {
         path: '/login',
         name: 'login',
+         meta: {
+                    title: '登录'
+                },
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
@@ -113,11 +144,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/') {
-    next({ path: '/login' })
-  } else {
-    next()
-  }
+    document.title = to.meta.title ? to.meta.title : '接口测试平台';
+    if (to.path === '/') {
+        next({path: '/login'})
+    } else {
+        next()
+    }
 })
 
 export default router
