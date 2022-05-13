@@ -34,7 +34,9 @@
                             ></a-select>
                         </div>
                     </a-form-item>
-
+                    <a-form-item label="通知邮件">
+                        <a-input v-model:value="modelRef.email"/>
+                    </a-form-item>
                     <a-form-item
                             class="error-infos"
                             :wrapper-col="{ span: 14, offset: 4 }"
@@ -205,6 +207,7 @@
                         (modelRef.id = res.data[0].id);
                     modelRef.env = res.data[0].env
                     modelRef.project_id = res.data[0].project;
+                    modelRef.email = res.data[0].email;
                     formState.project_id = res.data[0].project;
                     if (res.data[0].case_list.includes("[")) {
                         console.log()
@@ -228,6 +231,7 @@
                 env: "0",
                 project_id: "",
                 case_list: "",
+                email: "",
             });
             const count = reactive({
                 cases_count: 0,
