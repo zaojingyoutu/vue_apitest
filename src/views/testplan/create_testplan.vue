@@ -312,7 +312,10 @@
             };
 
             const onClose = () => {
-                visible.value = false;
+
+                // state.selectedRowKeys = tmpCaseIds.selectedRowKeys;
+                // modelRef.case_list.push(...tmpCaseIds.selectedRows) ;
+                 visible.value = false;
             };
             // const RowKeys = [];
 
@@ -321,7 +324,7 @@
 
             const onFinish = (values) => {
                 console.log("Received values of form:", values);
-                console.log("modelRef.case_list", modelRef.case_list);
+                console.log("modelRef.case_list", state.selectedRowKeys,modelRef.case_list);
                 cases_get(formState).then((res) => {
                     data.value = res.data
                     total.value = res.total
@@ -367,14 +370,28 @@
 
                 setTimeout(() => {
                     state.loading = false;
-                    state.selectedRowKeys = [];
+                    // state.selectedRowKeys = [];
                 }, 1000);
             };
+
+            // const tmpCaseIds = reactive({
+            //     selectedRowKeys: [],
+            //     selectedRows: [],
+            // });
+
             // 添加用例
             const onSelectChange = (selectedRowKeys, selectedRows) => {
-                console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows);
-                state.selectedRowKeys = selectedRowKeys;
-                modelRef.case_list = selectedRows;
+                console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows,state.selectedRowKeys);
+                state.selectedRowKeys=selectedRowKeys;
+                 modelRef.case_list = selectedRows
+               //  state.selectedRowKeys.push(...selectedRowKeys)
+               //  state.selectedRowKeys=Array.from(new  Set(state.selectedRowKeys));
+               //  modelRef.case_list.push(...selectedRows)
+               //  console.log(modelRef.case_list)
+               //  modelRef.case_list = Array.from(new  Set(modelRef.case_list));
+               // console.log(selectedRowKeys[selectedRowKeys.length-1])
+                // tmpCaseIds.selectedRowKeys = selectedRowKeys
+                // tmpCaseIds.selectedRows = selectedRows
             };
 
             const formState = reactive({});

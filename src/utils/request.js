@@ -6,10 +6,18 @@ import notification from 'ant-design-vue/es/notification'
 // import { token } from '@/store/mutation-types'
 import { useRouter } from 'vue-router';
 
+let allURL;
+if (process.env.VUE_APP_FLAG == "dev") {
+  allURL = process.env.VUE_APP_BASEURL;
+} else{
+  allURL = "https://www.zaojingyoutu.top:8000/api/";
+}
+
+
 // 创建 axios 实例
 const request = axios.create({
   // API 请求的默认前缀
-  baseURL: 'https://www.zaojingyoutu.top:8000/api/',
+  baseURL: allURL,
   timeout: 10000 // 请求超时时间
 })
 request.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头信息。
