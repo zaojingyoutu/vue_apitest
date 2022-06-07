@@ -56,8 +56,13 @@
                 <a-button type="primary" @click="showDrawer('large')"
                 >添加用例
                 </a-button>
-                <a-table :dataSource="modelRef.case_list" :columns="columns" :pagination="false"/>
-
+                <a-table :dataSource="modelRef.case_list" :columns="columns" :pagination="false">
+                     <template #bodyCell="{ record,column}">
+                    <template v-if="column.dataIndex === 'operation'">
+                            <a @click="deletes(record)">Delete</a>
+                    </template>
+                     </template>
+                </a-table>
 
                 <a-drawer
                         title="Basic Drawer"
@@ -120,14 +125,15 @@
 
                         <a-table
                                 :row-selection="{
-                selectedRowKeys: selectedRowKeys,
-                onChange: onSelectChange,
-              }"
+                                                    selectedRowKeys: selectedRowKeys,
+                                                    onChange: onSelectChange,
+                                                    getCheckboxProps:getCheckboxProps,
+                                                  }"
                                 :row-key="record => record.id"
                                 :columns="columns"
                                 :data-source="data"
                                 :pagination="false"
-                                @change="onChange"
+
                         />
                     </div>
                 </a-drawer>
@@ -191,6 +197,10 @@
             title: "module",
             dataIndex: "module",
         },
+        {
+            title: "操作",
+            dataIndex: "operation",
+        },
     ];
 
     const useForm = Form.useForm;
@@ -217,6 +227,7 @@
                         if (modelRef.case_list.length != 0) {
                             for (let i = 0; i < modelRef.case_list.length; i++) {
                                 state.selectedRowKeys.push(modelRef.case_list[i].id)
+                                tmpCaseIds.selectedRowKeys.push(modelRef.case_list[i].id)
                             }
                         }
                     }
@@ -284,7 +295,6 @@
                     });
                     if (res.code == 200) {
                         router.push("/testplan")
-                        // window.location.href = "/testplan";
                     }
                     console.log(res);
                 });
@@ -313,11 +323,18 @@
 
             const onClose = () => {
 
-                // state.selectedRowKeys = tmpCaseIds.selectedRowKeys;
-                // modelRef.case_list.push(...tmpCaseIds.selectedRows) ;
+                tmpCaseIds.selectedRowKeys = state.selectedRowKeys;
+                if( modelRef.case_list.length>0)
+                {
+                    const addRows = [...tmpCaseIds.selectedRows].filter(x =>[...modelRef.case_list].every(y => y.id !== x.id) )
+                    modelRef.case_list.push(...addRows) ;
+                    console.log(modelRef.case_list)
+                } else {
+                    modelRef.case_list.push(...tmpCaseIds.selectedRows) ;
+                }
+
                  visible.value = false;
             };
-            // const RowKeys = [];
 
             const formRef = ref();
 
@@ -374,25 +391,21 @@
                 }, 1000);
             };
 
-            // const tmpCaseIds = reactive({
-            //     selectedRowKeys: [],
-            //     selectedRows: [],
-            // });
+            const tmpCaseIds = reactive({
+                selectedRowKeys: [],
+                selectedRows: [],
+            });
 
             // 添加用例
             const onSelectChange = (selectedRowKeys, selectedRows) => {
                 console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows,state.selectedRowKeys);
                 state.selectedRowKeys=selectedRowKeys;
-                 modelRef.case_list = selectedRows
-               //  state.selectedRowKeys.push(...selectedRowKeys)
-               //  state.selectedRowKeys=Array.from(new  Set(state.selectedRowKeys));
-               //  modelRef.case_list.push(...selectedRows)
-               //  console.log(modelRef.case_list)
-               //  modelRef.case_list = Array.from(new  Set(modelRef.case_list));
-               // console.log(selectedRowKeys[selectedRowKeys.length-1])
-                // tmpCaseIds.selectedRowKeys = selectedRowKeys
-                // tmpCaseIds.selectedRows = selectedRows
+                tmpCaseIds.selectedRows = selectedRows
             };
+
+
+
+
 
             const formState = reactive({});
             const total = ref();
@@ -440,6 +453,24 @@
 
                 console.log(optionsProject.value);
             });
+
+
+            // 删除添加的用例
+            const deletes = (record) =>{
+                const index = modelRef.case_list.indexOf(record)
+
+                modelRef.case_list.splice(index,1)
+                const keyIndex = state.selectedRowKeys.indexOf(record.id)
+                delete  state.selectedRowKeys[keyIndex]
+                console.log(index)
+            }
+
+            const getCheckboxProps = record =>
+            ({
+                disabled: tmpCaseIds.selectedRowKeys.includes(record.id)
+            })
+
+
             return {
                 formState,
                 data,
@@ -475,7 +506,9 @@
                 focus,
                 handleChange,
                 options1,
-                optionsProject
+                optionsProject,
+                deletes,
+                getCheckboxProps
             };
         },
     });

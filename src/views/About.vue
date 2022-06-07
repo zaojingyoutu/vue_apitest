@@ -1,45 +1,61 @@
 <template>
-  <h2 style="margin-top: 10px">use options (recommend)</h2>
-  <a-space>
-    <a-select
-      ref="select"
-      v-model:value="value1"
-      style="width: 120px"
-      :options="options1"
-      @focus="focus"
-      @change="handleChange"
-    ></a-select>
-  </a-space>
+  <a-table :row-selection="rowSelection" :columns="columns" :data-source="data">
+    <template #bodyCell="{ column, text }">
+      <template v-if="column.dataIndex === 'name'">
+        <a>{{ text }}</a>
+      </template>
+    </template>
+  </a-table>
 </template>
 <script>
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
+const columns = [{
+  title: 'Name',
+  dataIndex: 'name',
+}, {
+  title: 'Age',
+  dataIndex: 'age',
+}, {
+  title: 'Address',
+  dataIndex: 'address',
+}];
+const data = [{
+  key: '1',
+  name: 'John Brown',
+  age: 32,
+  address: 'New York No. 1 Lake Park',
+}, {
+  key: '2',
+  name: 'Jim Green',
+  age: 42,
+  address: 'London No. 1 Lake Park',
+}, {
+  key: '3',
+  name: 'Joe Black',
+  age: 32,
+  address: 'Sidney No. 1 Lake Park',
+}, {
+  key: '4',
+  name: 'Disabled User',
+  age: 99,
+  address: 'Sidney No. 1 Lake Park',
+}];
 export default defineComponent({
   setup() {
-    const options1 = ref([{
-      value: '0',
-      label: '测试环境',
-    }, {
-      value: '1',
-      label: '预发布环境',
-    },  {
-      value: '2',
-      label: '线上环境',
-    }]);
-   
-
-    const focus = () => {
-      console.log('focus');
+    const rowSelection = {
+      onChange: (selectedRowKeys, selectedRows) => {
+        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+      },
+      getCheckboxProps: record => ({
+        props: {
+            defaultChecked: ['2','3'].includes(record.key)
+          },
+      }),
     };
-
-    const handleChange = value => {
-      console.log(`selected ${value}`);
-    };
-
     return {
-      focus,
-      handleChange,
-      value1: ref('0'),
-      options1    
+      data,
+      columns,
+      rowSelection,
     };
   },
 
