@@ -386,7 +386,6 @@
 import { reactive, computed, defineComponent, watch, toRefs } from "vue";
 import { toArray } from "lodash-es";
 import { Form } from "ant-design-vue";
-import axios from "axios";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 import { ref } from "vue";
@@ -395,6 +394,8 @@ import { debounce } from "lodash-es";
 import { cases_get, cases_api } from "@/api/cases";
 import MyCodemirror from "@/components/VueCodemirror.vue";
 import {project_get} from '@/api/project'
+import {deBug_post} from '@/api/deBug'
+
 
 const useForm = Form.useForm;
 export default defineComponent({
@@ -555,30 +556,24 @@ export default defineComponent({
     const debug = () => {
       (modelRef.relation = dynamicValidateForm.cases),
         console.log("11111111111", modelRef.test);
-      axios({
-        method: "post",
-        url: "debug/",
-        // headers: {"Access-Control-Allow-Origin": "*"},
-        data: modelRef,
-        headers: { Authorization: localStorage.getItem("token") },
-      }).then((res) => {
+      deBug_post(modelRef).then((res) => {
         message.success({
-          content: res.data.msg,
+          content: res.msg,
           duration: 5,
         });
         try {
-          if (res.data.data.response.includes("{")) {
+          if (res.data.response.includes("{")) {
             modelRef.response = JSON.stringify(
-              JSON.parse(res.data.data.response),
+              JSON.parse(res.data.response),
               null,
               2
             );
           
-          }else{modelRef.response = res.data.data.response}
+          }else{modelRef.response = res.data.response}
         } catch {
-          modelRef.response = res.data.data;
+          modelRef.response = res.data;
         }
-        modelRef.result = JSON.stringify(res.data.data.result, null, 2);
+        modelRef.result = JSON.stringify(res.data.result, null, 2);
       });
     };
 

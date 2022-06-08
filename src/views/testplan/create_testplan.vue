@@ -57,7 +57,12 @@
                 >添加用例
                 </a-button>
                 <a-table :dataSource="modelRef.case_list" :columns="columns" :pagination="false">
-                     <template #bodyCell="{ record,column}">
+                     <template #bodyCell="{ record,column,text}">
+                               <template v-if="column.dataIndex === 'name'">
+                                  <router-link :to="{path:'/debug',query:{id:record.id}}" >
+                                      <a  >{{ text }}</a>
+                                  </router-link>
+                              </template>
                     <template v-if="column.dataIndex === 'operation'">
                             <a @click="deletes(record)">Delete</a>
                     </template>

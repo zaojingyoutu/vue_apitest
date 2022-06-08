@@ -26,8 +26,7 @@
 <script>
 import { defineComponent } from "vue";
 import { testplan_get, testplan_del } from "@/api/testplan";
-import axios from "axios";
-
+import {runTestplan_post } from '@/api/runTestplan'
 const columns = [
   {
     title: "Full Name",
@@ -103,13 +102,8 @@ export default defineComponent({
             content: "开始运行！",
             duration: 5,
           });
-      axios({
-        method: "post",
-        headers: { Authorization: localStorage.getItem("token") },
-        url: "runtestplan/",
-        data: {'id': record},
-      }).then((res) => {
-        if (res.data.code == 200) {
+       runTestplan_post({'id': record}).then((res) => {
+        if (res.code == 200) {
           message.success({
             content: "运行成功！",
             duration: 5,
@@ -123,7 +117,7 @@ export default defineComponent({
         }
 
         console.log(res);
-        console.log(res.data.data.result);
+        console.log(res.data.result);
       });
     };
 
