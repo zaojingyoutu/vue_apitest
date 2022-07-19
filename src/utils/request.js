@@ -18,7 +18,7 @@ if (process.env.VUE_APP_FLAG == "dev") {
 const request = axios.create({
   // API 请求的默认前缀
   baseURL: allURL,
-  timeout: 10000 // 请求超时时间
+  timeout: 300000 // 请求超时时间
 })
 request.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头信息。
 // 异常拦截处理器

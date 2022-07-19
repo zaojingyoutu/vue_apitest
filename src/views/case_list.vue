@@ -66,7 +66,7 @@
                         </router-link>
                         |
                         <a @click="deletes(record)">Delete</a> |
-                        <router-link :to="{path:'/create_case',query:{project_id: record.project,id:record.id}}">
+                        <router-link :to="{path:'/debug',query:{project_id: record.project,id:record.id}}">
                             <a>Edit</a> |
                         </router-link>
                         <a @click="copy(record)">Copy</a>

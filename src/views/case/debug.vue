@@ -262,7 +262,7 @@
         </template>
         <a-textarea
           v-model:value="modelRef.response"
-          style="margin-top: 0px; margin-bottom: 0px; height: 150px"
+          style="margin-top: 0px; margin-bottom: 0px; height: 460px"
         />
       </a-tab-pane>
       <a-tab-pane key="7">

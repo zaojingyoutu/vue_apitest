@@ -30,6 +30,10 @@
           <user-outlined />
           <span class="nav-text"><router-link to="/userList"  style="color: white"> 用户管理</router-link></span>
         </a-menu-item>
+        <a-menu-item key="6">
+          <user-outlined />
+          <span class="nav-text"><router-link to="/tools"  style="color: white"> 常用工具</router-link></span>
+        </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout>

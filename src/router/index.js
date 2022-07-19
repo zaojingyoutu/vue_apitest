@@ -109,11 +109,21 @@ const routes = [
                 path: '/createUser',
                 name: 'createUser',
                  meta: {
-                    title: '创建用户'
+                    title: '添加用户'
                 },
                 component: () => import(/* webpackChunkName: "createUser" */ '../views/user/createUser.vue'),
 
             },
+            {
+                path: '/tools',
+                name: 'tools',
+                 meta: {
+                    title: '工具箱'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/tool/tool.vue'),
+
+            },
+
         ]
     },
     {
