@@ -125,7 +125,7 @@ const routes = [
             },
             {
                 path: '/uploads',
-                name: 'tools',
+                name: 'uploads',
                  meta: {
                     title: '工具箱'
                 },
