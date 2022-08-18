@@ -123,6 +123,15 @@ const routes = [
                 component: () => import(/* webpackChunkName: "tools" */ '../views/tool/tool.vue'),
 
             },
+            {
+                path: '/uploads',
+                name: 'tools',
+                 meta: {
+                    title: '工具箱'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/uploads'),
+
+            },
 
         ]
     },

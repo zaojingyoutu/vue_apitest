@@ -3,14 +3,15 @@ module.exports = {
     outputDir: "docs",
     devServer: {
         proxy: {
-            '/api': {
-                target: 'http://127.0.0.1:8000/api/', //接口域名
+            ['/rest']: {
+                target: 'https://d.pcs.baidu.com', //接口域名
                 changeOrigin: true,             //是否跨域
                 ws: true,                       //是否代理 websockets
                 secure: true,                   //是否https接口
-                // pathRewrite: {                  //路径重置
-                //     '^/api': ''
-                // }
+                logLevel: 'debug',
+                pathRewrite: {                  //路径重置
+                    '^/rest': '/rest'
+                }
             }
         }
     },

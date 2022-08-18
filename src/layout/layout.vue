@@ -31,8 +31,12 @@
           <span class="nav-text"><router-link to="/userList"  style="color: white"> 用户管理</router-link></span>
         </a-menu-item>
         <a-menu-item key="6">
-          <user-outlined />
+          <code-sandbox-outlined />
           <span class="nav-text"><router-link to="/tools"  style="color: white"> 常用工具</router-link></span>
+        </a-menu-item>
+          <a-menu-item key="7">
+          <code-sandbox-outlined />
+          <span class="nav-text"><router-link to="/uploads"  style="color: white"> 上传云盘</router-link></span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -69,7 +73,7 @@
   </a-layout>
 </template>
 <script>
-import { UserOutlined,FolderOutlined,CalendarOutlined,TableOutlined,EyeOutlined } from '@ant-design/icons-vue';
+import { UserOutlined,FolderOutlined,CalendarOutlined,TableOutlined,EyeOutlined,CodeSandboxOutlined } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
   components: {
@@ -77,7 +81,8 @@ export default defineComponent({
     FolderOutlined,
     CalendarOutlined,
     TableOutlined,
-    EyeOutlined
+    EyeOutlined,
+    CodeSandboxOutlined
   },
 
   setup() {
