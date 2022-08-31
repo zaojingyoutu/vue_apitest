@@ -1,32 +1,7 @@
 <template>
   <a-tabs v-model:activeKey="activeKey" centered>
     <a-tab-pane key="1" tab="时间转换">
-        <h1>时区转换</h1>
-     <dev class="time cycle" style="width:500px;height:200px;float: left;" >
-        <a-form :label-col="labelCol" :wrapper-col="wrapperCol" style="width:500px;height:200px;">
-                <a-form-item label="转换时间" required>
-                <a-input v-model:value="modelRef.date" />
-                </a-form-item>
-                <a-form-item label="当前时区" required>
-                <a-input v-model:value="modelRef.now_timezone" />
-                </a-form-item>
-                <a-form-item label="目标时区" required>
-                <a-input v-model:value="modelRef.timezone" />
-                </a-form-item>
-                
-                <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }">
-                <a-button type="primary" @click.prevent="onSubmit">提交</a-button>
-                <a-button style="margin-left: 10px" @click="resetFields">重置</a-button>
-                </a-form-item>
-        </a-form>
-     </dev>
-     <div class="cycleDate" style="float: right;">
-        <div style="background: #ececec; padding: 30px ;width:350px;">
-            <a-card title="目标时间" :bordered="false" style="width: 300px">
-            <p>{{modelRef.cycleDate.date}}</p>
-            </a-card>
-        </div>
-     </div>      
+        <timezone></timezone>
     </a-tab-pane>
     <a-tab-pane key="2" tab="获取ip" force-render>
         <getIp></getIp>
@@ -40,6 +15,8 @@ import { Form } from 'ant-design-vue';
 import {timezone_post} from '@/api/timezone'
 import { message } from "ant-design-vue";
 import getIp from "@/components/getIp.vue";
+import timezone from "@/components/timezone";
+
 
 const useForm = Form.useForm;
 var data = {
@@ -47,7 +24,7 @@ var data = {
 };
 
 export default defineComponent({
-    components: {getIp,},
+    components: {getIp,timezone},
   setup() {
     const modelRef = reactive({
       date: '2022-07-19 16:50',
