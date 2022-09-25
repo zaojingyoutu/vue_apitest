@@ -36,7 +36,7 @@
         </a-menu-item>
           <a-menu-item key="7">
           <code-sandbox-outlined />
-          <span class="nav-text"><router-link to="/uploads"  style="color: white"> 上传云盘</router-link></span>
+          <span class="nav-text"><router-link to="/filesList"  style="color: white"> 文件管理</router-link></span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>

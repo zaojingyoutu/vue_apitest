@@ -18,3 +18,11 @@ export function upfiles_post(data){
 }
 
 
+export function files_get(data){
+    return request.request({
+        method: "get",
+          url: "upfiles/",
+          params: data,
+
+    })
+}

@@ -9,9 +9,8 @@ module.exports = {
                 ws: true,                       //是否代理 websockets
                 secure: true,                   //是否https接口
                 logLevel: 'debug',
-                pathRewrite: {                  //路径重置
-                    '^/rest': '/rest'
-                }
+                //
+
             }
         }
     },

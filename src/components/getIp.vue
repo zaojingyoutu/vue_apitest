@@ -1,7 +1,7 @@
 <template>
         <h1>获取ip</h1>
-     <dev class="time cycle" style="width:500px;height:200px;float: left;" >
-        <a-form :label-col="labelCol" :wrapper-col="wrapperCol" style="width:500px;height:200px;">
+     <dev class="time cycle" style="width:50%;height:200px;float: left;" >
+        <a-form :label-col="labelCol" :wrapper-col="wrapperCol" style="width:500px;height:200px;margin: auto;">
                 <a-form-item label="国家名称" required>
                 <a-input v-model:value="modelRef.name" />
                 </a-form-item>
@@ -11,8 +11,8 @@
                 </a-form-item>
         </a-form>
      </dev>
-     <div class="cycleDate" style="float: right;">
-        <div style="background: #ececec; padding: 30px ;width:350px;">
+     <div class="cycleDate" style="float: right;width:50%;">
+        <div style="background: #ececec; padding: 30px ;width:350px;margin: auto;">
             <a-card title="目标ip" :bordered="false" style="width: 300px">
             <p>{{modelRef.ipDate.ip}}</p>
             </a-card>

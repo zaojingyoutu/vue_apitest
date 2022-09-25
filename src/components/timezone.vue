@@ -1,25 +1,50 @@
 <template>
         <h1>时区转换</h1>
-     <dev class="time cycle" style="width:500px;height:200px;float: left;" >
-        <a-form :label-col="labelCol" :wrapper-col="wrapperCol" style="width:500px;height:200px;">
+     <dev class="time cycle" style="width:50%;height:200px;float: left;" >
+         <div class="input" style="margin: auto;width: 50%;">
+                <a-form :label-col="labelCol" :wrapper-col="wrapperCol" style="width:500px;height:200px;">
                 <a-form-item label="转换时间" required>
-                <a-input v-model:value="modelRef.date" />
+                <a-input v-model:value="modelRef.date" style="width: 200px;    right: 26%;" />
                 </a-form-item>
                 <a-form-item label="当前时区" required>
-                <a-input v-model:value="modelRef.now_timezone" />
+<!--                <a-input v-model:value="modelRef.now_timezone" />-->
+
+              <a-select
+                v-model:value="modelRef.now_timezone"
+                show-search
+                placeholder="Select a person"
+                style="width: 200px;    right: 26%;"
+                :options="options"
+                :filter-option="filterOption"
+                @focus="handleFocus"
+                @blur="handleBlur"
+                @change="handleChange"
+              ></a-select>
                 </a-form-item>
                 <a-form-item label="目标时区" required>
-                <a-input v-model:value="modelRef.timezone" />
+                    <a-select
+                v-model:value="modelRef.timezone"
+                show-search
+                placeholder="Select a person"
+                style="width: 200px;    right: 26%;"
+                :options="options"
+                :filter-option="filterOption"
+                @focus="handleFocus"
+                @blur="handleBlur"
+                @change="handleChange"
+              ></a-select>
                 </a-form-item>
-                
+
                 <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }">
                 <a-button type="primary" @click.prevent="onSubmit">提交</a-button>
                 <a-button style="margin-left: 10px" @click="resetFields">重置</a-button>
                 </a-form-item>
         </a-form>
+         </div>
+
      </dev>
-     <div class="cycleDate" style="float: right;">
-        <div style="background: #ececec; padding: 30px ;width:350px;">
+     <div class="cycleDate" style="float: right;width:50%;">
+        <div style="background: #ececec; padding: 30px ;width:350px;margin: auto;">
             <a-card title="目标时间" :bordered="false" style="width: 300px">
             <p>{{modelRef.cycleDate.date}}</p>
             </a-card>
@@ -27,9 +52,9 @@
      </div>      
 </template>
 <script>
-import { reactive, defineComponent} from 'vue';
+import { reactive, ref,defineComponent} from 'vue';
 import { Form } from 'ant-design-vue';
-import {timezone_post} from '@/api/timezone'
+import {timezone_post,timezone_get} from '@/api/timezone'
 import { message } from "ant-design-vue";
 
 const useForm = Form.useForm;
@@ -45,6 +70,24 @@ export default defineComponent({
       timezone: 'Asia/Shanghai',
       cycleDate:''  
     });
+    const timeZoneList = [];
+
+      timezone_get().then(res=>{
+          if(res.code !== 200){
+                message.error({
+                content: res.msg,
+                duration: 5
+                });
+          }else{
+              for (let i=0;i < res.data.length; i++){
+                  options.value.push({value: res.data[i],
+                      label: res.data[i]})
+              }
+              console.log(options.value)
+                timeZoneList.push(res.data)
+          }
+
+          });
 
     const {
       resetFields,
@@ -82,12 +125,40 @@ export default defineComponent({
     const reset = () => {
       resetFields();
     };
+
+    const options = ref([]);
+
+    const handleChange = value => {
+      console.log(`selected ${value}`);
+    };
+
+    const handleBlur = () => {
+      console.log('blur');
+    };
+
+    const handleFocus = () => {
+      console.log('focus');
+    };
+
+    const filterOption = (input, option) => {
+      return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
+    };
+
+
+
     return {
       validateInfos,
       reset,
       modelRef,
       onSubmit,
-      data
+      data,
+        timeZoneList,
+              value: ref(undefined),
+      filterOption,
+      handleBlur,
+      handleFocus,
+      handleChange,
+      options,
     };
   },
 

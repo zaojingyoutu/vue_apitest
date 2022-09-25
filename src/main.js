@@ -8,6 +8,9 @@ import VueAxios from 'vue-axios'
 import  layout from './layout/layout'
 // import axios from './utils/request'
 import 'codemirror/lib/codemirror.css';
+import VideoPlayer from '@videojs-player/vue';
+import 'video.js/dist/video-js.css';
+// import "vue-video-player/src/custom-theme.css";
 
 let allURL;
 if (process.env.VUE_APP_FLAG == "dev") {
@@ -22,4 +25,4 @@ axios.defaults.baseURL = allURL;
 axios.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8';//配置请求头信息。
 
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-createApp(App).use(router).use(Antd).use(VueAxios, axios).component('layout',layout).mount('#app');
+createApp(App).use(router).use(Antd).use(VideoPlayer).use(VueAxios, axios).component('layout',layout).mount('#app');

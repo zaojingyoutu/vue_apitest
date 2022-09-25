@@ -127,9 +127,18 @@ const routes = [
                 path: '/uploads',
                 name: 'uploads',
                  meta: {
-                    title: '工具箱'
+                    title: '上传文件'
                 },
-                component: () => import(/* webpackChunkName: "tools" */ '../views/uploads'),
+                component: () => import(/* webpackChunkName: "tools" */ '../views/files/uploads'),
+
+            },
+            {
+                path: '/filesList',
+                name: 'filesList',
+                 meta: {
+                    title: '文件列表'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/files/filesList'),
 
             },
 

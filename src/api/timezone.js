@@ -15,3 +15,11 @@ export function timezone_post(data){
           data: data,
     })
 }
+
+export function timezone_get(data){
+    return request.request({
+        method: "get",
+          url: "timezone/",
+          data: data,
+    })
+}
