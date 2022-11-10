@@ -7,8 +7,6 @@
                 <a-input v-model:value="modelRef.date" style="width: 200px;    right: 26%;" />
                 </a-form-item>
                 <a-form-item label="当前时区" required>
-<!--                <a-input v-model:value="modelRef.now_timezone" />-->
-
               <a-select
                 v-model:value="modelRef.now_timezone"
                 show-search
@@ -38,6 +36,7 @@
                 <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }">
                 <a-button type="primary" @click.prevent="onSubmit">提交</a-button>
                 <a-button style="margin-left: 10px" @click="resetFields">重置</a-button>
+                    <a-button style="margin-left: 10px" @click="swap">时区互换</a-button>
                 </a-form-item>
         </a-form>
          </div>
@@ -54,7 +53,7 @@
 <script>
 import { reactive, ref,defineComponent} from 'vue';
 import { Form } from 'ant-design-vue';
-import {timezone_post,timezone_get} from '@/api/timezone'
+import {timezone_post} from '@/api/timezone'
 import { message } from "ant-design-vue";
 
 const useForm = Form.useForm;
@@ -72,22 +71,7 @@ export default defineComponent({
     });
     const timeZoneList = [];
 
-      timezone_get().then(res=>{
-          if(res.code !== 200){
-                message.error({
-                content: res.msg,
-                duration: 5
-                });
-          }else{
-              for (let i=0;i < res.data.length; i++){
-                  options.value.push({value: res.data[i],
-                      label: res.data[i]})
-              }
-              console.log(options.value)
-                timeZoneList.push(res.data)
-          }
 
-          });
 
     const {
       resetFields,
@@ -102,6 +86,12 @@ export default defineComponent({
         message: 'Please input sub name',
       }],
     }));
+
+    const swap =() =>{
+        let timezone = modelRef.timezone
+        modelRef.timezone = modelRef.now_timezone
+        modelRef.now_timezone = timezone
+    }
 
     const onSubmit = () => {
       timezone_post(modelRef).then(res=>{
@@ -159,6 +149,7 @@ export default defineComponent({
       handleFocus,
       handleChange,
       options,
+        swap
     };
   },
 
