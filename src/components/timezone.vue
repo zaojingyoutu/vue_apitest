@@ -53,7 +53,7 @@
 <script>
 import { reactive, ref,defineComponent} from 'vue';
 import { Form } from 'ant-design-vue';
-import {timezone_post} from '@/api/timezone'
+import {timezone_post,timezone_get} from '@/api/timezone'
 import { message } from "ant-design-vue";
 
 const useForm = Form.useForm;
@@ -70,7 +70,22 @@ export default defineComponent({
       cycleDate:''  
     });
     const timeZoneList = [];
+    timezone_get().then(res=>{
+          if(res.code !== 200){
+                message.error({
+                content: res.msg,
+                duration: 5
+                });
+          }else{
+              for (let i=0;i < res.data.length; i++){
+                  options.value.push({value: res.data[i],
+                      label: res.data[i]})
+              }
+              console.log(options.value)
+                timeZoneList.push(res.data)
+          }
 
+          });
 
 
     const {
