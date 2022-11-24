@@ -541,6 +541,8 @@ export default defineComponent({
         delete modelRef["response"];
       delete modelRef["env"];
       delete modelRef["result"];
+      delete modelRef["run_time"];
+      delete modelRef["status"];
       var req_method;
       if (project.id == undefined) {
         req_method = "post";
