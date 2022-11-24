@@ -52,14 +52,9 @@
 </template>
 <script>
 import { reactive, ref,defineComponent} from 'vue';
-import { Form } from 'ant-design-vue';
 import {timezone_post,timezone_get} from '@/api/timezone'
 import { message } from "ant-design-vue";
 
-const useForm = Form.useForm;
-var data = {
-  date: '',
-};
 
 export default defineComponent({
   setup() {
@@ -81,26 +76,11 @@ export default defineComponent({
                   options.value.push({value: res.data[i],
                       label: res.data[i]})
               }
-              console.log(options.value)
                 timeZoneList.push(res.data)
           }
 
           });
 
-
-    const {
-      resetFields,
-      validateInfos,
-    } = useForm(modelRef, reactive({
-      name: [{
-        required: true,
-        message: 'Please input name',
-      }],
-      'sub.name': [{
-        required: true,
-        message: 'Please input sub name',
-      }],
-    }));
 
     const swap =() =>{
         let timezone = modelRef.timezone
@@ -123,13 +103,15 @@ export default defineComponent({
                 modelRef.cycleDate = res.data
           }
           
-          console.log(res.msg, res.data,data.date)
           })
     };
 
-    const reset = () => {
-      resetFields();
-    };
+    const resetFields = () =>{
+        modelRef.date = null
+        modelRef.timezone = null
+        modelRef.now_timezone = null
+        modelRef.cycleDate = null
+    }
 
     const options = ref([]);
 
@@ -152,11 +134,9 @@ export default defineComponent({
 
 
     return {
-      validateInfos,
-      reset,
+      resetFields,
       modelRef,
       onSubmit,
-      data,
         timeZoneList,
               value: ref(undefined),
       filterOption,

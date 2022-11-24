@@ -21,14 +21,9 @@
 </template>
 <script>
 import { reactive, defineComponent} from 'vue';
-import { Form } from 'ant-design-vue';
 import {ip_get} from '@/api/ip'
 import { message } from "ant-design-vue";
 
-const useForm = Form.useForm;
-var data = {
-  date: '',
-};
 
 export default defineComponent({
   setup() {
@@ -37,19 +32,7 @@ export default defineComponent({
       ipDate:''  
     });
 
-    const {
-      resetFields,
-      validateInfos,
-    } = useForm(modelRef, reactive({
-      name: [{
-        required: true,
-        message: 'Please input name',
-      }],
-      'sub.name': [{
-        required: true,
-        message: 'Please input sub name',
-      }],
-    }));
+
 
     const onSubmit = () => {
       ip_get(modelRef).then(res=>{
@@ -70,15 +53,15 @@ export default defineComponent({
           })
     };
 
-    const reset = () => {
-      resetFields();
-    };
+    const resetFields = () =>{
+        modelRef.name = null
+        modelRef.ipDate = null
+    }
     return {
-      validateInfos,
-      reset,
+    resetFields,
       modelRef,
       onSubmit,
-      data
+
     };
   },
 

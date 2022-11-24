@@ -27,54 +27,37 @@
     </div>
 </template>
 <script>
-    import {reactive, defineComponent} from 'vue';
-    import {Form} from 'ant-design-vue';
+import {reactive, defineComponent} from 'vue';
 
 
-    const useForm = Form.useForm;
-    var data = {
-        date: '',
+export default defineComponent({
+setup() {
+    const modelRef = reactive({
+        dict: null,
+        json: null,
+    });
+
+    const onSubmit = () => {
+        try {
+            let jsondata = JSON.parse(modelRef.dict.replaceAll("'", '"'));
+            modelRef.json = JSON.stringify(jsondata)
+        }catch (e) {
+            alert(e)
+        }
     };
 
-    export default defineComponent({
-        setup() {
-            const modelRef = reactive({
-                dict: null,
-                json: null,
-            });
+    const resetFields = () =>{
+        modelRef.json = null
+        modelRef.dict = null
+    }
 
-            const {
-                resetFields,
-                validateInfos,
-            } = useForm(modelRef, reactive({
-                name: [{
-                    required: true,
-                    message: 'Please input dict',
-                }]
-            }));
+    return {
+        resetFields,
+        modelRef,
+        onSubmit,
 
-            const onSubmit = () => {
-                try {
-                    let jsondata = JSON.parse(modelRef.dict.replaceAll("'", '"'))
-                    modelRef.json = JSON.stringify(jsondata)
-                }catch (e) {
-                    alert(e)
-                }
+    };
+},
 
-                console.log(JSON.parse(modelRef.json))
-            };
-
-            const reset = () => {
-                resetFields();
-            };
-            return {
-                validateInfos,
-                reset,
-                modelRef,
-                onSubmit,
-                data
-            };
-        },
-
-    });
+});
 </script>
