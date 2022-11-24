@@ -1,7 +1,4 @@
 <template>
-  <!-- <a-form-item label="name" style="left: 800px">-->
-  <!--      <a-input v-model:value="modelRef.name" />-->
-  <!--    </a-form-item>-->
   <div>
     <div class="name" style="right: 50%">
       <a-form-item label="用例名称：">
@@ -98,7 +95,7 @@
         </template>
         <a-textarea
           v-model:value="modelRef.data"
-          style="margin-top: 0px; margin-bottom: 0px; height: 150px"
+          style="margin-top: 0px; margin-bottom: 0px; height: 460px"
         />
       </a-tab-pane>
       <a-tab-pane key="4">
@@ -156,16 +153,15 @@
         <template #tab>
           <span> setup </span>
         </template>
-        <MyCodemirror v-model:value="modelRef.setup"></MyCodemirror>
-        <!-- <a-textarea v-model:value="modelRef.setup"  style="margin-top: 0px; margin-bottom: 0px; height: 150px;" /> -->
-      </a-tab-pane>
-
-      <a-tab-pane key="9">
-        <template #tab>
-          <span> 关联用例 </span>
-        </template>
-        <!--      <a-textarea v-model:value="modelRef.relation"  style="margin-top: 0px; margin-bottom: 0px; height: 150px;" />-->
-        <a-form
+         <a-tabs>
+          <a-tab-pane key="1" tab="code">
+            <MyCodemirror v-model:value="modelRef.setup"></MyCodemirror>
+            响应数据：response.json()
+            全局变量设置：set_global_svariate(dict)
+            局部变量设置：set_variate(key,value)
+          </a-tab-pane>
+          <a-tab-pane key="2" tab="关联用例" force-render>
+            <a-form
           ref="formRef"
           name="dynamic_form_nest_item"
           :model="dynamicValidateForm"
@@ -240,8 +236,9 @@
             </a-form-item>
             <a-form-item>
                 <a-checkbox v-model:checked="testcase.runRelation"  >是否执行前置处理</a-checkbox>
-
-                 <!-- <a-checkbox v-model:checked="checked" @change="onchange(testcase)">是否执行关联用例</a-checkbox> -->
+            </a-form-item>
+            <a-form-item>
+                <a-checkbox v-model:checked="testcase.runTeardown"  >是否执行后置处理</a-checkbox>
             </a-form-item>
             <MinusCircleOutlined @click="removeUser(testcase)" />
           </a-space>
@@ -255,11 +252,15 @@
           <!--      <a-button type="primary" html-type="submit">Submit</a-button>-->
           <!--    </a-form-item>-->
         </a-form>
+          </a-tab-pane>
+        </a-tabs>
+
       </a-tab-pane>
       <a-tab-pane key="6">
         <template #tab>
           <span> response </span>
         </template>
+        <p style="float: right" >  响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}</p>
         <a-textarea
           v-model:value="modelRef.response"
           style="margin-top: 0px; margin-bottom: 0px; height: 460px"
@@ -357,6 +358,9 @@
                 </a-form-item>
                 <a-form-item>
                  <a-checkbox v-model:checked="testcase.runRelation"  >是否执行前置处理</a-checkbox>
+                </a-form-item>
+                <a-form-item>
+                  <a-checkbox v-model:checked="testcase.runTeardown"  >是否执行后置处理</a-checkbox>
                 </a-form-item>
                 <MinusCircleOutlined @click="removeCases(testcase)" />
               </a-space>
@@ -467,6 +471,8 @@ export default defineComponent({
       env: "0",
       result: "",
       relation: "",
+      run_time: "",
+      status,
     });
 
     const rulesRef = reactive({
@@ -555,7 +561,6 @@ export default defineComponent({
 
     const debug = () => {
       (modelRef.relation = dynamicValidateForm.cases),
-        console.log("11111111111", modelRef.test);
       deBug_post(modelRef).then((res) => {
         message.success({
           content: res.msg,
@@ -568,12 +573,15 @@ export default defineComponent({
               null,
               2
             );
-          
+
           }else{modelRef.response = res.data.response}
         } catch {
           modelRef.response = res.data;
         }
         modelRef.result = JSON.stringify(res.data.result, null, 2);
+        modelRef.run_time = res.data.request_data.run_time
+        modelRef.status =res.status
+        console.log('122222222222222',res)
       });
     };
 

@@ -73,6 +73,7 @@ request.interceptors.request.use(config => {
 
 // response interceptor
 request.interceptors.response.use((response) => {
+  response.data['status'] = response.status
   return response.data
 }, errorHandler)
 

@@ -1,13 +1,13 @@
 <template>
-	<MyVideo video="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4" cover=""  />
+	<addCase />
 </template>
 
 <script>
-import MyVideo from '@/components/video.vue'
+import addCase from '@/components/addCase.vue'
 
 export default {
 	components:{
-        MyVideo
+        addCase
     }
 }
 
