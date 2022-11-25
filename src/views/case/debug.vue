@@ -583,7 +583,6 @@ export default defineComponent({
         modelRef.result = JSON.stringify(res.data.result, null, 2);
         modelRef.run_time = res.data.request_data.run_time
         modelRef.status =res.status
-        console.log('122222222222222',res)
       });
     };
 
@@ -646,7 +645,8 @@ export default defineComponent({
         mold: "response",
         value: "",
         name: "",
-        runRelation: true,
+        runRelation: false,
+        runTeardown: false,
       });
     };
 
@@ -658,6 +658,7 @@ export default defineComponent({
         runRelation: false,
         runTeardown: false,
       });
+      console.log(modelRef.teardown.relation)
     };
 
     const onFinish = (values) => {
