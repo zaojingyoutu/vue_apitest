@@ -656,6 +656,7 @@ export default defineComponent({
         value: "",
         name: "",
         runRelation: false,
+        runTeardown: false,
       });
     };
 

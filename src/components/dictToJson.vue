@@ -28,6 +28,7 @@
 </template>
 <script>
 import {reactive, defineComponent} from 'vue';
+import {dictFotmat_post} from '@/api/dictFormat'
 
 
 export default defineComponent({
@@ -38,12 +39,14 @@ setup() {
     });
 
     const onSubmit = () => {
-        try {
-            let jsondata = JSON.parse(modelRef.dict.replaceAll("'", '"'));
-            modelRef.json = JSON.stringify(jsondata)
-        }catch (e) {
-            alert(e)
-        }
+        let request_data = {'dict_data': modelRef.dict}
+        dictFotmat_post(request_data).then((res) => {
+           console.log(res)
+            if (res.code == 200){
+                modelRef.json = JSON.stringify(res.json_data)
+            }
+            else {alert(res.msg)}
+        })
     };
 
     const resetFields = () =>{
