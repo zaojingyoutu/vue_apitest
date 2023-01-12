@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div class="describe" style="float: right;width: 40%" >
+        <a-collapse ghost >
+            <a-collapse-panel key="1" header="描述" >
+                <a-textarea v-model:value="modelRef.describe" placeholder="请添加" :rows="4" />
+            </a-collapse-panel>
+        </a-collapse>
+    </div>
     <div class="name" style="right: 50%">
       <a-form-item label="用例名称：">
         <a-input
@@ -425,6 +432,7 @@ export default defineComponent({
           // (modelRef.asserts = res.data[0].asserts),
           (modelRef.id = res.data[0].id),
           (modelRef.setup = res.data[0].setup),
+           (modelRef.describe = res.data[0].describe),
           (modelRef.header = res.data[0].header);
 
         const a = res.data[0].data;
@@ -473,6 +481,7 @@ export default defineComponent({
       relation: "",
       run_time: "",
       status,
+      describe: '',
     });
 
     const rulesRef = reactive({
@@ -582,7 +591,7 @@ export default defineComponent({
         }
         modelRef.result = JSON.stringify(res.data.result, null, 2);
         modelRef.run_time = res.data.request_data.run_time
-        modelRef.status =res.status
+        modelRef.status =res.data.status_code
       });
     };
 
