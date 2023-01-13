@@ -198,6 +198,11 @@
                 <a-spin size="small" />
               </template>
             </a-select>
+
+            <router-link v-if ="testcase.case" :to="{path:'/debug',query:{project_id:testcase.case.option.project ,id:testcase.case.value}}" target="_blank">
+                <a >to case</a>
+            </router-link>
+
             <a-select
               ref="select"
               v-model:value="testcase.mold"
@@ -316,7 +321,11 @@
                     <a-spin size="small" />
                   </template>
                 </a-select>
-                
+
+                <router-link v-if ="testcase.case" :to="{path:'/debug',query:{project_id:testcase.case.option.project ,id:testcase.case.value}}" target="_blank">
+                    <a >to case</a>
+                </router-link>
+
                 <a-select
                   ref="select"
                   v-model:value="testcase.mold"
@@ -621,6 +630,7 @@ export default defineComponent({
         const data = res.data.map((cases) => ({
           label: cases.name + "-" + cases.project + "-" + cases.module,
           value: cases.id,
+          project :cases.project,
         }));
         state.data = data;
         state.fetching = false;
