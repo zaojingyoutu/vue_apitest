@@ -246,7 +246,7 @@
                 describe: "",
                 env: "0",
                 project_id: "",
-                case_list: "",
+                case_list: [],
                 email: "",
             });
             const count = reactive({
