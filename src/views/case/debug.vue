@@ -1,5 +1,17 @@
 <template>
+  <div class="Breadcrumb" style="text-align: left;height: 30px;">
+    <a-breadcrumb>
+      <a-breadcrumb-item>
+        <router-link :to="{path:'/case',query:{project_id:project.project_id}}" >
+                <a  >用例列表</a>
+            </router-link>
+      </a-breadcrumb-item>
+      <a-breadcrumb-item>用例详情</a-breadcrumb-item>
+    </a-breadcrumb>
+
+  </div>
   <div>
+    <div>
     <div class="describe" style="float: right;width: 40%" >
         <a-collapse ghost >
             <a-collapse-panel key="1" header="描述" >
@@ -32,7 +44,7 @@
     </div>
     <div class="project" style="width: 600px">
       <a-form-item label="项目：">
-        <div class="selectEnv" style="float: left;"> 
+        <div class="selectEnv" style="float: left;">
               <a-select
             ref="select"
             v-model:value="modelRef.project"
@@ -51,7 +63,7 @@
           placeholder="模块"
           style="right: 20%; width: 50%"
         />
-       
+
       </a-form-item>
     </div>
   </div>
@@ -153,7 +165,7 @@
               添加断言
             </a-button>
           </a-form-item>
-   
+
         </a-form>
       </a-tab-pane>
       <a-tab-pane key="5">
@@ -401,6 +413,8 @@
       </a-tab-pane>
     </a-tabs>
   </a-form>
+  </div>
+
 </template>
 <script>
 import { reactive, computed, defineComponent, watch, toRefs } from "vue";
@@ -628,7 +642,7 @@ export default defineComponent({
         console.log(res.data);
 
         const data = res.data.map((cases) => ({
-          label: cases.name + "-" + cases.project + "-" + cases.module,
+          label: cases.name + "-" + cases.project__name + "-" + cases.module,
           value: cases.id,
           project :cases.project,
         }));
@@ -761,7 +775,8 @@ export default defineComponent({
       focus,
       handleChange,
       options1,
-      optionsProject
+      optionsProject,
+      project
    
     };
   },
