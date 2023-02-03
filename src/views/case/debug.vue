@@ -401,6 +401,7 @@
             </a-form>
           </a-tab-pane>
         </a-tabs>
+        <associatedCases v-model:value="modelRef.teardown" ></associatedCases>
       </a-tab-pane>
       <a-tab-pane key="8">
         <template #tab>
@@ -429,6 +430,7 @@ import { cases_get, cases_api } from "@/api/cases";
 import MyCodemirror from "@/components/VueCodemirror.vue";
 import {project_get} from '@/api/project'
 import {deBug_post} from '@/api/deBug'
+import associatedCases from "@/components/associatedCases.vue";
 
 
 const useForm = Form.useForm;
@@ -437,6 +439,8 @@ export default defineComponent({
     MinusCircleOutlined,
     PlusOutlined,
     MyCodemirror,
+    associatedCases
+
   },
   setup() {
     const dynamicValidateForm = reactive({

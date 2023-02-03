@@ -29,7 +29,7 @@ export default {
     const code = ref();
 
     return {
-        
+
       code,
       cmOptions: {
         mode: "python", // 语言模式
@@ -43,9 +43,10 @@ export default {
         lineWrapping: true,
       },
       onChange() {
-        console.log(code);
+        // console.log(code);
       },
     };
   },
-};
+
+}
 </script>
