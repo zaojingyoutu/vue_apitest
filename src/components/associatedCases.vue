@@ -1,5 +1,5 @@
 <template>
-    <a-tabs  v-model:value="association">
+    <a-tabs  v-model:value="association" @change="$emit('update:associations',$event.target.value)" >
         <a-tab-pane key="1" tab="code">
             <MyCodemirror v-model:value="association.code"></MyCodemirror>
             响应数据：response.json()
@@ -119,14 +119,15 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
 export default {
     name: "associatedCases",
     props: {
-            msg: Object,
+        associations: Object,
           },
+    emits: [ "update:associations"],
     components: {
         MyCodemirror,
         MinusCircleOutlined,
         PlusOutlined,
     },
-    setup() {
+    setup(props) {
 
         const dynamicValidateForm = reactive({
             cases: [],
@@ -135,11 +136,9 @@ export default {
             console.log("Received values of form:", values);
             console.log("dynamicValidateForm.users:", dynamicValidateForm.cases);
         };
-        const association = reactive({
-            'code': '',
-            'relation': [],
-        });
-        console.log(222222222222222222,association)
+
+        const text = toRefs(props)
+        const association = text.associations
         const addCase = () => {
             association.relation.push({
                 mold: "response",
