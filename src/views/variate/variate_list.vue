@@ -68,6 +68,7 @@ const columns = [{
 }];
 
 import {message} from "ant-design-vue";
+import {useRouter} from "vue-router";
 export default defineComponent({
   data() {
     return {
@@ -76,12 +77,17 @@ export default defineComponent({
     };
   },
   created() {
-    variate_get()
+      const queryData = useRouter().currentRoute.value.query;
+      console.log(queryData)
+      if (queryData != null){
+              variate_get(queryData)
      .then((res) => {
          this.data =  res.data;
 
         console.log('=========',);
      });
+      }
+
 
   },
 
