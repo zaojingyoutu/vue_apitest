@@ -1,5 +1,5 @@
 <template>
-    <a-tabs  v-model:value="association" @change="$emit('update:associations',$event.target.value)" >
+    <a-tabs  :value="association" @change="$emit('update:associations',$event.target.value)" >
         <a-tab-pane key="1" tab="code">
             <MyCodemirror v-model:value="association.code"></MyCodemirror>
             响应数据：response.json()
@@ -119,7 +119,8 @@ import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
 export default {
     name: "associatedCases",
     props: {
-        associations: Object,
+        associations: {code:String,
+                       relation: []  }   ,
           },
     emits: [ "update:associations"],
     components: {
@@ -137,9 +138,11 @@ export default {
             console.log("dynamicValidateForm.users:", dynamicValidateForm.cases);
         };
 
-        const text = toRefs(props)
-        const association = text.associations
+        const prop = toRefs(props)
+        const association = prop.associations.value
+        console.log(association)
         const addCase = () => {
+            // eslint-disable-next-line vue/no-mutating-props
             association.relation.push({
                 mold: "response",
                 value: "",

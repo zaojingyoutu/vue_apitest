@@ -173,113 +173,7 @@
         <template #tab>
           <span> setup </span>
         </template>
-         <a-tabs>
-          <a-tab-pane key="1" tab="code">
-            <MyCodemirror v-model:value="modelRef.setup"></MyCodemirror>
-            响应数据：response.json()
-            全局变量设置：set_global_svariate(dict)
-            局部变量设置：set_variate(key,value)
-          </a-tab-pane>
-          <a-tab-pane key="2" tab="关联用例" force-render>
-            <a-form
-          ref="formRef"
-          name="dynamic_form_nest_item"
-          :model="dynamicValidateForm"
-          @finish="onFinish"
-        >
-          <a-space
-            v-for="(testcase, index) in dynamicValidateForm.cases"
-            :key="testcase.id"
-            style="display: flex; margin-bottom: 8px"
-            align="baseline"
-          >
-            <a-select
-              v-model:value="testcase.case"
-              show-search
-              label-in-value
-              placeholder="用例名称"
-              style="width: 300px"
-              :default-active-first-option="false"
-              :show-arrow="false"
-              :filter-option="false"
-              :not-found-content="null"
-              type="radio"
-              :options="data"
-              @search="fetchUser"
-            >
-              <template v-if="fetching" #notFoundContent>
-                <a-spin size="small" />
-              </template>
-            </a-select>
-
-            <router-link v-if ="testcase.case" :to="{path:'/debug',query:{project_id:testcase.case.option.project ,id:testcase.case.value}}" target="_blank">
-                <a >to case</a>
-            </router-link>
-
-            <a-select
-              ref="select"
-              v-model:value="testcase.mold"
-              style="width: 120px"
-              @focus="focus"
-              placeholder="提取类型"
-            >
-              <a-select-option value="response">response</a-select-option>
-              <a-select-option value="parameter">parameter</a-select-option>
-              <a-select-option value="data">data</a-select-option>
-              <a-select-option value="None">无</a-select-option>
-            </a-select>
-
-            <a-select
-              ref="select"
-              v-model:value="testcase.type"
-              style="width: 120px"
-              @focus="focus"
-              placeholder="提取方式"
-            >
-              <a-select-option value="jmespath">jmespath</a-select-option>
-              <a-select-option value="re">正则</a-select-option>
-              <a-select-option value="json">json提取</a-select-option>
-            </a-select>
-
-            <a-form-item
-              :name="['cases', index, 'value']"
-              :rules="{
-                // required: true,
-                message: 'Missing value',
-              }"
-            >
-              <a-input v-model:value="testcase.value" placeholder="公式" />
-            </a-form-item>
-            <a-form-item
-              :name="['cases', index, 'name']"
-              :rules="{
-                // required: true,
-                message: 'Missing  name',
-              }"
-            >
-              <a-input v-model:value="testcase.name" placeholder="变量名称" />
-            </a-form-item>
-            <a-form-item>
-                <a-checkbox v-model:checked="testcase.runRelation"  >是否执行前置处理</a-checkbox>
-            </a-form-item>
-            <a-form-item>
-                <a-checkbox v-model:checked="testcase.runTeardown"  >是否执行后置处理</a-checkbox>
-            </a-form-item>
-            <MinusCircleOutlined @click="removeUser(testcase)" />
-          </a-space>
-          <a-form-item>
-            <a-button type="dashed" block @click="addUser">
-              <PlusOutlined />
-              Add 用例
-            </a-button>
-          </a-form-item>
-          <!--    <a-form-item>-->
-          <!--      <a-button type="primary" html-type="submit">Submit</a-button>-->
-          <!--    </a-form-item>-->
-        </a-form>
-          </a-tab-pane>
-        </a-tabs>
-
+<associatedCases :associations="modelRef.setup" @update:associations ='setup => associations = modelRef.setup '></associatedCases>
       </a-tab-pane>
       <a-tab-pane key="6">
         <template #tab>
@@ -295,7 +189,7 @@
         <template #tab>
           <span> teardown </span>
         </template>
-        <associatedCases v-model:associations="modelRef.teardown" @update:associations ='teardown => associations = modelRef.teardown '></associatedCases>
+        <associatedCases :associations="modelRef.teardown" @update:associations ='teardown => associations = modelRef.teardown '></associatedCases>
       </a-tab-pane>
       <a-tab-pane key="8">
         <template #tab>
@@ -312,16 +206,15 @@
 
 </template>
 <script>
-import { reactive, computed, defineComponent, watch, toRefs } from "vue";
+import { reactive, computed, defineComponent, toRefs } from "vue";
 import { toArray } from "lodash-es";
 import { Form } from "ant-design-vue";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 import { ref } from "vue";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
-import { debounce } from "lodash-es";
 import { cases_get, cases_api } from "@/api/cases";
-import MyCodemirror from "@/components/VueCodemirror.vue";
+// import MyCodemirror from "@/components/VueCodemirror.vue";
 import {project_get} from '@/api/project'
 import {deBug_post} from '@/api/deBug'
 import associatedCases from "@/components/associatedCases.vue";
@@ -332,7 +225,7 @@ export default defineComponent({
   components: {
     MinusCircleOutlined,
     PlusOutlined,
-    MyCodemirror,
+    // MyCodemirror,
     associatedCases
 
   },
@@ -354,32 +247,20 @@ export default defineComponent({
           (modelRef.id = res.data[0].id),
           (modelRef.setup = res.data[0].setup),
            (modelRef.describe = res.data[0].describe),
+                (modelRef.teardown = res.data[0].teardown),
           (modelRef.header = res.data[0].header);
 
         const a = res.data[0].data;
+
         if (a.includes("{")) {
           modelRef.data = JSON.stringify(JSON.parse(a), null, 2);
         } else {
           modelRef.data = res.data[0].data;
         }
-        if (res.data[0].teardown != null) {
-
-          const tearDown = (res.data[0].teardown).replace(/(True)/g,'true')
-          const tear = tearDown.replace(/(False)/g,'false')
-          modelRef.teardown = eval("(" + tear + ")");
-        }
         if (res.data[0].asserts != null) {
         // modelRef.asserts = eval("(" + res.data[0].asserts + ")");
         modelRef.asserts = res.data[0].asserts ;
 
-        }
-
-        if (res.data[0].relation.includes("[")) {
-          const tearDown = (res.data[0].relation).replace(/(True)/g,'true')
-          const tear = tearDown.replace(/(False)/g,'false')
-          dynamicValidateForm.cases = eval("(" + tear + ")");
-
-          console.log(dynamicValidateForm.cases);
         }
       });
     }
@@ -395,7 +276,7 @@ export default defineComponent({
       asserts: [],
       id: "",
       response: "",
-      setup: "",
+      setup: { code: "", relation: [] },
       teardown: { code: "", relation: [] },
       env: "0",
       result: "",
@@ -520,39 +401,11 @@ export default defineComponent({
       return mergeValidateInfo(toArray(validateInfos));
     });
 
-    let lastFetchId = 0;
     const state = reactive({
       data: [],
       value: [],
       fetching: false,
     });
-    const fetchUser = debounce((value) => {
-      console.log("fetching user", value);
-      lastFetchId += 1;
-      const fetchId = lastFetchId;
-      state.data = [];
-      state.fetching = true;
-      cases_get({ name: value }).then((res) => {
-        if (fetchId !== lastFetchId) {
-          // for fetch callback order
-          return;
-        }
-        console.log(res.data);
-
-        const data = res.data.map((cases) => ({
-          label: cases.name + "-" + cases.project__name + "-" + cases.module,
-          value: cases.id,
-          project :cases.project,
-        }));
-        state.data = data;
-        state.fetching = false;
-      });
-      watch(state.value, () => {
-        state.data = [];
-        state.fetching = false;
-      });
-    }, 100);
-
     const formRef = ref();
 
     const removeUser = (item) => {
@@ -563,33 +416,16 @@ export default defineComponent({
       }
     };
 
-    const removeCases = (item) => {
-      let index = modelRef.teardown.relation.indexOf(item);
 
-      if (index !== -1) {
-        modelRef.teardown.relation.splice(index, 1);
-      }
-    };
 
     const addUser = () => {
       dynamicValidateForm.cases.push({
-        mold: "response",
+        mold: "None",
         value: "",
         name: "",
         runRelation: false,
         runTeardown: false,
       });
-    };
-
-    const addCase = () => {
-      modelRef.teardown.relation.push({
-        mold: "response",
-        value: "",
-        name: "",
-        runRelation: false,
-        runTeardown: false,
-      });
-      console.log(modelRef.teardown.relation)
     };
 
     const onFinish = (values) => {
@@ -666,9 +502,6 @@ export default defineComponent({
       removeUser,
       addUser,
       ...toRefs(state),
-      fetchUser,
-      addCase,
-      removeCases,
       checked:ref(false),
       focus,
       handleChange,
