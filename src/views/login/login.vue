@@ -1,10 +1,13 @@
 <template>
+                  <img
+                     src="https://www.yulumi.cn/gl/uploads/allimg/201121/11200I923-1.jpg">
   <div style="position: absolute;
     right: 40%;
     width: 400px;
     border: 3px solid #42b983;
     padding: 10px;
-    top: 50%;
+    top: 40%;
+    background:#ffffff;
     height: 300px;
 ">
     <h2>欢迎来到接口测试平台</h2><br>
@@ -154,6 +157,13 @@ const login = () =>Login(formState).then((res) => {
            });
     };
 
+    const handleOks = ()=> {
+                      message.success({
+                content: '暂未开放！',
+                duration: 5
+                });
+    }
+
 
 return {
       formState,
@@ -164,6 +174,7 @@ return {
       showModal,
       handleOk,
       modelRef,
+  handleOks,
   login,
     };
   },
