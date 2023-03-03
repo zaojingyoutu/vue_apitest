@@ -49,6 +49,18 @@
                     <a style="color: white">Create</a>
                 </router-link>
             </a-button>
+                <a-button type="primary" @click="showModal" style="margin-left: 10px">导入</a-button>
+                <a-modal v-model:visible="visible" title="导入数据" @ok="handleOk">
+                    <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+                        <a-form-item label="导入类型" required>
+                          <a-input v-model:value="modelRef.type" />
+                        </a-form-item>
+                         <a-form-item label="导入值" required>
+                          <a-input v-model:value="modelRef.context" />
+                        </a-form-item>
+                    </a-form>
+            </a-modal>
+
         </div>
         <div class="search-result-list">
 
@@ -153,6 +165,7 @@
     import {useRouter} from "vue-router";
     import {message} from "ant-design-vue";
     import {project_get} from '@/api/project'
+    import {import_post} from '@/api/importApi'
 
 
     export default defineComponent({
@@ -264,6 +277,42 @@
 
                 console.log(optionsProject.value);
             });
+
+            const visible = ref(false);
+    const showModal = () => {
+      visible.value = true;
+    };
+    const handleOk =() => {
+        import_post(modelRef)  .then((res) => {
+                        if (res.code == 200) {
+                            message.success({
+                                    content: "导入成功！",
+                                    duration: 5
+                                }
+                            );
+                            cases_get(par).then((res) => {
+                                data.value = res.data;
+                                total.value = res.total;
+                            });
+                        } else {
+                            message.success({
+                                    content: "导入失败！",
+                                    duration: 5
+                                }
+                            );}
+                }
+                        );
+      console.log(modelRef);
+      visible.value = false;
+    };
+
+        const modelRef = reactive({
+                  type: 'curl',
+                  context: '',
+                  project: par.project_id,
+
+                });
+
             return {
                 formRef,
                 formState,
@@ -277,7 +326,11 @@
                 pageSize,
                 total,
                 current,
-                optionsProject
+                optionsProject,
+                visible,
+                modelRef,
+      showModal,
+      handleOk,
 
             }
         }
