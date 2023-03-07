@@ -141,6 +141,15 @@ const routes = [
                 component: () => import(/* webpackChunkName: "tools" */ '../views/files/filesList'),
 
             },
+            {
+                path: '/locust',
+                name: 'locust',
+                 meta: {
+                    title: 'locust'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/locust/index'),
+
+            },
 
         ]
     },

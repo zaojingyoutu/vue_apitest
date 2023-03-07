@@ -42,6 +42,10 @@
                     <code-sandbox-outlined/>
                     <span class="nav-text"><router-link to="/filesList" style="color: white"> 文件管理</router-link></span>
                 </a-menu-item>
+                <a-menu-item key="8">
+                    <code-sandbox-outlined/>
+                    <span class="nav-text"><router-link to="/filesList" style="color: white"> 文件管理</router-link></span>
+                </a-menu-item>
             </a-menu>
         </a-layout-sider>
         <a-layout>
