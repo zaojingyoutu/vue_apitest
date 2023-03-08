@@ -5,7 +5,6 @@
     border
     placeholder="测试 placeholder"
     text-align="left"
-    :height="200"
     @change="onChange"
     style="text-align: left"
   />

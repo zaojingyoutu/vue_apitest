@@ -1,7 +1,7 @@
 <template>
     <a-tabs  :value="association" @change="$emit('update:associations',$event.target.value)" >
         <a-tab-pane key="1" tab="code">
-            <MyCodemirror v-model:value="association.code"></MyCodemirror>
+            <MyCodemirror v-model:value="association.code" style="height: 200px"></MyCodemirror>
             响应数据：response.json()
             全局变量设置：set_global_svariate(dict)
             局部变量设置：set_variate(key,value)

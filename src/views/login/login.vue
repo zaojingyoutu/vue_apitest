@@ -133,6 +133,7 @@ const login = () =>Login(formState).then((res) => {
 
                   // window.location.href="project";
                   localStorage.setItem('token','Bearer ' +  res.data.access_token)
+                  localStorage.setItem('user',JSON.stringify(res.data))
 }});
 
  const visible = ref(false);

@@ -49,16 +49,16 @@
                     <a style="color: white">Create</a>
                 </router-link>
             </a-button>
-                <a-button type="primary" @click="showModal" style="margin-left: 10px">导入</a-button>
-                <a-modal v-model:visible="visible" title="导入数据" @ok="handleOk">
-                    <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
-                        <a-form-item label="导入类型" required>
-                          <a-input v-model:value="modelRef.type" />
-                        </a-form-item>
-                         <a-form-item label="导入值" required>
-                          <a-input v-model:value="modelRef.context" />
-                        </a-form-item>
-                    </a-form>
+            <a-button type="primary" @click="showModal" style="margin-left: 10px">导入</a-button>
+            <a-modal v-model:visible="visible" title="导入数据" @ok="handleOk">
+                <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
+                    <a-form-item label="导入类型" required>
+                        <a-input v-model:value="modelRef.type"/>
+                    </a-form-item>
+                    <a-form-item label="导入值" required>
+                        <a-input v-model:value="modelRef.context"/>
+                    </a-form-item>
+                </a-form>
             </a-modal>
 
         </div>
@@ -279,11 +279,11 @@
             });
 
             const visible = ref(false);
-    const showModal = () => {
-      visible.value = true;
-    };
-    const handleOk =() => {
-        import_post(modelRef)  .then((res) => {
+            const showModal = () => {
+                visible.value = true;
+            };
+            const handleOk = () => {
+                import_post(modelRef).then((res) => {
                         if (res.code == 200) {
                             message.success({
                                     content: "导入成功！",
@@ -299,19 +299,20 @@
                                     content: "导入失败！",
                                     duration: 5
                                 }
-                            );}
-                }
-                        );
-      console.log(modelRef);
-      visible.value = false;
-    };
+                            );
+                        }
+                    }
+                );
+                console.log(modelRef);
+                visible.value = false;
+            };
 
-        const modelRef = reactive({
-                  type: 'curl',
-                  context: '',
-                  project: par.project_id,
+            const modelRef = reactive({
+                type: 'curl',
+                context: '',
+                project: par.project_id,
 
-                });
+            });
 
             return {
                 formRef,
@@ -329,8 +330,8 @@
                 optionsProject,
                 visible,
                 modelRef,
-      showModal,
-      handleOk,
+                showModal,
+                handleOk,
 
             }
         }

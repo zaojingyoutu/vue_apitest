@@ -25,7 +25,7 @@ export function locust_detail(id){
 export function locust_put(data){
     return request.request({
         method: "put",
-          url: "locust/",
+          url: "locust/" + data.id +"/",
           data: data,
     })
 }
@@ -38,10 +38,17 @@ export function locust_create(data){
     })
 }
 
-export function locust_del(data){
+export function locustRun(data){
+    return request.request({
+        method: "post",
+          url: "runLocust/",
+          data: data,
+    })
+}
+
+export function locust_del(id){
     return request.request({
         method: "delete",
-          url: "locust/",
-          data: [data],
+          url: "locust/" + id +"/",
     })
 }
