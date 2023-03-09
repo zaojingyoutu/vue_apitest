@@ -20,7 +20,15 @@
 
             <a-button type="primary" style="margin-left: 10px" @click="create">保存</a-button>
             <a-button type="primary" style="margin-left: 10px" @click="del">删除</a-button>
-            <a-button type="primary" style="margin-left: 10px" @click="run">运行</a-button>
+            <a-popconfirm
+                    title="只能运行locust并关闭已运行的，确认运行吗？"
+                    ok-text="Yes"
+                    cancel-text="No"
+                    @confirm="run"
+                    @cancel="cancel"
+            >
+                <a-button type="primary" style="margin-left: 10px" >运行</a-button>
+            </a-popconfirm>
         </div>
 
         <MyCodemirror v-model:value="content"></MyCodemirror>
@@ -29,7 +37,7 @@
 </template>
 <script>
     import {defineComponent, reactive, ref} from 'vue';
-    import {locust_get, locust_detail, locust_put,locust_del,locustRun} from '@/api/locust'
+    import {locust_get, locust_detail, locust_put, locust_del, locustRun} from '@/api/locust'
     import MyCodemirror from "@/components/VueCodemirror.vue";
     import {locust_create} from "../../api/locust";
     import {message} from "ant-design-vue";
@@ -104,7 +112,7 @@
 
                     locust_put(modelRef).then((res) => {
                         content.value = res.content
-                         if (res.status == 200) {
+                        if (res.status == 200) {
                             message.success({
                                     content: "操作成功！",
                                     duration: 5
@@ -123,7 +131,7 @@
                     locust_create(modelRef).then((res) => {
                         content.value = res.data.content
                         modelRef.id = res.data.id
-                       if (res.status == 200) {
+                        if (res.status == 200) {
                             message.success({
                                     content: "添加成功！",
                                     duration: 5
@@ -141,45 +149,47 @@
 
                 console.log(modelRef)
             }
-            const  del =() =>{
-                 locust_del(modelRef.id).then((res) => {
-                         if (res.status == 200) {
-                            message.success({
-                                    content: "删除成功！",
-                                    duration: 5
+            const del = () => {
+                locust_del(modelRef.id).then((res) => {
+                    if (res.status == 200) {
+                        message.success({
+                                content: "删除成功！",
+                                duration: 5
 
-                                },
-                                location.reload()
-                            );
-                        } else {
-                            message.success({
-                                    content: "操作失败！",
-                                    duration: 5
-                                }
-                            );
-                        }
+                            },
+                            location.reload()
+                        );
+                    } else {
+                        message.success({
+                                content: "操作失败！",
+                                duration: 5
+                            }
+                        );
+                    }
 
-                    })
+                })
 
             }
-            const  run= ()=>{
+            const run = () => {
                 locustRun(modelRef).then((res) => {
-                         if (res.status == 200) {
-                            message.success({
-                                    content: "运行成功！",
-                                    duration: 5
+                    if (res.status == 200) {
+                        message.success({
+                                content: "运行成功！",
+                                duration: 5
 
-                                },
-                            );
-                        } else {
-                            message.success({
-                                    content: "运行失败！",
-                                    duration: 5
-                                }
-                            );
-                        }
+                            },
 
-                    })
+                            window.open(res.url, '_blank')
+                        );
+                    } else {
+                        message.success({
+                                content: "运行失败！",
+                                duration: 5
+                            }
+                        );
+                    }
+
+                })
 
             }
             return {
