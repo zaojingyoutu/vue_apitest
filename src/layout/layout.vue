@@ -46,6 +46,10 @@
                     <code-sandbox-outlined/>
                     <span class="nav-text"><router-link to="/locust" style="color: white"> locust</router-link></span>
                 </a-menu-item>
+                <a-menu-item key="9">
+                    <code-sandbox-outlined/>
+                    <span class="nav-text"><router-link to="/customFun" style="color: white"> 内置方法</router-link></span>
+                </a-menu-item>
             </a-menu>
         </a-layout-sider>
         <a-layout>

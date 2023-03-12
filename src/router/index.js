@@ -150,6 +150,15 @@ const routes = [
                 component: () => import(/* webpackChunkName: "tools" */ '../views/locust/index'),
 
             },
+            {
+                path: '/customFun',
+                name: 'customFun',
+                 meta: {
+                    title: 'customFun'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/customFun/index'),
+
+            },
 
         ]
     },
