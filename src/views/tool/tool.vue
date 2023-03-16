@@ -7,6 +7,7 @@
         <getIp></getIp>
     </a-tab-pane>
     <a-tab-pane key="3" tab="字典转json"><dictToJson></dictToJson></a-tab-pane>
+      <a-tab-pane key="4" tab="手机号获取"><moble></moble></a-tab-pane>
   </a-tabs>
 </template>
 <script>
@@ -14,12 +15,13 @@ import { defineComponent} from 'vue';
 import getIp from "@/components/getIp.vue";
 import timezone from "@/components/timezone";
 import dictToJson from "@/components/dictToJson";
+import moble from "@/components/getMoble";
 
 
 
 
 export default defineComponent({
-    components: {getIp,timezone,dictToJson},
+    components: {getIp,timezone,dictToJson,moble},
 
 });
 </script>
