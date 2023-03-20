@@ -17,7 +17,7 @@
             <a-collapse-panel key="1" header="描述" >
                 <a-textarea v-model:value="modelRef.describe" placeholder="请添加" :rows="4" />
             </a-collapse-panel>
-          <router-link :to="{path:'/variate_list',query:{project: modelRef.project,env:modelRef.env}} " target="_blank" >全局变量管理</router-link>
+          <router-link :to="{path:'/variate_list',query:{project: modelRef.project}} " target="_blank" >全局变量管理</router-link>
         </a-collapse>
     </div>
     <div class="name" style="right: 50%">
