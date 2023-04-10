@@ -8,6 +8,7 @@
     </a-tab-pane>
     <a-tab-pane key="3" tab="字典转json"><dictToJson></dictToJson></a-tab-pane>
       <a-tab-pane key="4" tab="手机号获取"><moble></moble></a-tab-pane>
+      <a-tab-pane key="5" tab="当前ip"><img src="https://tool.lu/netcard/"></a-tab-pane>
   </a-tabs>
 </template>
 <script>
