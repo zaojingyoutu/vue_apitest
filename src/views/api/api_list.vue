@@ -45,7 +45,7 @@
         <div style="margin-right: 10px;
     margin-left: 10px;float: left;margin-top: 5px;">
             <a-button type="primary">
-                <router-link :to="{path:'/debug',query:{project_id:this.$route.query.project_id}}">
+                <router-link :to="{path:'/apiDetail',query:{project_id:this.$route.query.project_id}}">
                     <a style="color: white">Create</a>
                 </router-link>
             </a-button>
@@ -69,16 +69,16 @@
                      @change="onChange">
                 <template #bodyCell="{ column,record,text }">
                     <template v-if="column.key === 'name'">
-                        <router-link :to="{path:'/debug',query:{project_id: record.project,id:record.id}}">
+                        <router-link :to="{path:'/apiDetail',query:{project_id: record.project,id:record.id}}">
                             <a>{{ text }}</a>
                         </router-link>
                     </template>
                     <template v-if="column.key === 'operation'">
-                        <router-link :to="{path:'/debug',query:{project_id: record.project,id:record.id}}"><a>Debug</a>
+                        <router-link :to="{path:'/apiDetail',query:{project_id: record.project,id:record.id}}"><a>Debug</a>
                         </router-link>
                         |
                         <a @click="deletes(record)">Delete</a> |
-                        <router-link :to="{path:'/debug',query:{project_id: record.project,id:record.id}}">
+                        <router-link :to="{path:'/apiDetail',query:{project_id: record.project,id:record.id}}">
                             <a>Edit</a> |
                         </router-link>
                         <a @click="copy(record)">Copy</a>

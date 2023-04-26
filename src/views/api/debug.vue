@@ -2,7 +2,7 @@
   <div class="Breadcrumb" style="text-align: left;height: 30px;">
     <a-breadcrumb>
       <a-breadcrumb-item>
-        <router-link :to="{path:'/case',query:{project_id:project.project_id}}" >
+        <router-link :to="{path:'/api',query:{project_id:project.project_id}}" >
                 <a  >用例列表</a>
             </router-link>
       </a-breadcrumb-item>
@@ -217,7 +217,7 @@ import { cases_get, cases_api } from "@/api/cases";
 // import MyCodemirror from "@/components/VueCodemirror.vue";
 import {project_get} from '@/api/project'
 import {deBug_post} from '@/api/deBug'
-import associatedCases from "@/components/steps.vue";
+import associatedCases from "@/components/associatedCases.vue";
 
 
 const useForm = Form.useForm;

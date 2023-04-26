@@ -19,29 +19,33 @@
                 </a-menu-item>
                 <a-menu-item key="2">
                     <table-outlined/>
-                    <span class="nav-text"><router-link to="/case" style="color: white"> 测试用例</router-link></span>
+                    <span class="nav-text"><router-link to="/api" style="color: white"> 接口管理</router-link></span>
                 </a-menu-item>
                 <a-menu-item key="3">
+                    <table-outlined/>
+                    <span class="nav-text"><router-link to="/case" style="color: white"> 测试用例</router-link></span>
+                </a-menu-item>
+                <a-menu-item key="4">
                     <eye-outlined/>
                     <span class="nav-text"><router-link to="/variate_list"
                                                         style="color: white"> 变量管理</router-link></span>
                 </a-menu-item>
-                <a-menu-item key="4">
+                <a-menu-item key="5">
                     <calendar-outlined/>
                     <span class="nav-text"><router-link to="/testplan" style="color: white"> 测试计划</router-link></span>
                 </a-menu-item>
-                <a-menu-item key="5">
+                <a-menu-item key="6">
                     <user-outlined/>
                     <span class="nav-text"><router-link to="/userList" style="color: white"> 用户管理</router-link></span>
                 </a-menu-item>
-                <a-menu-item key="6">
+                <a-menu-item key="7">
                     <code-sandbox-outlined/>
                     <span class="nav-text"><router-link to="/tools" style="color: white"> 常用工具</router-link></span>
                 </a-menu-item>
-                <a-menu-item key="7">
+                <!-- <a-menu-item key="8">
                     <code-sandbox-outlined/>
                     <span class="nav-text"><router-link to="/filesList" style="color: white"> 文件管理</router-link></span>
-                </a-menu-item>
+                </a-menu-item> -->
                 <a-menu-item key="8">
                     <code-sandbox-outlined/>
                     <span class="nav-text"><router-link to="/locust" style="color: white"> locust</router-link></span>

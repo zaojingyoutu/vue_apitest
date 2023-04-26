@@ -11,7 +11,7 @@
   <a-table :columns="columns" :data-source="data" :scroll="{ x: 1200, y: 700 }">
       <template #bodyCell="{ record,column,text  }">
       <template v-if="column.dataIndex === 'name'">
-          <router-link :to="{path:'/case',query:{project_id:record.id}}" >
+          <router-link :to="{path:'/api',query:{project_id:record.id}}" >
               <a  >{{ text }}</a>
           </router-link>
       </template>

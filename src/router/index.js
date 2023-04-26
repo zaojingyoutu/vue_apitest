@@ -26,27 +26,53 @@ const routes = [
                 component: () => import(/* webpackChunkName: "about" */ '../views/project')
             },
             {
+                path: '/create_api',
+                name: 'create_api',
+                // route level code-splitting
+                // this generates a separate chunk (about.[hash].js) for this route
+                // which is lazy-loaded when the route is visited.
+                component: () => import(/* webpackChunkName: "about" */ '../views/api/create_api.vue')
+            },
+            {
+                path: '/api',
+                name: 'apiList',
+                 meta: {
+                    title: '接口列表'
+                },
+                component: () => import(/* webpackChunkName: "about" */ '../views/api/api_list.vue')
+            },
+
+            {
+                path: '/apiDetail',
+                name: 'apiDetail',
+                 meta: {
+                    title: '接口'
+                },
+                component: () => import(/* webpackChunkName: "layout" */ '../views/api/debug'),
+
+            },
+            {
                 path: '/create_case',
                 name: 'create_case',
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
                 // which is lazy-loaded when the route is visited.
-                component: () => import(/* webpackChunkName: "about" */ '../views/create_case')
+                component: () => import(/* webpackChunkName: "about" */ '../views/case/create_case.vue')
             },
             {
                 path: '/case',
                 name: 'caseList',
                  meta: {
-                    title: '用例列表'
+                    title: '接口列表'
                 },
-                component: () => import(/* webpackChunkName: "about" */ '../views/case_list')
+                component: () => import(/* webpackChunkName: "about" */ '../views/case/case_list.vue')
             },
 
             {
-                path: '/debug',
-                name: 'debug',
+                path: '/caseDetail',
+                name: 'caseDetail',
                  meta: {
-                    title: '用例'
+                    title: '接口'
                 },
                 component: () => import(/* webpackChunkName: "layout" */ '../views/case/debug'),
 
