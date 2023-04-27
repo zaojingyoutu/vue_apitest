@@ -96,6 +96,8 @@
                     <a-form-item>
                         <a-checkbox v-model:checked="testcase.runTeardown">是否执行后置处理</a-checkbox>
                     </a-form-item>
+
+                    
                     <MinusCircleOutlined @click="removeCases(testcase)"/>
                 </a-space>
                 <a-form-item>

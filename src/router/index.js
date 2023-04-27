@@ -74,7 +74,7 @@ const routes = [
                  meta: {
                     title: '接口'
                 },
-                component: () => import(/* webpackChunkName: "layout" */ '../views/case/debug'),
+                component: () => import(/* webpackChunkName: "layout" */ '../views/case/case.vue'),
 
             },
             {

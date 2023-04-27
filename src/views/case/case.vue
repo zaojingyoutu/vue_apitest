@@ -69,40 +69,17 @@
     </div>
   </div>
   <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
-    <div class="method" style="float: left">
-      <a-select v-model:value="modelRef.method" placeholder="method">
-        <a-select-option value="POST">POST</a-select-option>
-        <a-select-option value="GET">GET</a-select-option>
-        <a-select-option value="PUT">PUT</a-select-option>
-        <a-select-option value="DELETE">DELETE</a-select-option>
-      </a-select>
-    </div>
-    <div class="url" style="float: left; width: 800px">
-      <a-input v-model:value="modelRef.url" placeholder="url" />
-    </div>
-    <div class="method" style="float: left">
-      <a-button @click="debug">Send</a-button>
-    </div>
-    <div class="method" style="float: left">
-      <a-button type="primary" @click.prevent="onSubmit">save</a-button>
-    </div>
-    <br /><br />
-
     <a-tabs v-model:activeKey="activeKey">
       <a-tab-pane key="1">
         <template #tab>
-          <span> header </span>
+          <span> 步骤 </span>
         </template>
-        <!--          <a-form-item label="header" required>-->
-        <a-textarea
-          v-model:value="modelRef.header"
-          style="margin-top: 0px; margin-bottom: 0px; height: 150px"
-        />
-        <!--    </a-form-item>-->
+        <addApi></addApi>
+        
       </a-tab-pane>
       <a-tab-pane key="2">
         <template #tab>
-          <span> parameter </span>
+          <span> 数据 </span>
         </template>
         <a-textarea
           v-model:value="modelRef.parameter"
@@ -111,93 +88,11 @@
       </a-tab-pane>
       <a-tab-pane key="3">
         <template #tab>
-          <span> data </span>
+          <span> 测试报告 </span>
         </template>
         <a-textarea
           v-model:value="modelRef.data"
           style="margin-top: 0px; margin-bottom: 0px; height: 460px"
-        />
-      </a-tab-pane>
-      <a-tab-pane key="4">
-        <template #tab>
-          <span> asserts </span>
-        </template>
-        <a-form
-          ref="formRef"
-          name="dynamic_form_nest_item"
-          :model="dynamicValidateForm"
-          @finish="onFinish"
-        >
-          <a-space
-            v-for="assert in modelRef.asserts"
-            :key="assert.id"
-            style="display: flex; margin-bottom: 8px"
-            align="baseline"
-          >
-            <a-select
-              ref="select"
-              v-model:value="assert.mold"
-              style="width: 120px"
-              @focus="focus"
-              placeholder="断言类型"
-            >
-              <a-select-option value="response">response</a-select-option>
-              <a-select-option value="Status">响应状态</a-select-option>
-              <a-select-option value="None">无</a-select-option>
-            </a-select>
-
-            <a-form-item>
-              <a-input
-                v-model:value="assert.value"
-                v-if="assert.mold == 'response'"
-                placeholder="请填写断言json"
-              />
-              <a-input
-                v-model:value="assert.value"
-                v-else
-                placeholder="请填写响应状态码"
-              />
-            </a-form-item>
-            <MinusCircleOutlined @click="removeAssert(assert)" />
-          </a-space>
-          <a-form-item>
-            <a-button type="dashed" block @click="addAssert">
-              <PlusOutlined />
-              添加断言
-            </a-button>
-          </a-form-item>
-
-        </a-form>
-      </a-tab-pane>
-      <a-tab-pane key="5">
-        <template #tab>
-          <span> setup </span>
-        </template>
-<associatedCases :associations="modelRef.setup" @update:associations ='setup => associations = modelRef.setup '></associatedCases>
-      </a-tab-pane>
-      <a-tab-pane key="6">
-        <template #tab>
-          <span> response </span>
-        </template>
-        <p style="float: right" >  响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}</p>
-        <a-textarea
-          v-model:value="modelRef.response"
-          style="margin-top: 0px; margin-bottom: 0px; height: 460px"
-        />
-      </a-tab-pane>
-      <a-tab-pane key="7">
-        <template #tab>
-          <span> teardown </span>
-        </template>
-        <associatedCases :associations="modelRef.teardown" @update:associations ='teardown => associations = modelRef.teardown '></associatedCases>
-      </a-tab-pane>
-      <a-tab-pane key="8">
-        <template #tab>
-          <span> asserts result </span>
-        </template>
-        <a-textarea
-          v-model:value="modelRef.result"
-          style="margin-top: 0px; margin-bottom: 0px; height: 150px"
         />
       </a-tab-pane>
     </a-tabs>
@@ -212,21 +107,18 @@ import { Form } from "ant-design-vue";
 import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 import { ref } from "vue";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
 import { cases_get, cases_api } from "@/api/cases";
 // import MyCodemirror from "@/components/VueCodemirror.vue";
 import {project_get} from '@/api/project'
 import {deBug_post} from '@/api/deBug'
-import associatedCases from "@/components/steps.vue";
+import addApi from "@/components/addApi.vue";
+
 
 
 const useForm = Form.useForm;
 export default defineComponent({
   components: {
-    MinusCircleOutlined,
-    PlusOutlined,
-    // MyCodemirror,
-    associatedCases
+    addApi
 
   },
   setup() {
