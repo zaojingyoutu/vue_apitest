@@ -21,10 +21,10 @@
                     <table-outlined/>
                     <span class="nav-text"><router-link to="/api" style="color: white"> 接口管理</router-link></span>
                 </a-menu-item>
-                <a-menu-item key="3">
+                <!-- <a-menu-item key="3">
                     <table-outlined/>
                     <span class="nav-text"><router-link to="/case" style="color: white"> 测试用例</router-link></span>
-                </a-menu-item>
+                </a-menu-item> -->
                 <a-menu-item key="4">
                     <eye-outlined/>
                     <span class="nav-text"><router-link to="/variate_list"
@@ -42,10 +42,6 @@
                     <code-sandbox-outlined/>
                     <span class="nav-text"><router-link to="/tools" style="color: white"> 常用工具</router-link></span>
                 </a-menu-item>
-                <!-- <a-menu-item key="8">
-                    <code-sandbox-outlined/>
-                    <span class="nav-text"><router-link to="/filesList" style="color: white"> 文件管理</router-link></span>
-                </a-menu-item> -->
                 <a-menu-item key="8">
                     <code-sandbox-outlined/>
                     <span class="nav-text"><router-link to="/locust" style="color: white"> locust</router-link></span>

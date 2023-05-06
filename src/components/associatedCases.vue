@@ -39,7 +39,7 @@
                     </a-select>
 
                     <router-link v-if="testcase.case"
-                                 :to="{path:'/debug',query:{project_id:testcase.case.option.project ,id:testcase.case.value}}"
+                                 :to="{path:'/apiDetail',query:{project_id:testcase.case.option.project ,id:testcase.case.value}}"
                                  target="_blank">
                         <a>to case</a>
                     </router-link>

@@ -61,7 +61,7 @@
         >
           <template #bodyCell="{ record, column, text }">
             <template v-if="column.dataIndex === 'name'">
-              <router-link :to="{ path: '/debug', query: { id: record.id } }">
+              <router-link :to="{ path: '/apiDetail', query: { id: record.id } }">
                 <a>{{ text }}</a>
               </router-link>
             </template>
