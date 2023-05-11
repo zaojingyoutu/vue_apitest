@@ -4,8 +4,12 @@
     <router-link to="create_testplan">Create </router-link>
   </a-button>
   <a-table :columns="columns" :data-source="data" :scroll="{ y: 800 }">
-    <template #bodyCell="{ record, column }">
-      <template v-if="column.dataIndex === 'name'"> </template>
+    <template #bodyCell="{ record, column,text }">
+      <template v-if="column.dataIndex === 'name'"> 
+        <router-link :to="{ path: '/create_testplan', query: { id: record.id } }">
+          <a>{{text}}</a>
+        </router-link>
+      </template>
 
       <template v-if="column.key === 'operation'">
         <a @click="deletes(record)">Delete</a> |
@@ -15,7 +19,7 @@
           <a>Edit</a>
         </router-link>
         |
-        <router-link :to="{ path: '/report', query: { testplan_id: record.id } }">
+        <router-link :to="{ path: '/reportList', query: { testplan_id: record.id } }">
           <a>report</a>
         </router-link>
         |<a @click="runplan(record.id )"> run</a>

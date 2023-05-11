@@ -121,6 +121,16 @@ const routes = [
                 },
                 component: () => import(/* webpackChunkName: "report" */ '../views/report/report'),
 
+            }
+            ,
+            {
+                path: '/reportList',
+                name: 'reportList',
+                 meta: {
+                    title: '测试报告列表'
+                },
+                component: () => import(/* webpackChunkName: "report" */ '../views/report/reportList'),
+
             },
             {
                 path: '/userList',

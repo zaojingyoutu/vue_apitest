@@ -21,7 +21,7 @@
     <div style="position: relative; top: 100px">
       <a-progress
         type="circle"
-        :percent="((count.cases_result / count.cases_count) * 100).toFixed(2)"
+        :percent="((count.cases_false / count.cases_count) * 100).toFixed(2)"
         status="exception"
         :format="(percent) => `${percent} %`"
       />&nbsp;
@@ -34,7 +34,7 @@
       <a-progress
         type="circle"
         :percent="
-          100 - ((count.cases_result / count.cases_count) * 100).toFixed(2)
+          100 - ((count.cases_false / count.cases_count) * 100).toFixed(2)
         "
         :format="(percent) => `${percent} %`"
       >
@@ -43,9 +43,9 @@
         </template>
       </a-progress>
        <div style="margin: 10px;">    
-          <a-tag color="#f50">失败：{{count.cases_result}}</a-tag>
+          <a-tag color="#f50">失败：{{count.cases_false}}</a-tag>
           <a-tag color="#FFA500">跳过: {{count.skip}}</a-tag>
-          <a-tag color="#87d068">通过：{{ count.cases_count-count.cases_result}}</a-tag>
+          <a-tag color="#87d068">通过：{{ count.cases_count-count.cases_false}}</a-tag>
       </div>
     </div>
   </div>
@@ -203,26 +203,26 @@ export default defineComponent({
       cases_false: 0,
       skip:0,
     });
-    const planid = useRouter().currentRoute.value.query;
-    report_get(planid).then((res) => {
+    const id = useRouter().currentRoute.value.query;
+    report_get(id).then((res) => {
       if (res.code == 201) {
         message.error({
           content: res.msg,
           duration: 5,
         });
       }
-      console.log(res.data.result);
-      data.value = eval("(" + res.data.details + ")");
-      const result = eval("(" + res.data.result + ")");
+
+      data.value = eval("(" + res.data[0].details + ")");
+      const result = eval("(" + res.data[0].result + ")");
       count.cases_count = result.cases_count;
       count.cases_result = result.cases_result;
       count.skip = result.cases_skip
-      info.project = res.data.project__name;
-      info.env = res.data.env;
-      info.create_time = res.data.create_time;
+      info.project = res.data[0].project__name;
+      info.env = res.data[0].env;
+      info.create_time = res.data[0].create_time;
       info.cases_count = result.cases_count;
-      info.name = res.data.name;
-      case_details.project = res.data.project__name;
+      info.name = res.data[0].name;
+      case_details.project = res.data[0].project__name;
     });
 
     const visible = ref(false);

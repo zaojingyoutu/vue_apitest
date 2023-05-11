@@ -318,20 +318,20 @@
       <br /><br />
       <div>
         运行用例数：{{ count.cases_count }} &nbsp; 失败用例数：{{
-          count.cases_result
+          count.cases_false
         }}
       </div>
       <!-- <a-progress type="circle" :percent="75" :format="percent => `${percent} %`"/> -->
       <a-progress
         type="circle"
-        :percent="((count.cases_result / count.cases_count) * 100).toFixed(2)"
+        :percent="((count.cases_false / count.cases_count) * 100).toFixed(2)"
         status="exception"
         :format="(percent) => `${percent} %`"
       />&nbsp;
       <a-progress
         type="circle"
         :percent="
-          100 - ((count.cases_result / count.cases_count) * 100).toFixed(2)
+          100 - ((count.cases_false / count.cases_count) * 100).toFixed(2)
         "
         :format="(percent) => `${percent} %`"
       />
