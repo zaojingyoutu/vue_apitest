@@ -366,8 +366,8 @@ export default defineComponent({
           duration: 5,
         });
         if (res.code == 200) {
-           router.push({path:'case',query:{project_id:project.project_id}})
-          // window.location.href = "case?project_id=" + project.project_id;
+           router.push({path:'api',query:{project_id:project.project_id}})
+          // window.location.href = "api?project_id=" + project.project_id;
         }
       });
     };
