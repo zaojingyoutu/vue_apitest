@@ -4,10 +4,12 @@
     <router-link to="create_testplan">Create </router-link>
   </a-button>
   <a-table :columns="columns" :data-source="data" :scroll="{ y: 800 }">
-    <template #bodyCell="{ record, column,text }">
-      <template v-if="column.dataIndex === 'name'"> 
-        <router-link :to="{ path: '/create_testplan', query: { id: record.id } }">
-          <a>{{text}}</a>
+    <template #bodyCell="{ record, column, text }">
+      <template v-if="column.dataIndex === 'name'">
+        <router-link
+          :to="{ path: '/create_testplan', query: { id: record.id } }"
+        >
+          <a>{{ text }}</a>
         </router-link>
       </template>
 
@@ -19,18 +21,26 @@
           <a>Edit</a>
         </router-link>
         |
-        <router-link :to="{ path: '/reportList', query: { testplan_id: record.id } }">
+        <router-link
+          :to="{ path: '/reportList', query: { testplan_id: record.id } }"
+        >
           <a>report</a>
         </router-link>
-        |<a @click="runplan(record.id )"> run</a>
+        |<a @click="runplan(record.id)"> run</a> |
+        <a type="primary" @click="showModal(record.id)">添加定时任务</a>
       </template>
     </template>
   </a-table>
+  <a-modal v-model:visible="visible" title="添加定时任务" @ok="handleOk">
+    <a-form-item  label="cron表达式" :rules="[{ required: true }]">
+      <a-input v-model:value="cron" />
+    </a-form-item>
+  </a-modal>
 </template>
 <script>
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { testplan_get, testplan_del } from "@/api/testplan";
-import {runTestplan_post } from '@/api/runTestplan'
+import { runTestplan_post } from "@/api/runTestplan";
 const columns = [
   {
     title: "Full Name",
@@ -102,11 +112,11 @@ export default defineComponent({
       });
     };
     const runplan = (record) => {
-       message.success({
-            content: "开始运行！",
-            duration: 5,
-          });
-       runTestplan_post({'id': record}).then((res) => {
+      message.success({
+        content: "开始运行！",
+        duration: 5,
+      });
+      runTestplan_post({ id: record }).then((res) => {
         if (res.code == 200) {
           message.success({
             content: "运行成功！",
@@ -125,9 +135,23 @@ export default defineComponent({
       });
     };
 
+    const visible = ref(false);
+    const showModal = (id) => {
+      console.log(id);
+      visible.value = true;
+    };
+    const handleOk = (e) => {
+      console.log(e);
+      visible.value = false;
+    };
+    const cron = ref(false);
     return {
       deletes,
       runplan,
+      visible,
+      showModal,
+      handleOk,
+      cron
     };
   },
 });
