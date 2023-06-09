@@ -27,20 +27,20 @@
           <a>report</a>
         </router-link>
         |<a @click="runplan(record.id)"> run</a> |
-        <a type="primary" @click="showModal(record.id)">添加定时任务</a>
+        <a type="primary" @click="showModal(record)">添加定时任务</a>
       </template>
     </template>
   </a-table>
   <a-modal v-model:visible="visible" title="添加定时任务" @ok="handleOk">
-    <a-form-item  label="cron表达式" :rules="[{ required: true }]">
-      <a-input v-model:value="cron" />
+    <a-form-item label="cron表达式" :rules="[{ required: true }]">
+      <a-input v-model:value="cronData.value.cron" />
     </a-form-item>
   </a-modal>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, reactive } from "vue";
 import { testplan_get, testplan_del } from "@/api/testplan";
-import { runTestplan_post } from "@/api/runTestplan";
+import { runTestplan_post, taskTestplanPost,Deltask } from "@/api/runTestplan";
 const columns = [
   {
     title: "Full Name",
@@ -136,22 +136,49 @@ export default defineComponent({
     };
 
     const visible = ref(false);
-    const showModal = (id) => {
-      console.log(id);
+    const showModal = (record) => {
+      cronData.value = { test_plan_id: record.id, cron: record.cron__cron};
+      if (record.cron__task_id){
+        cronData.value.id = record.cron__task_id
+      }
+      console.log(cronData.value,record.cron__id)
       visible.value = true;
     };
     const handleOk = (e) => {
-      console.log(e);
+      console.log(e, cronData);
+      if (cronData.value.cron == ''){
+        Deltask(cronData.value.id)
+      }
+      else{
+        taskTestplanPost(cronData.value).then((res) => {
+        if (res.code == 200) {
+          message.success({
+            content: "添加成功！",
+            duration: 5,
+          });
+          //  location.reload();
+        } else {
+          message.success({
+            content: "添加失败！",
+            duration: 5,
+          });
+        }
+      });
+
+      }
+
+      
       visible.value = false;
     };
-    const cron = ref(false);
+    const cronData = reactive({});
+
     return {
       deletes,
       runplan,
       visible,
       showModal,
       handleOk,
-      cron
+      cronData,
     };
   },
 });

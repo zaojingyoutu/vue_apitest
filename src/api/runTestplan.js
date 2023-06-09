@@ -15,3 +15,29 @@ export function runTestplan_post(data){
           data: data,
     })
 }
+
+export function taskTestplanPost(data){
+    return request.request({
+        method: "post",
+          url: "task/",
+          data: data,
+    })
+}
+
+export function taskDetails(id){
+    return request.request({
+        method: "get",
+          url: "task/" + id,
+    })
+}
+
+export function Deltask(id){
+    return request.request({
+        method: "delete",
+          url: "task/" + id,
+    })
+}
+
+
+
+
