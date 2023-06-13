@@ -37,6 +37,14 @@
             <a-input v-model:value="modelRef.email" />
           </a-form-item>
           <a-form-item
+            label="用户变量"
+          >
+            <a-textarea
+              v-model:value="modelRef.user_variables"
+              style="margin-top: 0px; margin-bottom: 0px; height: 150px"
+            />
+          </a-form-item>
+          <a-form-item
             class="error-infos"
             :wrapper-col="{ span: 14, offset: 4 }"
             v-bind="errorInfos"
@@ -61,7 +69,9 @@
         >
           <template #bodyCell="{ record, column, text }">
             <template v-if="column.dataIndex === 'name'">
-              <router-link :to="{ path: '/apiDetail', query: { id: record.id } }">
+              <router-link
+                :to="{ path: '/apiDetail', query: { id: record.id } }"
+              >
                 <a>{{ text }}</a>
               </router-link>
             </template>
@@ -351,7 +361,7 @@ import { testplan_get, testplan_api } from "@/api/testplan";
 import { cases_get } from "@/api/cases";
 import axios from "axios";
 import { project_get } from "@/api/project";
-import { MinusCircleOutlined } from '@ant-design/icons-vue';
+import { MinusCircleOutlined } from "@ant-design/icons-vue";
 
 const columns = [
   {
@@ -390,8 +400,9 @@ export default defineComponent({
         modelRef.env = res.data[0].env;
         modelRef.project_id = res.data[0].project;
         modelRef.email = res.data[0].email;
+        modelRef.user_variables = res.data[0].user_variables || '';
         formState.project_id = res.data[0].project;
-        modelRef.case_list = res.data[0].case_list;
+        modelRef.case_list = res.data[0].case_list ;
         if (modelRef.case_list.length != 0) {
           for (let i = 0; i < modelRef.case_list.length; i++) {
             state.selectedRowKeys.push(modelRef.case_list[i].id);
@@ -410,7 +421,7 @@ export default defineComponent({
       project_id: "",
       case_list: [],
       email: "",
-      asserts: [],
+      user_variables: '',
     });
     const count = reactive({
       cases_count: 0,
@@ -707,6 +718,7 @@ export default defineComponent({
         mold: "response",
       });
     };
+
 
     return {
       removeAssert,

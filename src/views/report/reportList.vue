@@ -21,6 +21,7 @@
 <script>
 import { defineComponent } from "vue";
 import { report_get, report_del } from "@/api/report";
+import {useRouter } from 'vue-router';
 
 const columns = [
   {
@@ -66,9 +67,9 @@ export default defineComponent({
     };
   },
   created() {
-    report_get().then((res) => {
+    const id = useRouter().currentRoute.value.query
+    report_get(id).then((res) => {
       this.data = res.data;
-      console.log("=========");
     });
   },
 

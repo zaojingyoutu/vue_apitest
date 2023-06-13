@@ -215,8 +215,9 @@ export default defineComponent({
       data.value = eval("(" + res.data[0].details + ")");
       const result = eval("(" + res.data[0].result + ")");
       count.cases_count = result.cases_count;
-      count.cases_result = result.cases_result;
+      count.cases_false = result.cases_false;
       count.skip = result.cases_skip
+      console.log(count)
       info.project = res.data[0].project__name;
       info.env = res.data[0].env;
       info.create_time = res.data[0].create_time;

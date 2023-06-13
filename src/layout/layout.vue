@@ -12,7 +12,7 @@
                 <img style="height: 60px;width: 200px"
                      src="https://www.yulumi.cn/gl/uploads/allimg/201121/11200I923-1.jpg">
                 <a-menu-item key="1">
-                    <folder-outlined/>
+                    <table-outlined/>
                     <span class="nav-text">
              <router-link to="/project" style="color: white"> 项目管理</router-link>
           </span>
@@ -89,19 +89,18 @@
 <script>
     import {
         UserOutlined,
-        FolderOutlined,
         CalendarOutlined,
         TableOutlined,
         EyeOutlined,
-        CodeSandboxOutlined
-    } from '@ant-design/icons-vue';
+        CodeSandboxOutlined,
+    } 
+    from '@ant-design/icons-vue';
     import {defineComponent, ref} from 'vue';
     import {useRoute} from 'vue-router';
 
     export default defineComponent({
         components: {
             UserOutlined,
-            FolderOutlined,
             CalendarOutlined,
             TableOutlined,
             EyeOutlined,
