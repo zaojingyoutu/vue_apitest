@@ -12,7 +12,7 @@
       }}</a-descriptions-item>
       <a-descriptions-item label="通过率"
         >{{
-          100 - ((count.cases_result / count.cases_count) * 100).toFixed(2)
+          100 - ((count.cases_false / count.cases_count) * 100).toFixed(2)
         }}%</a-descriptions-item
       >
     </a-descriptions>
