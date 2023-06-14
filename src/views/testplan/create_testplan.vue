@@ -674,7 +674,7 @@ export default defineComponent({
       detail.data = record.data;
       detail.parameter = record.parameter;
       detail.variable = record.variable;
-      detail.asserts = record.asserts;
+      detail.asserts = record.asserts || [];
       detail.project__name = record.project__name;
       detail.module = record.module;
     };
