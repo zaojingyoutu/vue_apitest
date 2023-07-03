@@ -197,13 +197,20 @@
           <template #tab>
             <span> response </span>
           </template>
+          
           <p style="float: right">
             响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}
           </p>
-          <a-textarea
-            v-model:value="modelRef.response"
-            style="margin-top: 0px; margin-bottom: 0px; height: 460px"
-          />
+          <div v-if="resp_loading">
+              <a-textarea
+              v-model:value="modelRef.response"
+              style="margin-top: 0px; margin-bottom: 0px; height: 460px"
+            />
+          </div>
+          <div v-else>
+            <a-spin />
+          </div>
+
         </a-tab-pane>
         <a-tab-pane key="7">
           <template #tab>
@@ -399,6 +406,7 @@ export default defineComponent({
 
     const debug = () => {
       (modelRef.relation = dynamicValidateForm.cases),
+        resp_loading.value=false
         deBug_post(modelRef).then((res) => {
           message.success({
             content: res.msg,
@@ -420,8 +428,10 @@ export default defineComponent({
           modelRef.result = JSON.stringify(res.data.result, null, 2);
           modelRef.run_time = res.data.request_data.run_time;
           modelRef.status = res.data.status_code;
+          resp_loading.value=true
         });
-    };
+
+      };
 
     const errorInfos = computed(() => {
       return mergeValidateInfo(toArray(validateInfos));
@@ -470,6 +480,7 @@ export default defineComponent({
         mold: "response",
       });
     };
+    const resp_loading = ref(true);
 
     const options1 = ref([
       {
@@ -545,6 +556,7 @@ export default defineComponent({
       options1,
       optionsProject,
       project,
+      resp_loading
     };
   },
 });
