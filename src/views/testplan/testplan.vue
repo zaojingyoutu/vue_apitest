@@ -14,7 +14,7 @@
       </template>
 
       <template v-if="column.key === 'operation'">
-        <a @click="deletes(record)">Delete</a> |
+        
         <router-link
           :to="{ path: '/create_testplan', query: { id: record.id } }"
         >
@@ -28,6 +28,22 @@
         </router-link>
         |<a @click="runplan(record.id)"> run</a> |
         <a type="primary" @click="showModal(record)">添加定时任务</a>
+        <a-dropdown>
+          <a class="ant-dropdown-link" @click.prevent>
+            更多
+            <DownOutlined />
+          </a>
+          <template #overlay>
+            <a-menu>
+              <a-menu-item>
+                <a @click="deletes(record)">Delete</a> 
+              </a-menu-item>
+              <a-menu-item>
+                <a @click="toLocust(record)">转locust</a>
+              </a-menu-item>
+            </a-menu>
+          </template>
+        </a-dropdown>
       </template>
     </template>
   </a-table>
@@ -78,6 +94,8 @@ const columns = [
   },
 ];
 import { message } from "ant-design-vue";
+import { locust_create } from "../../api/locust";
+
 export default defineComponent({
   setup() {
     const data = ref();
@@ -177,6 +195,30 @@ export default defineComponent({
     };
     const cronData = reactive({});
     const checked = ref(false);
+
+    const toLocust =(record)=>{
+    const  requstData ={
+                "mold": "tofile",
+                "name": record.name + ".py",
+                "testplan_id": record.id,
+                "create_user":JSON.parse(localStorage.user).name
+            }
+
+      locust_create(requstData).then((res) => {
+          if (res.code == 200) {
+            message.success({
+              content: "添加成功！",
+              duration: 5,
+            });
+          } else {
+            message.error({
+              content: "添加失败！" +res.msg ,
+              duration: 5,
+            });
+          }
+        });
+
+    }
     return {
       deletes,
       runplan,
@@ -187,6 +229,7 @@ export default defineComponent({
       checked,
       data,
       columns,
+      toLocust,
     };
   },
 });
