@@ -152,6 +152,7 @@ export default defineComponent({
         cronData.value.id = record.task__id;
       }
       visible.value = true;
+      checked.value == false
     };
     const handleOk = (e) => {
       console.log(e, cronData);
@@ -173,10 +174,11 @@ export default defineComponent({
           }
         });
       } else {
+        Deltask(cronData.value.id)
         taskTestplanPost(cronData.value).then((res) => {
           if (res.code == 200) {
             message.success({
-              content: "添加成功！",
+              content: "成功！",
               duration: 5,
             });
             testplan_get().then((res) => {
@@ -184,7 +186,7 @@ export default defineComponent({
             });
           } else {
             message.success({
-              content: "添加失败！",
+              content: "失败！",
               duration: 5,
             });
           }

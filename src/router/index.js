@@ -195,6 +195,15 @@ const routes = [
                 component: () => import(/* webpackChunkName: "tools" */ '../views/customFun/index'),
 
             },
+            {
+                path: '/chat',
+                name: 'chat',
+                 meta: {
+                    title: 'chat'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/customFun/index'),
+
+            },
 
         ]
     },
