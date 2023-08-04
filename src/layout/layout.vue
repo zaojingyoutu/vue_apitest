@@ -18,7 +18,7 @@
           </span>
                 </a-menu-item>
                 <a-menu-item key="2">
-                    <table-outlined/>
+                    <api-outlined />
                     <span class="nav-text"><router-link to="/api" style="color: white"> 接口管理</router-link></span>
                 </a-menu-item>
                 <!-- <a-menu-item key="3">
@@ -39,7 +39,7 @@
                     <span class="nav-text"><router-link to="/userList" style="color: white"> 用户管理</router-link></span>
                 </a-menu-item>
                 <a-menu-item key="7">
-                    <code-sandbox-outlined/>
+                    <tool-outlined />
                     <span class="nav-text"><router-link to="/tools" style="color: white"> 常用工具</router-link></span>
                 </a-menu-item>
                 <a-menu-item key="8">
@@ -47,8 +47,12 @@
                     <span class="nav-text"><router-link to="/locust" style="color: white"> locust</router-link></span>
                 </a-menu-item>
                 <a-menu-item key="9">
-                    <code-sandbox-outlined/>
+                    <code-outlined />
                     <span class="nav-text"><router-link to="/customFun" style="color: white"> 内置方法</router-link></span>
+                </a-menu-item>                
+                <a-menu-item key="10">
+                    <message-outlined />
+                    <span class="nav-text"><router-link to="/chat" style="color: white"> AiChat</router-link></span>
                 </a-menu-item>
             </a-menu>
         </a-layout-sider>
@@ -93,6 +97,11 @@
         TableOutlined,
         EyeOutlined,
         CodeSandboxOutlined,
+        MessageOutlined,
+        CodeOutlined,
+        ToolOutlined,
+        ApiOutlined
+
     } 
     from '@ant-design/icons-vue';
     import {defineComponent, ref} from 'vue';
@@ -104,7 +113,11 @@
             CalendarOutlined,
             TableOutlined,
             EyeOutlined,
-            CodeSandboxOutlined
+            CodeSandboxOutlined,
+            MessageOutlined,
+            CodeOutlined,
+            ToolOutlined,
+            ApiOutlined
         },
 
         setup() {

@@ -201,7 +201,7 @@ const routes = [
                  meta: {
                     title: 'chat'
                 },
-                component: () => import(/* webpackChunkName: "tools" */ '../views/customFun/index'),
+                component: () => import(/* webpackChunkName: "tools" */ '../components/aiChat.vue'),
 
             },
 
