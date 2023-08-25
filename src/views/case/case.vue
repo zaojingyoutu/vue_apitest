@@ -343,10 +343,10 @@ export default defineComponent({
  
  const options1 = ref([{
       value: '0',
-      label: '测试环境',
+      label: '开发环境',
     }, {
       value: '1',
-      label: '预发布环境',
+      label: '测试环境',
     },  {
       value: '2',
       label: '线上环境',
