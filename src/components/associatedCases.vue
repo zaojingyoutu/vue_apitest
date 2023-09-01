@@ -4,7 +4,7 @@
             <MyCodemirror v-model:value="association.code" style="height: 200px"></MyCodemirror>
             响应数据：response.json()
             全局变量设置：set_global_svariate(dict)
-            局部变量设置：set_variate(key,value)
+            局部变量设置：self.set_variate(key,value)
         </a-tab-pane>
         <a-tab-pane key="2" tab="关联用例" force-render>
             <a-form
@@ -99,6 +99,7 @@
 
                     
                     <MinusCircleOutlined @click="removeCases(testcase)"/>
+        
                 </a-space>
                 <a-form-item>
                     <a-button type="dashed" block @click="addCase">
@@ -129,6 +130,8 @@ export default {
         MyCodemirror,
         MinusCircleOutlined,
         PlusOutlined,
+         
+       
     },
     setup(props) {
 
