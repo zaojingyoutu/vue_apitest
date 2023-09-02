@@ -65,30 +65,27 @@
           :dataSource="modelRef.case_list"
           :columns="columns"
           :pagination="false"
+          :customRow="customRow"
         >
           <template #bodyCell="{ record, column, text }">
-            <VueDraggableNext v-model="modelRef.case_list">
-              <transition-group>
-                <template v-if="column.dataIndex === 'name'">
-                  <router-link
-                    :to="{ path: '/apiDetail', query: { id: record.id } }"
-                  >
-                    <a>{{ text }}</a>
-                  </router-link>
-                </template>
-                <template v-if="column.dataIndex === 'operation'">
-                  <a @click="deletes(record)">Delete</a>
-                  <a
-                    @click="showModal(record)"
-                    type="primary"
-                    style="padding-right: 15px"
-                  >
-                    | 编辑</a
-                  >
-                  <MenuOutlined />
-                </template>
-              </transition-group>
-            </VueDraggableNext>
+              <template v-if="column.dataIndex === 'name'">
+                <router-link
+                  :to="{ path: '/apiDetail', query: { id: record.id } }"
+                >
+                  <a>{{ text }}</a>
+                </router-link>
+              </template>
+              <template v-if="column.dataIndex === 'operation'">
+                <a @click="deletes(record)">Delete</a>
+                <a
+                  @click="showModal(record)"
+                  type="primary"
+                  style="padding-right: 15px"
+                >
+                  | 编辑</a
+                >
+                <MenuOutlined />
+              </template>
           </template>
         </a-table>
 
@@ -363,7 +360,7 @@
   </a-tabs>
 </template>
 <script>
-import { reactive, toRaw, computed, defineComponent, ref, toRefs } from "vue";
+import { reactive, computed, defineComponent, ref, toRefs } from "vue";
 import { toArray } from "lodash-es";
 import { Form } from "ant-design-vue";
 import { message } from "ant-design-vue";
@@ -373,7 +370,6 @@ import { cases_get } from "@/api/cases";
 import axios from "axios";
 import { project_get } from "@/api/project";
 import { MinusCircleOutlined, MenuOutlined } from "@ant-design/icons-vue";
-import { VueDraggableNext } from "vue-draggable-next";
 
 const columns = [
   {
@@ -399,7 +395,6 @@ export default defineComponent({
   components: {
     MinusCircleOutlined,
     MenuOutlined,
-    VueDraggableNext,
   },
   setup() {
     const router = useRouter();
@@ -407,7 +402,6 @@ export default defineComponent({
     const planid = useRouter().currentRoute.value.query;
     if (useRouter().currentRoute.value.query.id != undefined) {
       testplan_get(useRouter().currentRoute.value.query).then((res) => {
-        console.log(res);
         (modelRef.name = res.data[0].name),
           (modelRef.describe = res.data[0].describe),
           (modelRef.id = res.data[0].id);
@@ -472,9 +466,15 @@ export default defineComponent({
       modelRef,
       rulesRef
     );
+    const case_list_add_srot=(case_list)=>{
+      for (let i=0;i<case_list.length;i++){
+        modelRef.case_list[i]['sort'] = i
+      }
+
+    }
 
     const onSubmit = () => {
-      console.log(toRaw(modelRef));
+      case_list_add_srot(modelRef.case_list)
       var req_method;
       if (planid.id == undefined) {
         req_method = "post";
@@ -489,7 +489,6 @@ export default defineComponent({
         if (res.code == 200) {
           router.push("/testplan");
         }
-        console.log(res);
       });
     };
 
@@ -505,7 +504,6 @@ export default defineComponent({
       visible.value = true;
       cases_get(formState).then((res) => {
         data.value = res.data;
-        console.log(state.selectedRowKeys);
       });
     };
 
@@ -520,7 +518,6 @@ export default defineComponent({
           [...modelRef.case_list].every((y) => y.id !== x.id)
         );
         modelRef.case_list.push(...addRows);
-        console.log(modelRef.case_list);
       } else {
         modelRef.case_list.push(...tmpCaseIds.selectedRows);
       }
@@ -532,11 +529,6 @@ export default defineComponent({
 
     const onFinish = (values) => {
       console.log("Received values of form:", values);
-      console.log(
-        "modelRef.case_list",
-        state.selectedRowKeys,
-        modelRef.case_list
-      );
       cases_get(formState).then((res) => {
         data.value = res.data;
         total.value = res.total;
@@ -565,8 +557,6 @@ export default defineComponent({
           });
         }
 
-        console.log(res);
-        console.log(res.data.data.result);
       });
     };
 
@@ -593,12 +583,6 @@ export default defineComponent({
 
     // 添加用例
     const onSelectChange = (selectedRowKeys, selectedRows) => {
-      console.log(
-        "selectedRowKeys changed: ",
-        selectedRowKeys,
-        selectedRows,
-        state.selectedRowKeys
-      );
       state.selectedRowKeys = selectedRowKeys;
       tmpCaseIds.selectedRows = selectedRows;
     };
@@ -651,8 +635,6 @@ export default defineComponent({
           modelRef.project_id = res.data[i].id;
         }
       }
-
-      console.log(optionsProject.value);
     });
 
     // 删除添加的用例
@@ -662,7 +644,6 @@ export default defineComponent({
       modelRef.case_list.splice(index, 1);
       const keyIndex = state.selectedRowKeys.indexOf(record.id);
       delete state.selectedRowKeys[keyIndex];
-      console.log(index);
     };
 
     const getCheckboxProps = (record) => ({
@@ -732,6 +713,60 @@ export default defineComponent({
         mold: "response",
       });
     };
+    let change1;
+    function customRow(record, index) {
+      let change2;
+      return {
+        props: {
+          // draggable: 'true'
+        },
+        style: {
+          cursor: "pointer",
+        },
+        // 鼠标移入
+        onMouseenter: (event) => {
+          // 兼容IE
+          var ev = event || window.event;
+          ev.target.draggable = true; // 让你要拖动的行可以拖动，默认不可以
+        },
+        // 开始拖拽
+
+        onDragstart: (event) => {
+          // 兼容IE
+          var ev = event || window.event;
+          // 阻止冒泡
+          ev.stopPropagation();
+          // 得到源目标数据序号
+          change1 = index;
+        },
+        // 拖动元素经过的元素
+        onDragover: (event) => {
+          // 兼容 IE
+          var ev = event || window.event;
+          // 阻止默认行为
+          ev.preventDefault();
+        },
+        // 鼠标松开
+        onDrop: (event) => {
+          // 兼容IE
+          var ev = event || window.event;
+          // 阻止冒泡
+          ev.stopPropagation();
+          // 得到目标数据序号
+          change2 = index;
+          // // 这里就是让数据位置互换，让视图更新 你们可以看record，index的输出，看是什么
+          if (change1 < change2) {
+            const startObj = modelRef.case_list[change1];
+            modelRef.case_list.splice(change2 + 1, 0, startObj);
+            modelRef.case_list.splice(change1, 1);
+          } else if (change1 > change2) {
+            const startObj = modelRef.case_list[change1];
+            modelRef.case_list.splice(change2, 0, startObj);
+            modelRef.case_list.splice(change1 + 1, 1);
+          }
+        },
+      };
+    }
 
     return {
       removeAssert,
@@ -780,6 +815,7 @@ export default defineComponent({
       detail,
       activeKey2: ref("4"),
       addAssert,
+      customRow,
     };
   },
 });
