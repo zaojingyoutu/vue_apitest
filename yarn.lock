@@ -7867,6 +7867,11 @@
   dependencies:
     "is-plain-obj" "^1.0.0"
 
+"sortablejs@^1.14.0":
+  "integrity" "sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w=="
+  "resolved" "https://registry.npmjs.org/sortablejs/-/sortablejs-1.15.0.tgz"
+  "version" "1.15.0"
+
 "source-list-map@^2.0.0":
   "integrity" "sha1-OZO9hzv8SEecyp6jpUeDXHwVSzQ="
   "resolved" "https://registry.nlark.com/source-list-map/download/source-list-map-2.0.1.tgz"
@@ -8747,6 +8752,11 @@
   "resolved" "https://registry.npmjs.org/vue-axios/-/vue-axios-3.4.1.tgz"
   "version" "3.4.1"
 
+"vue-draggable-next@^2.2.1":
+  "integrity" "sha512-EAMS1IRHF0kZO0o5PMOinsQsXIqsrKT1hKmbICxG3UEtn7zLFkLxlAtajcCcUTisNvQ6TtCB5COjD9a1raNADw=="
+  "resolved" "https://registry.npmjs.org/vue-draggable-next/-/vue-draggable-next-2.2.1.tgz"
+  "version" "2.2.1"
+
 "vue-eslint-parser@^7.10.0":
   "integrity" "sha1-IUtd6pYQB/z/su5luJEjB2KNDa8="
   "resolved" "https://registry.npmmirror.com/vue-eslint-parser/download/vue-eslint-parser-7.11.0.tgz"
@@ -8819,7 +8829,7 @@
   dependencies:
     "@videojs-player/vue" "1.x"
 
-"vue@^2 || ^3.0.0-0", "vue@^3.0.0", "vue@^3.0.0 || ^2.0.0", "vue@^3.2.20", "vue@>=3.0.3", "vue@>=3.1.0", "vue@3.2.28", "vue@3.x":
+"vue@^2 || ^3.0.0-0", "vue@^3.0.0", "vue@^3.0.0 || ^2.0.0", "vue@^3.2.2", "vue@^3.2.20", "vue@>=3.0.3", "vue@>=3.1.0", "vue@3.2.28", "vue@3.x":
   "integrity" "sha512-U+jBwVh3RQ9AgceLFdT7i2FFujoC+kYuGrKo5y8aLluWKZWPS40WgA2pyYHaiSX9ydCbEGr3rc/JzdqskzD95g=="
   "resolved" "https://registry.npmmirror.com/vue/download/vue-3.2.28.tgz"
   "version" "3.2.28"
