@@ -50,7 +50,6 @@
                 :to="{
                   path: '/apiDetail',
                   query: {
-                    project_id: testcase.case.option.project,
                     id: testcase.case.value,
                   },
                 }"
