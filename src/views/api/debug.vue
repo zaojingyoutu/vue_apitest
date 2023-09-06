@@ -529,9 +529,7 @@ export default defineComponent({
       }
     });
     const copyButton = () => {
-      // const copy = document.getElementById("copyButton");
       const centent = curl_dumps(modelRef);
-      // 执行复制命令
       navigator.clipboard.writeText(centent);
     };
 
