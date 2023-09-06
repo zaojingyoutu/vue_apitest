@@ -52,7 +52,7 @@
       </div>
       <div
         class="type"
-        style="right: 50%; width: 300px; float: left; height: 32px"
+        style=" width: 30%; float: left; height: 32px"
       >
         <a-form-item label="环境：">
           <a-select
@@ -66,7 +66,7 @@
           <br /><br />
         </a-form-item>
       </div>
-      <div class="project" style="width: 600px">
+      <div class="project" >
         <a-form-item label="项目：">
           <div class="selectEnv" style="float: left">
             <a-select
@@ -80,163 +80,164 @@
           </div>
         </a-form-item>
       </div>
-      <div class="module" style="right: 50%; width: 300px">
+      <div class="module" style=" width:40%;">
         <a-form-item label="模块：">
           <a-input v-model:value="modelRef.module" placeholder="模块" />
         </a-form-item>
       </div>
-    </div>  
+    </div>
     <div class="requestInfo">
-      <div style="height: 35px">
+      <div class="requestHead">
         <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
-      <div class="method" style="float: left">
-        <a-select v-model:value="modelRef.method" placeholder="method">
-          <a-select-option value="POST">POST</a-select-option>
-          <a-select-option value="GET">GET</a-select-option>
-          <a-select-option value="PUT">PUT</a-select-option>
-          <a-select-option value="DELETE">DELETE</a-select-option>
-        </a-select>
-      </div>
-      <div class="url" style="float: left; width: 800px">
-        <a-input v-model:value="modelRef.url" placeholder="url" />
-      </div>
-      <div class="method" style="float: left">
-        <a-button @click="debug">Send</a-button>
-      </div>
-      <div class="method" style="float: left">
-        <a-button type="primary" @click.prevent="onSubmit">save</a-button>
-      </div>
-        </a-form>
-      </div>
-      <a-tabs v-model:activeKey="activeKey">
-      <a-tab-pane key="1">
-        <template #tab>
-          <span> header </span>
-        </template>
-        <a-textarea
-          v-model:value="modelRef.header"
-          style="margin-top: 0px; margin-bottom: 0px; height: 460px"
-        />
-      </a-tab-pane>
-      <a-tab-pane key="2">
-        <template #tab>
-          <span> parameter </span>
-        </template>
-        <a-textarea
-          v-model:value="modelRef.parameter"
-          style="margin-top: 0px; margin-bottom: 0px; height: 460px"
-        />
-      </a-tab-pane>
-      <a-tab-pane key="3">
-        <template #tab>
-          <span> data </span>
-        </template>
-        <a-textarea
-          v-model:value="modelRef.data"
-          style="margin-top: 0px; margin-bottom: 0px; height: 460px"
-        />
-      </a-tab-pane>
-      <a-tab-pane key="4">
-        <template #tab>
-          <span> asserts </span>
-        </template>
-        <a-form
-          ref="formRef"
-          name="dynamic_form_nest_item"
-          :model="dynamicValidateForm"
-          @finish="onFinish"
-        >
-          <a-space
-            v-for="assert in modelRef.asserts"
-            :key="assert.id"
-            style="display: flex; margin-bottom: 8px"
-            align="baseline"
-          >
-            <a-select
-              ref="select"
-              v-model:value="assert.mold"
-              style="width: 120px"
-              @focus="focus"
-              placeholder="断言类型"
-            >
-              <a-select-option value="response">response</a-select-option>
-              <a-select-option value="Status">响应状态</a-select-option>
-              <a-select-option value="None">无</a-select-option>
+          <div class="method" style="float: left">
+            <a-select v-model:value="modelRef.method" placeholder="method">
+              <a-select-option value="POST">POST</a-select-option>
+              <a-select-option value="GET">GET</a-select-option>
+              <a-select-option value="PUT">PUT</a-select-option>
+              <a-select-option value="DELETE">DELETE</a-select-option>
             </a-select>
-
-            <a-form-item>
-              <a-input
-                v-model:value="assert.value"
-                v-if="assert.mold == 'response'"
-                placeholder="请填写断言json"
-              />
-              <a-input
-                v-model:value="assert.value"
-                v-else
-                placeholder="请填写响应状态码"
-              />
-            </a-form-item>
-            <MinusCircleOutlined @click="removeAssert(assert)" />
-          </a-space>
-          <a-form-item>
-            <a-button type="dashed" block @click="addAssert">
-              <PlusOutlined />
-              添加断言
-            </a-button>
-          </a-form-item>
+          </div>
+          <div class="url" style="float: left; width: 60%">
+            <a-input v-model:value="modelRef.url" placeholder="url" />
+          </div>
+          <div class="method" style="float: left">
+            <a-button @click="debug">Send</a-button>
+          </div>
+          <div class="method" style="float: left">
+            <a-button type="primary" @click.prevent="onSubmit">save</a-button>
+          </div>
         </a-form>
-      </a-tab-pane>
-      <a-tab-pane key="5">
-        <template #tab>
-          <span> setup </span>
-        </template>
-        <associatedCases
-          :associations="modelRef.setup"
-          @update:associations="(setup) => (associations = modelRef.setup)"
-        ></associatedCases>
-      </a-tab-pane>
-      <a-tab-pane key="6">
-        <template #tab>
-          <span> response </span>
-        </template>
+      </div>
+      <div class="requestBody">
+        <a-tabs v-model:activeKey="activeKey">
+          <a-tab-pane key="1">
+            <template #tab>
+              <span> header </span>
+            </template>
+            <a-textarea
+              v-model:value="modelRef.header"
+              style="margin-top: 0px; margin-bottom: 0px; height: 460px"
+            />
+          </a-tab-pane>
+          <a-tab-pane key="2">
+            <template #tab>
+              <span> parameter </span>
+            </template>
+            <a-textarea
+              v-model:value="modelRef.parameter"
+              style="margin-top: 0px; margin-bottom: 0px; height: 460px"
+            />
+          </a-tab-pane>
+          <a-tab-pane key="3">
+            <template #tab>
+              <span> data </span>
+            </template>
+            <a-textarea
+              v-model:value="modelRef.data"
+              style="margin-top: 0px; margin-bottom: 0px; height: 460px"
+            />
+          </a-tab-pane>
+          <a-tab-pane key="4">
+            <template #tab>
+              <span> asserts </span>
+            </template>
+            <a-form
+              ref="formRef"
+              name="dynamic_form_nest_item"
+              :model="dynamicValidateForm"
+              @finish="onFinish"
+            >
+              <a-space
+                v-for="assert in modelRef.asserts"
+                :key="assert.id"
+                style="display: flex; margin-bottom: 8px"
+                align="baseline"
+              >
+                <a-select
+                  ref="select"
+                  v-model:value="assert.mold"
+                  style="width: 120px"
+                  @focus="focus"
+                  placeholder="断言类型"
+                >
+                  <a-select-option value="response">response</a-select-option>
+                  <a-select-option value="Status">响应状态</a-select-option>
+                  <a-select-option value="None">无</a-select-option>
+                </a-select>
 
-        <p style="float: right">
-          响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}
-        </p>
-        <div v-if="resp_loading">
-          <a-textarea
-            v-model:value="modelRef.response"
-            style="margin-top: 0px; margin-bottom: 0px; height: 460px"
-          />
-        </div>
-        <div v-else>
-          <a-spin />
-        </div>
-      </a-tab-pane>
-      <a-tab-pane key="7">
-        <template #tab>
-          <span> teardown </span>
-        </template>
-        <associatedCases
-          :associations="modelRef.teardown"
-          @update:associations="
-            (teardown) => (associations = modelRef.teardown)
-          "
-        ></associatedCases>
-      </a-tab-pane>
-      <a-tab-pane key="8">
-        <template #tab>
-          <span> asserts result </span>
-        </template>
-        <a-textarea
-          v-model:value="modelRef.result"
-          style="margin-top: 0px; margin-bottom: 0px; height: 150px"
-        />
-      </a-tab-pane>
-      </a-tabs>
+                <a-form-item>
+                  <a-input
+                    v-model:value="assert.value"
+                    v-if="assert.mold == 'response'"
+                    placeholder="请填写断言json"
+                  />
+                  <a-input
+                    v-model:value="assert.value"
+                    v-else
+                    placeholder="请填写响应状态码"
+                  />
+                </a-form-item>
+                <MinusCircleOutlined @click="removeAssert(assert)" />
+              </a-space>
+              <a-form-item>
+                <a-button type="dashed" block @click="addAssert">
+                  <PlusOutlined />
+                  添加断言
+                </a-button>
+              </a-form-item>
+            </a-form>
+          </a-tab-pane>
+          <a-tab-pane key="5">
+            <template #tab>
+              <span> setup </span>
+            </template>
+            <associatedCases
+              :associations="modelRef.setup"
+              @update:associations="(setup) => (associations = modelRef.setup)"
+            ></associatedCases>
+          </a-tab-pane>
+          <a-tab-pane key="6">
+            <template #tab>
+              <span> response </span>
+            </template>
+
+            <p style="float: right">
+              响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}
+            </p>
+            <div v-if="resp_loading">
+              <a-textarea
+                v-model:value="modelRef.response"
+                style="margin-top: 0px; margin-bottom: 0px; height: 460px"
+              />
+            </div>
+            <div v-else>
+              <a-spin />
+            </div>
+          </a-tab-pane>
+          <a-tab-pane key="7">
+            <template #tab>
+              <span> teardown </span>
+            </template>
+            <associatedCases
+              :associations="modelRef.teardown"
+              @update:associations="
+                (teardown) => (associations = modelRef.teardown)
+              "
+            ></associatedCases>
+          </a-tab-pane>
+          <a-tab-pane key="8">
+            <template #tab>
+              <span> asserts result </span>
+            </template>
+            <a-textarea
+              v-model:value="modelRef.result"
+              style="margin-top: 0px; margin-bottom: 0px; height: 150px"
+            />
+          </a-tab-pane>
+        </a-tabs>
+      </div>
     </div>
   </div>
-  
 </template>
 <script>
 import { reactive, computed, defineComponent, toRefs } from "vue";
@@ -280,7 +281,11 @@ export default defineComponent({
           (modelRef.setup = res.data[0].setup),
           (modelRef.describe = res.data[0].describe),
           (modelRef.teardown = res.data[0].teardown),
-          (modelRef.header = JSON.stringify(JSON.parse(res.data[0].header), null, 2));
+          (modelRef.header = JSON.stringify(
+            JSON.parse(res.data[0].header),
+            null,
+            2
+          ));
 
         const a = res.data[0].data;
 
@@ -568,6 +573,10 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.requestInfo {
+  display: flex;
+  flex-direction: column;
+}
 .error-infos :deep(.ant-form-explain) {
   white-space: pre-line;
 }
