@@ -84,6 +84,9 @@
                     <router-view></router-view>
                 </div>
             </a-layout-content>
+            <div class="ai" style="z-index: 999;position: fixed;right: 20px;bottom: 6%;"> 
+                <AiChat />
+            </div>
             <a-layout-footer style="text-align: center">
                 Ant Design ©2018 Created by Ant UED
             </a-layout-footer>
@@ -106,6 +109,7 @@
     from '@ant-design/icons-vue';
     import {defineComponent, ref} from 'vue';
     import {useRoute} from 'vue-router';
+import AiChat from "@/components/aiFloating.vue";
 
     export default defineComponent({
         components: {
@@ -117,7 +121,8 @@
             MessageOutlined,
             CodeOutlined,
             ToolOutlined,
-            ApiOutlined
+            ApiOutlined,
+            AiChat
         },
 
         setup() {
