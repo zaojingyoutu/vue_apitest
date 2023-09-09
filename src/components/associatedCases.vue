@@ -18,7 +18,10 @@
         :model="association.relation"
         @finish="onFinish"
       >
-        <VueDraggableNext v-model="association.relation" >
+        <VueDraggableNext
+          v-model="association.relation"
+          handle='.mover'
+        >
           <transition-group>
             <a-space
               v-for="(testcase, index) in association.relation"
@@ -26,7 +29,7 @@
               style="display: flex; margin-bottom: 8px"
               align="baseline"
             >
-            <MenuOutlined/>
+              <MenuOutlined  class="mover"/>
               <a-select
                 v-model:value="testcase.case"
                 show-search
@@ -86,36 +89,48 @@
               </a-select>
               <div v-if="testcase.type === 'code'">
                 <div>
-                  <a-button type="primary" @click="showModal(testcase)">查看/编辑</a-button>
-                  <a-modal v-model:visible="visible" style="width: 50%;"  title="code" @ok="handleOk">
+                  <a-button type="primary" @click="showModal(testcase)"
+                    >查看/编辑</a-button
+                  >
+                  <a-modal
+                    v-model:visible="visible"
+                    style="width: 50%"
+                    title="code"
+                    @ok="handleOk"
+                  >
                     <MyCodemirror
                       v-model:value="caseVariableCode.value"
                       style="height: 200px"
                     ></MyCodemirror>
-                    响应数据：response.json() 全局变量设置：set_global_svariate(dict)
+                    响应数据：response.json()
+                    全局变量设置：set_global_svariate(dict)
                     局部变量设置：self.set_variate(key,value)
                   </a-modal>
                 </div>
               </div>
-              <div  class="extractVariable" v-else>
-                <a-form-item class="item"
-                :name="['cases', index, 'value']"
-                :rules="{
-                  // required: true,
-                  message: 'Missing value',
-                }"
-              >
-              <a-input v-model:value="testcase.value" placeholder="公式" />
+              <div class="extractVariable" v-else>
+                <a-form-item
+                  class="item"
+                  :name="['cases', index, 'value']"
+                  :rules="{
+                    // required: true,
+                    message: 'Missing value',
+                  }"
+                >
+                  <a-input v-model:value="testcase.value" placeholder="公式" />
                 </a-form-item>
-                <a-form-item class="item"
+                <a-form-item
+                  class="item"
                   :name="['cases', index, 'name']"
                   :rules="{
                     // required: true,
                     message: 'Missing  name',
                   }"
-    
                 >
-                  <a-input v-model:value="testcase.name" placeholder="变量名称" />
+                  <a-input
+                    v-model:value="testcase.name"
+                    placeholder="变量名称"
+                  />
                 </a-form-item>
               </div>
               <a-form-item>
@@ -130,7 +145,6 @@
               </a-form-item>
 
               <MinusCircleOutlined @click="removeCases(testcase)" />
-              
             </a-space>
           </transition-group>
         </VueDraggableNext>
@@ -148,10 +162,14 @@
 
 <script>
 import MyCodemirror from "@/components/VueCodemirror.vue";
-import { reactive, toRefs, watch ,ref} from "vue";
+import { reactive, toRefs, watch, ref } from "vue";
 import { debounce } from "lodash-es";
 import { cases_get } from "@/api/cases";
-import { MinusCircleOutlined, PlusOutlined ,MenuOutlined } from "@ant-design/icons-vue";
+import {
+  MinusCircleOutlined,
+  PlusOutlined,
+  MenuOutlined,
+} from "@ant-design/icons-vue";
 import { VueDraggableNext } from "vue-draggable-next";
 
 export default {
@@ -165,7 +183,7 @@ export default {
     MinusCircleOutlined,
     PlusOutlined,
     VueDraggableNext,
-    MenuOutlined
+    MenuOutlined,
   },
   setup(props) {
     const dynamicValidateForm = reactive({
@@ -225,28 +243,28 @@ export default {
       }
     };
     const caseVariableCode = reactive({
-      caseId: '',
-      value: '',
+      caseId: "",
+      value: "",
     });
 
     const visible = ref(false);
     const showModal = (testcase) => {
       visible.value = true;
-      caseVariableCode.caseId =  testcase.case.key 
-      caseVariableCode.value = testcase.value
+      caseVariableCode.caseId = testcase.case.key;
+      caseVariableCode.value = testcase.value;
     };
-    const handleOk = e => {
+    const handleOk = (e) => {
       console.log(e);
-      association.relation.forEach(item => {
-    if(item.case.key === caseVariableCode.caseId) {  // 检查item的case对象是否包含key字段，并且key值是否等于你想要的值
-          item.value = caseVariableCode.value;  // 更新value字段
+      association.relation.forEach((item) => {
+        if (item.case.key === caseVariableCode.caseId) {
+          // 检查item的case对象是否包含key字段，并且key值是否等于你想要的值
+          item.value = caseVariableCode.value; // 更新value字段
         }
-      })
+      });
       visible.value = false;
-      caseVariableCode.caseId = ''
-      caseVariableCode.value = ''
-      console.log(association.relation)
-      
+      caseVariableCode.caseId = "";
+      caseVariableCode.value = "";
+      console.log(association.relation);
     };
 
     return {
@@ -259,19 +277,19 @@ export default {
       visible,
       showModal,
       handleOk,
-      caseVariableCode
+      caseVariableCode,
     };
   },
 };
 </script>
 
 <style >
-.extractVariable{
+.extractVariable {
   display: flex;
   flex-wrap: nowrap;
 }
 .item {
   flex: 0 0 auto;
+  border: "";
 }
-
 </style>
