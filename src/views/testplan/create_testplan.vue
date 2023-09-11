@@ -68,24 +68,24 @@
           :customRow="customRow"
         >
           <template #bodyCell="{ record, column, text }">
-              <template v-if="column.dataIndex === 'name'">
-                <router-link
-                  :to="{ path: '/apiDetail', query: { id: record.id } }"
-                >
-                  <a>{{ text }}</a>
-                </router-link>
-              </template>
-              <template v-if="column.dataIndex === 'operation'">
-                <a @click="deletes(record)">Delete</a>
-                <a
-                  @click="showModal(record)"
-                  type="primary"
-                  style="padding-right: 15px"
-                >
-                  | 编辑</a
-                >
-                <MenuOutlined />
-              </template>
+            <template v-if="column.dataIndex === 'name'">
+              <router-link
+                :to="{ path: '/apiDetail', query: { id: record.id } }"
+              >
+                <a>{{ text }}</a>
+              </router-link>
+            </template>
+            <template v-if="column.dataIndex === 'operation'">
+              <a @click="deletes(record)">Delete</a>
+              <a
+                @click="showModal(record)"
+                type="primary"
+                style="padding-right: 15px"
+              >
+                | 编辑</a
+              >
+              <MenuOutlined />
+            </template>
           </template>
         </a-table>
 
@@ -94,6 +94,7 @@
             wrap-class-name="full-modal"
             v-model:visible="visible2.state"
             :title="detail.name"
+            width="680px"
             @ok="handleOk2(record)"
           >
             <a-tabs v-model:activeKey="activeKey2" style="padding: 4px">
@@ -158,32 +159,59 @@
                         >
                         <a-select-option value="re">正则</a-select-option>
                         <a-select-option value="json">json提取</a-select-option>
+                        <a-select-option value="code">code提取</a-select-option>
                       </a-select>
-
-                      <a-form-item
-                        :name="['cases', index, 'value']"
-                        :rules="{
-                          // required: true,
-                          message: 'Missing value',
-                        }"
-                      >
-                        <a-input
-                          v-model:value="variable.value"
-                          placeholder="公式"
-                        />
-                      </a-form-item>
-                      <a-form-item
-                        :name="['cases', index, 'name']"
-                        :rules="{
-                          // required: true,
-                          message: 'Missing  name',
-                        }"
-                      >
-                        <a-input
-                          v-model:value="variable.name"
-                          placeholder="变量名称"
-                        />
-                      </a-form-item>
+                      <div v-if="variable.type === 'code'">
+                        <div>
+                          <a-button
+                            type="primary"
+                            @click="caseVariableShowModal(variable)"
+                            >查看/编辑</a-button
+                          >
+                          <a-modal
+                            v-model:visible="caseVisible"
+                            style="width: 50%"
+                            title="code"
+                            @ok="caseVariableHandleOk(index)"
+                          >
+                            <MyCodemirror
+                              v-model:value="caseVariableCode.value"
+                              style="height: 200px"
+                            ></MyCodemirror>
+                            响应数据：response.json()
+                            全局变量设置：set_global_svariate(dict)
+                            局部变量设置：self.set_variate(key,value)
+                          </a-modal>
+                        </div>
+                      </div>
+                      <div class="extractVariable" v-else>
+                        <a-form-item
+                          class="item"
+                          :name="['cases', index, 'value']"
+                          :rules="{
+                            // required: true,
+                            message: 'Missing value',
+                          }"
+                        >
+                          <a-input
+                            v-model:value="variable.value"
+                            placeholder="公式"
+                          />
+                        </a-form-item>
+                        <a-form-item
+                          class="item"
+                          :name="['cases', index, 'name']"
+                          :rules="{
+                            // required: true,
+                            message: 'Missing  name',
+                          }"
+                        >
+                          <a-input
+                            v-model:value="variable.name"
+                            placeholder="变量名称"
+                          />
+                        </a-form-item>
+                      </div>
 
                       <MinusCircleOutlined
                         @click="removeVariable(detail.variable, variable)"
@@ -370,6 +398,7 @@ import { cases_get } from "@/api/cases";
 import axios from "axios";
 import { project_get } from "@/api/project";
 import { MinusCircleOutlined, MenuOutlined } from "@ant-design/icons-vue";
+import MyCodemirror from "@/components/VueCodemirror.vue";
 
 const columns = [
   {
@@ -395,6 +424,7 @@ export default defineComponent({
   components: {
     MinusCircleOutlined,
     MenuOutlined,
+    MyCodemirror,
   },
   setup() {
     const router = useRouter();
@@ -466,15 +496,14 @@ export default defineComponent({
       modelRef,
       rulesRef
     );
-    const case_list_add_srot=(case_list)=>{
-      for (let i=0;i<case_list.length;i++){
-        modelRef.case_list[i]['sort'] = i
+    const case_list_add_srot = (case_list) => {
+      for (let i = 0; i < case_list.length; i++) {
+        modelRef.case_list[i]["sort"] = i;
       }
-
-    }
+    };
 
     const onSubmit = () => {
-      case_list_add_srot(modelRef.case_list)
+      case_list_add_srot(modelRef.case_list);
       var req_method;
       if (planid.id == undefined) {
         req_method = "post";
@@ -556,7 +585,6 @@ export default defineComponent({
             duration: 5,
           });
         }
-
       });
     };
 
@@ -612,9 +640,7 @@ export default defineComponent({
       },
     ]);
 
-    const focus = () => {
-      console.log("focus");
-    };
+    const focus = () => {};
 
     const handleChange = (value) => {
       console.log(`selected ${value}`);
@@ -685,6 +711,7 @@ export default defineComponent({
         record.splice(index, 1);
       }
     };
+    // 添加变量提取
     const addVariable = (record) => {
       if ((record.variable || null) == null) {
         record["variable"] = [];
@@ -767,6 +794,20 @@ export default defineComponent({
         },
       };
     }
+    const caseVariableCode = reactive({
+      value: "",
+    });
+
+    const caseVisible = ref(false);
+    const caseVariableShowModal = (testcase) => {
+      caseVariableCode.value = "";
+      caseVariableCode.value = testcase.value;
+      caseVisible.value = true;
+    };
+    const caseVariableHandleOk = (index) => {
+      detail.variable[index].value = caseVariableCode.value;
+      caseVisible.value = false;
+    };
 
     return {
       removeAssert,
@@ -816,7 +857,23 @@ export default defineComponent({
       activeKey2: ref("4"),
       addAssert,
       customRow,
+      caseVisible,
+      caseVariableShowModal,
+      caseVariableHandleOk,
+      caseVariableCode,
     };
   },
 });
 </script>
+
+<style >
+.extractVariable {
+  display: flex;
+  flex-wrap: nowrap;
+  margin-bottom: 0%;
+}
+.item {
+  flex: 0 0 auto;
+  border: "";
+}
+</style>
