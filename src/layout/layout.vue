@@ -10,7 +10,7 @@
 
             <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
                 <img style="height: 60px;width: 200px"
-                     src="https://www.yulumi.cn/gl/uploads/allimg/201121/11200I923-1.jpg">
+                     src="./../../public/R.jpeg">
                 <a-menu-item key="1">
                     <table-outlined/>
                     <span class="nav-text">

@@ -1,6 +1,6 @@
 <template>
                   <img
-                     src="https://www.yulumi.cn/gl/uploads/allimg/201121/11200I923-1.jpg">
+                     src="./../../../public/R.jpeg">
   <div style="position: absolute;
     right: 40%;
     width: 400px;
