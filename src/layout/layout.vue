@@ -42,10 +42,21 @@
                     <tool-outlined />
                     <span class="nav-text"><router-link to="/tools" style="color: white"> 常用工具</router-link></span>
                 </a-menu-item>
-                <a-menu-item key="8">
-                    <code-sandbox-outlined/>
-                    <span class="nav-text"><router-link to="/locust" style="color: white"> locust</router-link></span>
-                </a-menu-item>
+                
+                <a-sub-menu key="sub1">
+                    <template #icon>
+                            <code-sandbox-outlined/>
+                        </template>
+                    <template #title>locust</template>
+                    <a-menu-item key="8">
+                        <code-sandbox-outlined/>
+                        <span class="nav-text"><router-link to="/locust" style="color: white"> locust脚本</router-link></span>
+                    </a-menu-item>
+                    <a-menu-item key="11">
+                        <fund-outlined />
+                        <span class="nav-text"><router-link to="/locust/web" style="color: white"> locust web</router-link></span>
+                    </a-menu-item>
+                </a-sub-menu>
                 <a-menu-item key="9">
                     <code-outlined />
                     <span class="nav-text"><router-link to="/customFun" style="color: white"> 内置方法</router-link></span>
@@ -87,9 +98,9 @@
             <div class="ai" style="z-index: 999;position: fixed;right: 20px;bottom: 6%;"> 
                 <AiChat />
             </div>
-            <a-layout-footer style="text-align: center">
+            <!-- <a-layout-footer style="text-align: center">
                 Ant Design ©2018 Created by Ant UED
-            </a-layout-footer>
+            </a-layout-footer> -->
         </a-layout>
     </a-layout>
 </template>
@@ -103,7 +114,8 @@
         MessageOutlined,
         CodeOutlined,
         ToolOutlined,
-        ApiOutlined
+        ApiOutlined,
+        FundOutlined
 
     } 
     from '@ant-design/icons-vue';
@@ -122,6 +134,7 @@ import AiChat from "@/components/aiFloating.vue";
             CodeOutlined,
             ToolOutlined,
             ApiOutlined,
+            FundOutlined,
             AiChat
         },
 

@@ -60,6 +60,7 @@ import {
 import MyCodemirror from "@/components/VueCodemirror.vue";
 import { locust_create } from "../../api/locust";
 import { message } from "ant-design-vue";
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   components: {
@@ -190,6 +191,7 @@ export default defineComponent({
         }
       });
     };
+    const router = useRouter();
     const run = () => {
       locustRun(modelRef).then((res) => {
         if (res.status == 200) {
@@ -199,7 +201,7 @@ export default defineComponent({
               duration: 5,
             },
 
-            window.open(res.url, "_blank")
+            router.push("/locust/web")
           );
         } else {
           message.success({

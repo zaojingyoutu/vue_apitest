@@ -184,7 +184,14 @@ const routes = [
                     title: 'locust'
                 },
                 component: () => import(/* webpackChunkName: "tools" */ '../views/locust/index'),
-
+            },
+            {
+                path: 'locust/web',
+                name: 'locustWeb',
+                 meta: {
+                    title: 'locustWeb'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/locust/locustWeb.vue'),    
             },
             {
                 path: '/customFun',
