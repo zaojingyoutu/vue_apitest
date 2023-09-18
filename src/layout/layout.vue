@@ -90,7 +90,7 @@
             </a-layout-header>
 
             <a-layout-content :style="{ margin: '24px 16px 0' }">
-                <div :style="{ padding: '24px', background: '#fff', minHeight: '770px'}">
+                <div :style="{ padding: '10px', background: '#fff', minHeight: '91vh'}">
 
                     <router-view></router-view>
                 </div>
