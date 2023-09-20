@@ -186,12 +186,28 @@ const routes = [
                 component: () => import(/* webpackChunkName: "tools" */ '../views/locust/index'),
             },
             {
-                path: 'locust/web',
+                path: '/locust/web',
                 name: 'locustWeb',
                  meta: {
                     title: 'locustWeb'
                 },
                 component: () => import(/* webpackChunkName: "tools" */ '../views/locust/locustWeb.vue'),    
+            },
+            {
+                path: '/locustReport',
+                name: 'locustReport',
+                 meta: {
+                    title: 'locustReport'
+                },
+                component: () => import(/* webpackChunkName: "locustReport" */ '../views/locustReport/list.vue'),    
+            },
+            {
+                path: '/locustReport/ditail',
+                name: 'ditail',
+                 meta: {
+                    title: 'ditail'
+                },
+                component: () => import(/* webpackChunkName: "ditail" */ '../views/locustReport/detail.vue'),    
             },
             {
                 path: '/customFun',

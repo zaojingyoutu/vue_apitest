@@ -32,8 +32,17 @@
         >保存</a-button
       >
       <a-button type="primary" style="margin-left: 10px" @click="del"
-        >删除</a-button
-      >
+        >删除</a-button>
+
+        <router-link
+          :to="{ path: '/locustReport', query: { locustId: modelRef.id } }"
+        >
+        <a-button type="primary" style="margin-left: 10px"
+        >locust报告
+      </a-button>
+        </router-link>
+      
+
       <!-- <a-popconfirm
         title="只能运行locust并关闭已运行的，确认运行吗？"
         ok-text="Yes"
