@@ -18,6 +18,6 @@ export function locustReportDetail(id){
 export function locustReportDel(id){
     return request.request({
         method: "delete",
-        url: "locust/" + id +"/",
+        url: "locustReport/" + id +"/",
     })
 }
