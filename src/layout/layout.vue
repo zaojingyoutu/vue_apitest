@@ -58,7 +58,7 @@
                     </a-menu-item>
                     <a-menu-item key="12">
                         <fund-outlined />
-                        <span class="nav-text"><router-link to="/locust/report" style="color: white"> locust报告</router-link></span>
+                        <span class="nav-text"><router-link to="/locustReport" style="color: white"> locust报告</router-link></span>
                     </a-menu-item>
                 </a-sub-menu>
                 <a-menu-item key="9">
