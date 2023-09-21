@@ -22,7 +22,7 @@
             <a-select v-model:value="modelRef.mold" :options="options" />
           </a-form-item>
 
-          <a-form-item label="CURL" required v-if="modelRef.mold =='curl'">
+          <a-form-item label="CURL" required v-if="modelRef.mold == 'curl'">
             <a-input v-model:value="modelRef.content" />
           </a-form-item>
         </a-form>
@@ -32,58 +32,76 @@
         >保存</a-button
       >
       <a-button type="primary" style="margin-left: 10px" @click="del"
-        >删除</a-button>
+        >删除</a-button
+      >
 
-        <router-link
-          :to="{ path: '/locustReport', query: { locustId: modelRef.id } }"
-        >
+      <router-link
+        :to="{ path: '/locustReport', query: { locustId: modelRef.id } }"
+      >
         <a-button type="primary" style="margin-left: 10px"
-        >locust报告
-      </a-button>
-        </router-link>
-      
-
-      <!-- <a-popconfirm
-        title="只能运行locust并关闭已运行的，确认运行吗？"
-        ok-text="Yes"
-        cancel-text="No"
-        @confirm="run"
-        @cancel="cancel"
-      > -->
-      <a-modal v-model:visible="runVisible" title="运行locust" @ok="runHandleOk">
+          >locust报告
+        </a-button>
+      </router-link>
+      <a-modal
+        v-model:visible="runVisible"
+        title="运行locust"
+        @ok="runHandleOk"
+      >
         <div>
           <p>默认不启动</p>
           <a-input-number id="inputNumber" v-model:value="worker" :min="1" />
           worker：填写将启动分布式，不能超过服务器最大核心数
         </div>
-        <p>跨服务器分布式命令：locust -f xxx.py --worker --master-host=主控机器ip</p>
+        <p>
+          跨服务器分布式命令：locust -f xxx.py --worker --master-host=主控机器ip
+        </p>
       </a-modal>
-        <a-button type="primary" style="margin-left: 10px" @click="runShowModal">运行</a-button>
-        <a-modal v-model:visible="taskVisible" title="定时任务运行配置" @ok="taskHandleOk">
+      <a-button type="primary" style="margin-left: 10px" @click="runShowModal"
+        >运行</a-button
+      >
+      <a-modal
+        v-model:visible="taskVisible"
+        title="定时任务运行配置"
+        @ok="taskHandleOk"
+      >
         <div>
           <a-form-item label="cron表达式" :rules="[{ required: true }]">
             <a-input v-model:value="taskRef.cron" />
             <a-radio v-model:checked="checked">删除</a-radio>
           </a-form-item>
           <a-form-item label="执行时长" :rules="[{ required: true }]">
-            <a-input v-model:value="taskRef.run_time" />
+            <a-input v-model:value="taskRef.run_time" style="width: 45%" />
+            例如： (300s, 20m, 3h, 1h30m)
           </a-form-item>
           <div>
             启动用户：
-            <a-input-number id="inputNumber" v-model:value="taskRef.user"  :min="1"  />
-            
+            <a-input-number
+              id="inputNumber"
+              v-model:value="taskRef.user"
+              :min="1"
+            />
           </div>
           <div>
             启动数/s：
-            <a-input-number id="inputNumber" v-model:value="taskRef.rate" :min="1"  />
+            <a-input-number
+              id="inputNumber"
+              v-model:value="taskRef.rate"
+              :min="1"
+            />
           </div>
           workers：
-          <a-input-number id="inputNumber" v-model:value="taskRef.workers" :min="1" />
+          <a-input-number
+            id="inputNumber"
+            v-model:value="taskRef.workers"
+            :min="1"
+          />
           填写将启动分布式，不能超过服务器最大核心数
         </div>
       </a-modal>
-        <a-button type="primary" style="margin-left: 10px" @click="taskShowModal">定时任务</a-button>
-      </div>
+      <a-button type="primary" style="margin-left: 10px" @click="taskShowModal"
+        >定时任务</a-button
+      >
+    </div>
 
     <MyCodemirror v-model:value="content"></MyCodemirror>
   </div>
@@ -100,8 +118,8 @@ import {
 import MyCodemirror from "@/components/VueCodemirror.vue";
 import { locust_create } from "../../api/locust";
 import { message } from "ant-design-vue";
-import { useRouter } from 'vue-router';
-import {  locustTaskGet,locustTaskDel,locustTaskPost } from "@/api/locustTask";
+import { useRouter } from "vue-router";
+import { locustTaskGet, locustTaskDel, locustTaskPost } from "@/api/locustTask";
 
 export default defineComponent({
   components: {
@@ -147,25 +165,24 @@ export default defineComponent({
     };
     const handleOk = () => {
       delete modelRef.id;
-      if(modelRef.mold=='curl'){
-        create()
+      if (modelRef.mold == "curl") {
+        create();
         treeData.value[0].children.unshift({
-        title: modelRef.name,
-        key: treeData.value[0].children.length + 1,
-        isLeaf: true
-      })
-      selectedKeys.value = [treeData.value[0].children.length];
-      visible.value = false; 
-      }
-      else{
+          title: modelRef.name,
+          key: treeData.value[0].children.length + 1,
+          isLeaf: true,
+        });
+        selectedKeys.value = [treeData.value[0].children.length];
+        visible.value = false;
+      } else {
         treeData.value[0].children.unshift({
-        title: modelRef.name,
-        key: treeData.value[0].children.length + 1,
-        isLeaf: true
-      })
-      selectedKeys.value = [treeData.value[0].children.length];
-      visible.value = false;   
-      content.value = ""
+          title: modelRef.name,
+          key: treeData.value[0].children.length + 1,
+          isLeaf: true,
+        });
+        selectedKeys.value = [treeData.value[0].children.length];
+        visible.value = false;
+        content.value = "";
       }
     };
     const modelRef = reactive({
@@ -175,7 +192,7 @@ export default defineComponent({
     });
     const create = () => {
       modelRef["create_user"] = JSON.parse(localStorage.getItem("user")).name;
-      if(modelRef.mold !='curl'){
+      if (modelRef.mold != "curl") {
         modelRef.content = content;
       }
       console.log(modelRef);
@@ -205,7 +222,7 @@ export default defineComponent({
             });
           } else {
             message.error({
-              content: "添加失败！" +res.msg ,
+              content: "添加失败！" + res.msg,
               duration: 5,
             });
           }
@@ -263,25 +280,25 @@ export default defineComponent({
       runVisible.value = true;
     };
     const runHandleOk = () => {
-      const run_par={name:modelRef.name,workers:worker.value}
-      run(run_par)
+      const run_par = { name: modelRef.name, workers: worker.value };
+      run(run_par);
       runVisible.value = false;
     };
     const worker = ref();
     const taskVisible = ref(false);
     const taskShowModal = () => {
-      locustTaskGet({locust_id:modelRef.id}).then((res) => {
-          if (res.status == 200) {
-            taskRef.id=res[0].id
-            taskRef.cron=res[0].cron
-            taskRef.user=res[0].run_param.user
-            taskRef.rate=res[0].run_param.rate
-            taskRef.run_time=res[0].run_param.run_time
-            taskRef.workers=res[0].run_param.workers
-            console.log(res)
-
-            }})
-      console.log(taskRef)
+      locustTaskGet({ locust_id: modelRef.id }).then((res) => {
+        if (res.status == 200) {
+          taskRef.id = res[0].id;
+          taskRef.cron = res[0].cron;
+          taskRef.user = res[0].run_param.user;
+          taskRef.rate = res[0].run_param.rate;
+          taskRef.run_time = res[0].run_param.run_time;
+          taskRef.workers = res[0].run_param.workers;
+          console.log(res);
+        }
+      });
+      console.log(taskRef);
       taskVisible.value = true;
     };
     const taskHandleOk = () => {
@@ -300,36 +317,39 @@ export default defineComponent({
           }
         });
       } else {
-        if(taskRef.id){locustTaskDel(taskRef.id)}
-        taskRef.name=modelRef.name
-        taskRef.locust_id=modelRef.id
-        locustTaskPost({"locust":modelRef.id,"run_param":taskRef} ).then((res) => {
-          if (res.code == 200) {
-            message.success({
-              content: "成功！",
-              duration: 5,
-            });
-            
-          } else {
-            message.success({
-              content: "失败！",
-              duration: 5,
-            });
+        if (taskRef.id) {
+          locustTaskDel(taskRef.id);
+        }
+        taskRef.name = modelRef.name;
+        taskRef.locust_id = modelRef.id;
+        locustTaskPost({ locust: modelRef.id, run_param: taskRef }).then(
+          (res) => {
+            if (res.code == 200) {
+              message.success({
+                content: "成功！",
+                duration: 5,
+              });
+            } else {
+              message.success({
+                content: "失败！",
+                duration: 5,
+              });
+            }
           }
-        });
+        );
       }
-      checked.value = false
+      checked.value = false;
       taskVisible.value = false;
     };
     const taskRef = reactive({
       name: modelRef.name,
       user: "",
       rate: "",
-      run_time: '',
+      run_time: "",
       workers: null,
-      cron: '',
+      cron: "",
     });
-    const checked = ref(false)
+    const checked = ref(false);
     return {
       checked,
       taskRef,
@@ -355,6 +375,5 @@ export default defineComponent({
       options,
     };
   },
-  
 });
 </script>

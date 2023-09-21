@@ -1,6 +1,9 @@
 <template>
-  <div class="title">测试计划</div>
   <a-tabs v-model:activeKey="activeKey">
+    <template #rightExtra>
+      <a-button type="primary" @click.prevent="onSubmit">Submit</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">Reset </a-button>
+    </template>
     <a-tab-pane key="1" tab="基本信息">
       <div>
         <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
@@ -41,16 +44,6 @@
               v-model:value="modelRef.user_variables"
               style="margin-top: 0px; margin-bottom: 0px; height: 150px"
             />
-          </a-form-item>
-          <a-form-item
-            class="error-infos"
-            :wrapper-col="{ span: 14, offset: 4 }"
-            v-bind="errorInfos"
-          >
-            <a-button type="primary" @click.prevent="onSubmit">Submit</a-button>
-            <a-button style="margin-left: 10px" @click="resetFields"
-              >Reset
-            </a-button>
           </a-form-item>
         </a-form>
       </div>
@@ -356,34 +349,6 @@
           </div>
         </a-drawer>
       </div>
-    </a-tab-pane>
-    <a-tab-pane key="3" tab="测试报告">
-      <!-- <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
-            <a-button type="primary" @click.prevent="onSubmit">Create</a-button> -->
-      <a-button type="primary" @click="runplan">run</a-button>
-      <br /><br />
-      <div>
-        运行用例数：{{ count.cases_count }} &nbsp; 失败用例数：{{
-          count.cases_false
-        }}
-      </div>
-      <!-- <a-progress type="circle" :percent="75" :format="percent => `${percent} %`"/> -->
-      <a-progress
-        type="circle"
-        :percent="((count.cases_false / count.cases_count) * 100).toFixed(2)"
-        status="exception"
-        :format="(percent) => `${percent} %`"
-      />&nbsp;
-      <a-progress
-        type="circle"
-        :percent="
-          100 - ((count.cases_false / count.cases_count) * 100).toFixed(2)
-        "
-        :format="(percent) => `${percent} %`"
-      />
-      <template #format="percent">
-        <span style="color: red">{{ percent }}</span>
-      </template>
     </a-tab-pane>
   </a-tabs>
 </template>
@@ -808,9 +773,10 @@ export default defineComponent({
       detail.variable[index].value = caseVariableCode.value;
       caseVisible.value = false;
     };
-
+    const reportUrl = "/reportList?testplan_id=" + planid.id;
     return {
       removeAssert,
+      reportUrl,
       removeVariable,
       addVariable,
       formState,
