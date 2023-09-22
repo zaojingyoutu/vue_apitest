@@ -50,7 +50,7 @@
         <div>
           <p>默认不启动</p>
           <a-input-number id="inputNumber" v-model:value="worker" :min="1" />
-          worker：填写将启动分布式，不能超过服务器最大核心数
+          节点数量：填写将启动分布式，不能超过服务器最大核心数
         </div>
         <p>
           跨服务器分布式命令：locust -f xxx.py --worker --master-host=主控机器ip
@@ -82,14 +82,14 @@
             />
           </div>
           <div>
-            启动数/s：
+            每秒启动：
             <a-input-number
               id="inputNumber"
               v-model:value="taskRef.rate"
               :min="1"
             />
           </div>
-          workers：
+          节点数量：
           <a-input-number
             id="inputNumber"
             v-model:value="taskRef.workers"
@@ -287,6 +287,11 @@ export default defineComponent({
     const worker = ref();
     const taskVisible = ref(false);
     const taskShowModal = () => {
+      taskRef.user = "";
+      taskRef.rate = "";
+      taskRef.run_time = "";
+      taskRef.workers = null;
+      taskRef.cron = "";
       locustTaskGet({ locust_id: modelRef.id }).then((res) => {
         if (res.status == 200) {
           taskRef.id = res[0].id;
@@ -295,13 +300,22 @@ export default defineComponent({
           taskRef.rate = res[0].run_param.rate;
           taskRef.run_time = res[0].run_param.run_time;
           taskRef.workers = res[0].run_param.workers;
-          console.log(res);
         }
       });
-      console.log(taskRef);
       taskVisible.value = true;
     };
     const taskHandleOk = () => {
+      for (const key in taskRef) {
+      if (key !== 'workers' && key !== 'name'  && !taskRef[key]) {
+        message.error(`"${key}"字段不能为空`);
+        return ;
+      }}
+      const regex = /^(\d+h)?(\d+m)?(\d+s)?$/;
+      if (!regex.test(taskRef.run_time)) {
+        message.error('请输入有效的时间字符串,例如 "1h30m20s"')
+        return;
+      }
+
       if (checked.value == true) {
         locustTaskDel(taskRef.id).then((res) => {
           if (res.code == 200) {
