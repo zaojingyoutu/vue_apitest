@@ -106,7 +106,7 @@
     <a-table :columns="columns" :data-source="data" :pagination="false">
       <template #bodyCell="{ column, record,text }">
       <template v-if="column.key === 'name'">
-          <router-link :to="{path:'/debug',query:{id:record.id}}" >
+          <router-link :to="{path:'/apiDetail',query:{id:record.id}}" >
               <a  >{{ text }}</a>
           </router-link>
       </template>
