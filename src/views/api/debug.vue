@@ -231,7 +231,16 @@
             </template>
             <a-textarea
               v-model:value="modelRef.result"
-              style="margin-top: 0px; margin-bottom: 0px; height: 150px"
+              style="margin-top: 0px; margin-bottom: 0px; height: 300px"
+            />
+          </a-tab-pane>
+          <a-tab-pane key="9">
+            <template #tab>
+              <span> request data </span>
+            </template>
+            <a-textarea
+              v-model:value="log.request"
+              style="margin-top: 0px; margin-bottom: 0px; height: 300px"
             />
           </a-tab-pane>
         </a-tabs>
@@ -409,6 +418,9 @@ export default defineComponent({
         }
       });
     };
+    const log = reactive({
+      request:''
+    });
 
     const debug = () => {
       (modelRef.relation = dynamicValidateForm.cases),
@@ -426,12 +438,14 @@ export default defineComponent({
                 null,
                 2
               );
+              log.request =JSON.stringify(res.data.request_data, null, 2);
             } else {
               modelRef.response = res.data.response;
             }
           } catch {
             modelRef.response = res.data;
           }
+          
           modelRef.result = JSON.stringify(res.data.result, null, 2);
           modelRef.run_time = res.data.request_data.run_time;
           modelRef.status = res.data.status_code;
@@ -568,6 +582,7 @@ export default defineComponent({
       optionsProject,
       project,
       resp_loading,
+      log
     };
   },
 });

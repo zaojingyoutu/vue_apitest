@@ -144,13 +144,6 @@
             width: 250,
             ellipsis: true,
         },
-//  {
-//   title: 'asserts',
-//   dataIndex: 'asserts',
-//   key: 'asserts',
-//   width: 250,
-//   ellipsis: true,
-// },
         {
             title: 'createtime',
             dataIndex: 'create_time',
