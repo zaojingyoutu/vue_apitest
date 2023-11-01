@@ -136,11 +136,12 @@ export default defineComponent({
         children: [],
       },
     ]);
-    locust_get().then((res) => {
+    const getList =()=>{locust_get().then((res) => {
       content.value = res[0].content;
       selectedKeys.value = [res[0].id];
       modelRef.id = res[0].id;
       modelRef.name = res[0].name;
+      treeData.value[0].children = []
       for (let i = 0; i < res.length; i++) {
         treeData.value[0].children.push({
           title: res[i].name,
@@ -148,9 +149,12 @@ export default defineComponent({
           isLeaf: true,
         });
       }
-    });
+    });}
+    getList()
+
     const selectedKey = (id) => {
       selectedKeys.value = [id[id.length - 1]];
+      content.value = '努力加载中。。。。'
       locust_detail(selectedKeys.value[0]).then((res) => {
         content.value = res.content;
         modelRef.name = res.name;
@@ -215,6 +219,7 @@ export default defineComponent({
         locust_create(modelRef).then((res) => {
           content.value = res.data.content;
           modelRef.id = res.data.id;
+          modelRef.content = res.data.content
           if (res.code == 200) {
             message.success({
               content: "添加成功！",
@@ -239,7 +244,7 @@ export default defineComponent({
               content: "删除成功！",
               duration: 5,
             },
-            location.reload()
+            getList()
           );
         } else {
           message.success({
