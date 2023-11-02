@@ -275,7 +275,7 @@ export default defineComponent({
     const dynamicValidateForm = reactive({
       cases: [],
     });
-    const router = useRouter();
+    // const router = useRouter();
     const project = useRouter().currentRoute.value.query;
     if (useRouter().currentRoute.value.query.id != undefined) {
       cases_get(useRouter().currentRoute.value.query).then((res) => {
@@ -392,30 +392,32 @@ export default defineComponent({
     } = useForm(modelRef, rulesRef);
 
     const onSubmit = () => {
-      (modelRef.relation = dynamicValidateForm.cases),
-        delete modelRef["response"];
-      delete modelRef["env"];
-      delete modelRef["result"];
-      delete modelRef["run_time"];
-      delete modelRef["status"];
+      (modelRef.relation = dynamicValidateForm.cases)
+      const saveData = JSON.parse(JSON.stringify(modelRef))
+      delete saveData["response"];
+      delete saveData["env"];
+      delete saveData["result"];
+      delete saveData["run_time"];
+      delete saveData["status"];
+
       var req_method;
       if (project.id == undefined) {
         req_method = "post";
       } else {
         req_method = "put";
       }
-      cases_api(modelRef, req_method).then((res) => {
+      cases_api(saveData, req_method).then((res) => {
         message.success({
           content: res.msg,
           duration: 5,
         });
-        if (res.code == 200) {
-          router.push({
-            path: "api",
-            query: { project_id: project.project_id },
-          });
-          // window.location.href = "api?project_id=" + project.project_id;
-        }
+        // if (res.code == 200) {
+        //   router.push({
+        //     path: "api",
+        //     query: { project_id: project.project_id },
+        //   });
+        //   // window.location.href = "api?project_id=" + project.project_id;
+        // }
       });
     };
     const log = reactive({

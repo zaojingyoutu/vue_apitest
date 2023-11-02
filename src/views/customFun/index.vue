@@ -84,10 +84,12 @@
             })
             const selectedKey = (id) => {
                 selectedKeys.value = [id[id.length - 1]]
+                modelRef.content = '努力加载中。。。'
                 customFun_detail(selectedKeys.value[0]).then((res) => {
                     modelRef.content = res.content
                     modelRef.name = res.name
                     modelRef['id'] = res.id
+                    modelRef.fun_name=res.fun_name
                     console.log(res, modelRef)
                 })
 
@@ -105,8 +107,8 @@
 
 
                 modelRef.content = `def ${modelRef.name}():
-  pass
-  return None`
+    pass
+    return None`
 
                 delete modelRef.id
                 modelRef.fun_name = modelRef.name + '()'
