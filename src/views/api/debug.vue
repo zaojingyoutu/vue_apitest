@@ -298,7 +298,7 @@ export default defineComponent({
 
         const a = res.data[0].data;
 
-        if (a.includes("{")) {
+        if (typeof a === 'object') {
           modelRef.data = JSON.stringify(JSON.parse(a), null, 2);
         } else {
           modelRef.data = res.data[0].data;
@@ -440,10 +440,11 @@ export default defineComponent({
                 null,
                 2
               );
-              log.request =JSON.stringify(res.data.request_data, null, 2);
+              
             } else {
               modelRef.response = res.data.response;
             }
+            log.request =JSON.stringify(res.data.request_data, null, 2);
           } catch {
             modelRef.response = res.data;
           }
