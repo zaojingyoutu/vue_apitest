@@ -242,6 +242,9 @@
             const onFinish = values => {
                 console.log('Received values of form: ', values);
                 console.log('formState: ', formState);
+                if(formState.project_id == ''){
+                    delete formState['project_id']
+                }
                 formState['current'] = 1
                 cases_get(formState)
                     .then((res) => {
@@ -257,6 +260,9 @@
 
             const onChange = page => {
                 formState['current'] = page.current
+                if(formState.project_id == ''){
+                    delete formState['project_id']
+                }
                 cases_get(formState)
                     .then((res) => {
                         data.value = res.data;
