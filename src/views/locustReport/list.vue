@@ -29,8 +29,8 @@
     {
       title: "locust",
       width: "20%",
-      dataIndex: "locustName",
-      key: "locustName",
+      dataIndex: "locust_name",
+      key: "locust_name",
       ellipsis: true,
     },
     {
