@@ -238,10 +238,26 @@
             <template #tab>
               <span> request data </span>
             </template>
-            <a-textarea
+            <!-- <a-textarea
               v-model:value="log.request"
               style="margin-top: 0px; margin-bottom: 0px; height: 300px"
-            />
+            /> -->
+            <!-- <ul>
+              <li v-for:="request in log.request">
+                {{request}}
+                </li>
+            </ul> -->
+              <a-collapse v-model:activeKey="reqActiveKey">
+                  <a-collapse-panel v-for:="request in log.request" :key="request.id" :header="request.name" style="text-align: left;">
+                      <p>url: {{ request.url }}</p>
+                      <p>method: {{ request.method }}</p>
+                      <p>run_time: {{ request.run_time }}</p>
+                      <p>status_code: {{ request.status_code }}</p>
+                      <p>parameter: {{ request.parameter }}</p>
+                      <p>data: {{ request.data }}</p>
+                      <p>response: {{ request.response }}</p>
+                  </a-collapse-panel>
+                </a-collapse>
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -444,7 +460,8 @@ export default defineComponent({
             } else {
               modelRef.response = res.data.response;
             }
-            log.request =JSON.stringify(res.data.request_data, null, 2);
+            // log.request =JSON.stringify(res.data.request_data, null, 2);
+            log.request =res.data.request_data;
           } catch {
             modelRef.response = res.data;
           }
@@ -554,7 +571,7 @@ export default defineComponent({
       const centent = curl_dumps(modelRef);
       navigator.clipboard.writeText(centent);
     };
-
+    const reqActiveKey = ref([]);
     return {
       copyButton,
       addAssert,
@@ -585,7 +602,8 @@ export default defineComponent({
       optionsProject,
       project,
       resp_loading,
-      log
+      log,
+      reqActiveKey
     };
   },
 });
