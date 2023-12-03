@@ -50,10 +50,7 @@
           <br /><br />
         </a-form-item>
       </div>
-      <div
-        class="type"
-        style=" width: 30%; float: left; height: 32px"
-      >
+      <div class="type" style="width: 30%; float: left; height: 32px">
         <a-form-item label="环境：">
           <a-select
             ref="select"
@@ -66,7 +63,7 @@
           <br /><br />
         </a-form-item>
       </div>
-      <div class="project" >
+      <div class="project">
         <a-form-item label="项目：">
           <div class="selectEnv" style="float: left">
             <a-select
@@ -80,7 +77,7 @@
           </div>
         </a-form-item>
       </div>
-      <div class="module" style=" width:40%;">
+      <div class="module" style="width: 40%">
         <a-form-item label="模块：">
           <a-input v-model:value="modelRef.module" placeholder="模块" />
         </a-form-item>
@@ -238,26 +235,22 @@
             <template #tab>
               <span> request data </span>
             </template>
-            <!-- <a-textarea
-              v-model:value="log.request"
-              style="margin-top: 0px; margin-bottom: 0px; height: 300px"
-            /> -->
-            <!-- <ul>
-              <li v-for:="request in log.request">
-                {{request}}
-                </li>
-            </ul> -->
-              <a-collapse v-model:activeKey="reqActiveKey">
-                  <a-collapse-panel v-for:="request in log.request" :key="request.id" :header="request.name" style="text-align: left;">
-                      <p>url: {{ request.url }}</p>
-                      <p>method: {{ request.method }}</p>
-                      <p>run_time: {{ request.run_time }}</p>
-                      <p>status_code: {{ request.status_code }}</p>
-                      <p>parameter: {{ request.parameter }}</p>
-                      <p>data: {{ request.data }}</p>
-                      <p>response: {{ request.response }}</p>
-                  </a-collapse-panel>
-                </a-collapse>
+            <a-collapse v-model:activeKey="reqActiveKey">
+              <a-collapse-panel
+                v-for:="request in log.request"
+                :key="request.id"
+                :header="request.name"
+                style="text-align: left"
+              >
+                <p>url: {{ request.url }}</p>
+                <p>method: {{ request.method }}</p>
+                <p>run_time: {{ request.run_time }}</p>
+                <p>status_code: {{ request.status_code }}</p>
+                <p>parameter: {{ request.parameter }}</p>
+                <p>data: {{ request.data }}</p>
+                <p>response: {{ request.response }}</p>
+              </a-collapse-panel>
+            </a-collapse>
           </a-tab-pane>
         </a-tabs>
       </div>
@@ -273,7 +266,6 @@ import { message } from "ant-design-vue";
 import { ref } from "vue";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
 import { cases_get, cases_api } from "@/api/cases";
-// import MyCodemirror from "@/components/VueCodemirror.vue";
 import { project_get } from "@/api/project";
 import { deBug_post } from "@/api/deBug";
 import associatedCases from "@/components/associatedCases.vue";
@@ -284,16 +276,14 @@ export default defineComponent({
   components: {
     MinusCircleOutlined,
     PlusOutlined,
-    // MyCodemirror,
     associatedCases,
   },
   setup() {
     const dynamicValidateForm = reactive({
       cases: [],
     });
-    // const router = useRouter();
     const project = useRouter().currentRoute.value.query;
-    if (useRouter().currentRoute.value.query.id != undefined) {
+    if (project.id != undefined) {
       cases_get(useRouter().currentRoute.value.query).then((res) => {
         (modelRef.name = res.data[0].name),
           (modelRef.project = res.data[0].project),
@@ -301,7 +291,6 @@ export default defineComponent({
           (modelRef.method = res.data[0].method),
           (modelRef.module = res.data[0].module),
           (modelRef.parameter = res.data[0].parameter),
-          // (modelRef.asserts = res.data[0].asserts),
           (modelRef.id = res.data[0].id),
           (modelRef.setup = res.data[0].setup),
           (modelRef.describe = res.data[0].describe),
@@ -314,7 +303,7 @@ export default defineComponent({
 
         const a = res.data[0].data;
 
-        if (typeof a === 'object') {
+        if (typeof a === "object") {
           modelRef.data = JSON.stringify(JSON.parse(a), null, 2);
         } else {
           modelRef.data = res.data[0].data;
@@ -402,14 +391,13 @@ export default defineComponent({
 
     const {
       resetFields,
-      // validate,
       validateInfos,
       mergeValidateInfo,
     } = useForm(modelRef, rulesRef);
 
     const onSubmit = () => {
-      (modelRef.relation = dynamicValidateForm.cases)
-      const saveData = JSON.parse(JSON.stringify(modelRef))
+      modelRef.relation = dynamicValidateForm.cases;
+      const saveData = JSON.parse(JSON.stringify(modelRef));
       delete saveData["response"];
       delete saveData["env"];
       delete saveData["result"];
@@ -427,17 +415,10 @@ export default defineComponent({
           content: res.msg,
           duration: 5,
         });
-        // if (res.code == 200) {
-        //   router.push({
-        //     path: "api",
-        //     query: { project_id: project.project_id },
-        //   });
-        //   // window.location.href = "api?project_id=" + project.project_id;
-        // }
       });
     };
     const log = reactive({
-      request:''
+      request: "",
     });
 
     const debug = () => {
@@ -456,18 +437,21 @@ export default defineComponent({
                 null,
                 2
               );
-              
             } else {
               modelRef.response = res.data.response;
             }
-            // log.request =JSON.stringify(res.data.request_data, null, 2);
-            log.request =res.data.request_data;
+            log.request = res.data.request_data;
           } catch {
             modelRef.response = res.data;
           }
-          
+
           modelRef.result = JSON.stringify(res.data.result, null, 2);
-          modelRef.run_time = res.data.request_data.run_time;
+          res.data.request_data.forEach((obj) => {
+            if (obj.id == project.id) {
+              modelRef.run_time = obj.run_time;
+            }
+          });
+
           modelRef.status = res.data.status_code;
           resp_loading.value = true;
         } else {
@@ -556,7 +540,6 @@ export default defineComponent({
     const optionsProject = ref([]);
 
     project_get().then((res) => {
-      //  this.data =  res.data;
       for (var i = 0; i < res.data.length; i++) {
         optionsProject.value.push({
           value: res.data[i].id,
@@ -603,7 +586,7 @@ export default defineComponent({
       project,
       resp_loading,
       log,
-      reqActiveKey
+      reqActiveKey,
     };
   },
 });
