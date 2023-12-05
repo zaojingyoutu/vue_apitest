@@ -40,12 +40,11 @@
             <a-input v-model:value="modelRef.email" />
           </a-form-item>
           <a-form-item label=" 失败通知">
-            <div style="width: fit-content;">
-              <a-switch  v-model:checked="modelRef.alert_on_failure" />
-                默认false，填写通知邮件所有情况都通知，选择后只有失败才通知。
+            <div style="width: fit-content">
+              <a-switch v-model:checked="modelRef.alert_on_failure" />
+              默认false，填写通知邮件所有情况都通知，选择后只有失败才通知。
             </div>
-          
-        </a-form-item>
+          </a-form-item>
           <a-form-item label="用户变量">
             <a-textarea
               v-model:value="modelRef.user_variables"
@@ -171,7 +170,7 @@
                           <a-modal
                             v-model:visible="caseVisible"
                             style="width: 50%"
-                            title="code"
+                            title="variable code"
                             @ok="caseVariableHandleOk(index)"
                           >
                             <MyCodemirror
@@ -240,7 +239,7 @@
                   @finish="onFinish"
                 >
                   <a-space
-                    v-for="assert in detail.asserts"
+                    v-for="(assert,index) in detail.asserts"
                     :key="assert.id"
                     style="display: flex; margin-bottom: 8px"
                     align="baseline"
@@ -256,10 +255,32 @@
                         >response</a-select-option
                       >
                       <a-select-option value="Status">响应状态</a-select-option>
-                      <a-select-option value="None">无</a-select-option>
+                      <a-select-option value="code">code</a-select-option>
                     </a-select>
+                    <div v-if="assert.mold === 'code'">
+                      <div>
+                        <a-button
+                          type="primary"
+                          @click="caseAssertShowModal(assert)"
+                          >查看/编辑</a-button
+                        >
+                        <a-modal
+                          v-model:visible="assertsVisible"
+                          style="width: 50%"
+                          title="assert code"
+                          @ok="caseAssertHandleOk(index)"
+                        >
+                          <MyCodemirror
+                            v-model:value="caseAssertCode.value"
+                            style="height: 200px"
+                          ></MyCodemirror>
+                          响应数据：response.json()
+                          获取变量：self.get('key')
+                        </a-modal>
+                      </div>
+                    </div>
 
-                    <a-form-item>
+                    <a-form-item v-else>
                       <a-input
                         v-model:value="assert.value"
                         v-if="assert.mold == 'response'"
@@ -410,7 +431,7 @@ export default defineComponent({
         modelRef.env = res.data[0].env;
         modelRef.project_id = res.data[0].project;
         modelRef.email = res.data[0].email;
-        modelRef.alert_on_failure = res.data[0].alert_on_failure
+        modelRef.alert_on_failure = res.data[0].alert_on_failure;
         modelRef.user_variables = res.data[0].user_variables || "";
         formState.project_id = res.data[0].project;
         modelRef.case_list = res.data[0].case_list;
@@ -433,7 +454,7 @@ export default defineComponent({
       case_list: [],
       email: "",
       user_variables: "",
-      alert_on_failure: false
+      alert_on_failure: false,
     });
     const count = reactive({
       cases_count: 0,
@@ -782,6 +803,25 @@ export default defineComponent({
       detail.variable[index].value = caseVariableCode.value;
       caseVisible.value = false;
     };
+
+    const caseAssertCode = reactive({
+      value: "",
+    });
+    const assertsVisible = ref(false);
+    const caseAssertShowModal = (testcase) => {
+      caseAssertCode.value = "";
+      caseAssertCode.value = testcase.value;
+      assertsVisible.value = true;
+    };
+    const caseAssertHandleOk = (index) => {
+      console.log(index)
+      console.log(detail.asserts)
+      console.log(caseAssertCode.value)
+      detail.asserts[index].value = caseAssertCode.value;
+      assertsVisible.value = false;
+    };
+
+
     const reportUrl = "/reportList?testplan_id=" + planid.id;
     return {
       removeAssert,
@@ -836,6 +876,10 @@ export default defineComponent({
       caseVariableShowModal,
       caseVariableHandleOk,
       caseVariableCode,
+      assertsVisible,
+      caseAssertShowModal,
+      caseAssertHandleOk,
+      caseAssertCode,
     };
   },
 });
