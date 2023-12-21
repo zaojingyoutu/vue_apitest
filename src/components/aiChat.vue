@@ -1,3 +1,3 @@
 <template>
-    <iframe src="https://chat.zaojingyoutu.top/" style="width: 85vh;height: 88vh;;"></iframe>
+    <iframe src="https://a1a0939534.yicp.fun/" style="width: 100%;height: 88vh;"></iframe>
 </template>
