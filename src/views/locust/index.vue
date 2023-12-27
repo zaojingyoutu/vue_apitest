@@ -101,6 +101,7 @@
       <a-button type="primary" style="margin-left: 10px" @click="taskShowModal"
         >定时任务</a-button
       >
+      <a-button  style="margin-left: 10px"  @click="download">下载</a-button>
     </div>
 
     <MyCodemirror v-model:value="content"></MyCodemirror>
@@ -369,6 +370,20 @@ export default defineComponent({
       cron: "",
     });
     const checked = ref(false);
+
+    const download =()=>{
+      // 创建一个Blob对象
+      var blob = new Blob([content.value], { type: "text/plain" });
+      // 创建一个可以访问这个blob的url
+      var url = URL.createObjectURL(blob);
+      // 创建一个a标签
+      var a = document.createElement("a");
+      // 设置a标签的href和download属性
+      a.href = url;
+      a.download = modelRef.name;
+      // 触发a标签的click事件来下载文件
+      a.click();
+    }
     return {
       checked,
       taskRef,
@@ -392,6 +407,7 @@ export default defineComponent({
       del,
       run,
       options,
+      download
     };
   },
 });
