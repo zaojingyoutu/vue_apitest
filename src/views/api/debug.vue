@@ -86,19 +86,31 @@
             <template #tab>
               <span> header </span>
             </template>
-            <a-textarea v-model:value="modelRef.header" style="margin-top: 0px; margin-bottom: 0px; height: 460px" />
+            <MyCodemirror
+              v-model:value="modelRef.header"
+              mode="javascript"
+              style="height: 460px"
+            ></MyCodemirror>
           </a-tab-pane>
           <a-tab-pane key="2">
             <template #tab>
               <span> parameter </span>
             </template>
-            <a-textarea v-model:value="modelRef.parameter" style="margin-top: 0px; margin-bottom: 0px; height: 460px" />
+            <MyCodemirror
+              v-model:value="modelRef.parameter"
+              mode="javascript"
+              style="height: 460px"
+            ></MyCodemirror>
           </a-tab-pane>
           <a-tab-pane key="3">
             <template #tab>
               <span> data </span>
             </template>
-            <a-textarea v-model:value="modelRef.data" style="margin-top: 0px; margin-bottom: 0px; height: 460px" />
+            <MyCodemirror
+              v-model:value="modelRef.data"
+              mode="javascript"
+              style="height: 460px"
+            ></MyCodemirror>
           </a-tab-pane>
           <a-tab-pane key="4">
             <template #tab>
@@ -141,7 +153,11 @@
               响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}
             </p>
             <div v-if="resp_loading">
-              <a-textarea v-model:value="modelRef.response" style="margin-top: 0px; margin-bottom: 0px; height: 460px" />
+              <MyCodemirror
+              v-model:value="modelRef.response"
+              mode="javascript"
+              style="height: 460px"
+            ></MyCodemirror>
             </div>
             <div v-else>
               <a-spin />
@@ -195,6 +211,7 @@ import { project_get } from "@/api/project";
 import { deBug_post } from "@/api/deBug";
 import associatedCases from "@/components/associatedCases.vue";
 import { curl_dumps } from "@/utils/jsonToCurl";
+import MyCodemirror from "@/components/VueCodemirror.vue";
 
 const useForm = Form.useForm;
 export default defineComponent({
@@ -202,6 +219,7 @@ export default defineComponent({
     MinusCircleOutlined,
     PlusOutlined,
     associatedCases,
+    MyCodemirror
   },
   setup() {
     const dynamicValidateForm = reactive({

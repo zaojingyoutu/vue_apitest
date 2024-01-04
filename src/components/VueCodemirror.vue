@@ -21,17 +21,16 @@ import { ref } from "vue";
 export default {
   name: "MyCodemirror",
   props: {
-    msg: String,
+    mode: String,
   },
   components: { Codemirror },
-  setup() {
+  setup(props) {
     const code = ref();
-
+    const mode = props.mode || "python"
     return {
-
       code,
       cmOptions: {
-        mode: "python", // 语言模式
+        mode: mode, // 语言模式
         theme: "default", // 主题
         lineNumbers: true, // 显示行号
         smartIndent: true, // 智能缩进
