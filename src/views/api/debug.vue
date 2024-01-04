@@ -165,7 +165,7 @@
               <span> request data </span>
             </template>
             <a-collapse v-model:activeKey="reqActiveKey">
-              <a-collapse-panel v-for:="request in log.request" :key="request.id" :header="request.name"
+              <a-collapse-panel v-for:="request in log.request" :key="request.id" :header="`${request.name}  ${request.status_code}`"
                 style="text-align: left">
                 <p>url: {{ request.url }}</p>
                 <p>method: {{ request.method }}</p>
