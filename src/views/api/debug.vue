@@ -82,6 +82,16 @@
       </div>
       <div class="requestBody">
         <a-tabs v-model:activeKey="activeKey">
+          <a-tab-pane key="10">
+            <template #tab>
+              <span> 用户变量 </span>
+            </template>
+            <MyCodemirror
+              v-model:value="modelRef.variables"
+              mode="javascript"
+              style="height: 460px"
+            ></MyCodemirror>
+          </a-tab-pane>
           <a-tab-pane key="1">
             <template #tab>
               <span> header </span>
@@ -238,6 +248,7 @@ export default defineComponent({
           (modelRef.setup = res.data[0].setup),
           (modelRef.describe = res.data[0].describe),
           (modelRef.teardown = res.data[0].teardown),
+          (modelRef.variables = res.data[0].variables),
           (modelRef.header = JSON.stringify(
             JSON.parse(res.data[0].header),
             null,
@@ -276,6 +287,7 @@ export default defineComponent({
       run_time: "",
       status,
       describe: "",
+      variables: ""
     });
 
     const rulesRef = reactive({
@@ -339,6 +351,7 @@ export default defineComponent({
 
     const onSubmit = () => {
       modelRef.relation = dynamicValidateForm.cases;
+      console.log(modelRef)
       const saveData = JSON.parse(JSON.stringify(modelRef));
       delete saveData["response"];
       delete saveData["env"];
