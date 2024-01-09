@@ -361,7 +361,7 @@ export default defineComponent({
       delete saveData["status"];
 
       var req_method;
-      if (project.id == undefined) {
+      if (modelRef.id == '') {
         req_method = "post";
       } else {
         req_method = "put";
@@ -371,6 +371,9 @@ export default defineComponent({
           content: res.msg,
           duration: 5,
         });
+        if(req_method == "post"){
+          modelRef.id=res.data.id
+        }
       });
     };
     const log = reactive({
