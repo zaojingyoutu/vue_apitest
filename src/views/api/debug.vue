@@ -271,6 +271,7 @@ export default defineComponent({
     const modelRef = reactive({
       name: "",
       project: "",
+      module: "",
       url: "",
       method: [],
       header: "",
