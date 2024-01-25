@@ -10,7 +10,7 @@
       width ="35%"
       @after-visible-change="afterVisibleChange"
     >
-    <iframe src="lk-ai.top" style="width: 100%;height: 98%;" ></iframe>
+    <iframe src="https://lk-ai.top/" style="width: 100%;height: 98%;" ></iframe>
     </a-drawer>
   </template>
   <script>
