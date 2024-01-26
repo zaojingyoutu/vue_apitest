@@ -1,7 +1,7 @@
 <template>
   <div  >
     <div v-if="isShow">
-      <iframe src="https://www.zaojingyoutu.top:8000/locustWeb/" style="width: 100%;height: 85vh;;"></iframe>
+      <iframe :src="url" style="width: 100%;height: 85vh;"></iframe>
 
     </div>
   <div v-else>
@@ -15,8 +15,9 @@
 import { ref ,defineComponent} from 'vue'
 export default defineComponent ({
   setup() {
+    const url = "https://www.zaojingyoutu.top:8002/locustWeb/"
     const isShow = ref(true)
-    fetch("https://www.zaojingyoutu.top:8000/locustWeb/" ).then(r=>{
+    fetch(url).then(r=>{
       if(r.status != 200){
         isShow.value= false
       }else{
@@ -26,7 +27,8 @@ export default defineComponent ({
       console.log(isShow.value)
     })
     return{
-      isShow
+      isShow,
+      url
     }
   },
 })

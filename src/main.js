@@ -12,7 +12,7 @@ let allURL;
 if (process.env.VUE_APP_FLAG == "dev") {
   allURL = process.env.VUE_APP_VUE_APP_BASEURL;
 } else{
-  allURL = "https://www.zaojingyoutu.top:8000/api/";
+  allURL = "https://www.zaojingyoutu.top:8002/api/";
 }
 
 // let baseUrl = '127.0.0.1:8000/api/'
