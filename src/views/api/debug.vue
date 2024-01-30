@@ -12,8 +12,6 @@
         float: right;
         width: 40%;
         text-align: center;
-        z-index: 1;
-        position: fixed;
         right: 0;
       ">
       <a-collapse ghost>

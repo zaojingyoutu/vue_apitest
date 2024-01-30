@@ -15,6 +15,14 @@ import Codemirror from "codemirror-editor-vue3";
 // language
 import "codemirror/mode/javascript/javascript.js";
 import "codemirror/mode/python/python.js";
+// 折叠
+import 'codemirror/addon/fold/foldgutter.css'
+import 'codemirror/addon/fold/foldcode'
+import 'codemirror/addon/fold/foldgutter'
+import 'codemirror/addon/fold/brace-fold'
+import 'codemirror/addon/fold/comment-fold'
+import 'codemirror/addon/display/autorefresh'
+
 
 
 import { ref } from "vue";
@@ -30,6 +38,7 @@ export default {
     return {
       code,
       cmOptions: {
+        autoRefresh: true, // 自动刷新为true
         mode: mode, // 语言模式
         theme: "default", // 主题
         lineNumbers: true, // 显示行号
@@ -39,6 +48,7 @@ export default {
         styleActiveLine: true, // 显示选中行的样式
         completeSingle: false,
         lineWrapping: true,
+        gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'], // 启用折叠需要的配置
       },
       onChange() {
         // console.log(code);
