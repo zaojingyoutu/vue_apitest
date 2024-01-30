@@ -1,7 +1,7 @@
 <template>
   <div  >
     <div v-if="isShow">
-      <iframe :src="url" style="width: 100%;height: 85vh;"></iframe>
+      <iframe :src="url" style="width: 100%;height: 85vh;border: none;"></iframe>
 
     </div>
   <div v-else>
