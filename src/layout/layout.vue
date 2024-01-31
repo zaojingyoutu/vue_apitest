@@ -156,7 +156,6 @@ import AiChat from "@/components/aiFloating.vue";
                     localStorage.clear();
                     window.location.href = "/login";
                 }
-                console.log('click', e.key);
             };
             const selectedKeys = ref(['1']);
             let route = useRoute();

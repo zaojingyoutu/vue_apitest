@@ -56,7 +56,6 @@
          const query = useRouter().currentRoute.value.query;
          locustReportGet({locust:query.locustId}).then((res) => {
             data.value = res
-            console.log(data)
         })
         const deletes = (record) => {
             locustReportDel(record.id).then((res) => {
@@ -72,9 +71,6 @@
                 duration: 5,
                 });
             }
-    
-            console.log(res);
-            console.log(res.data.data.result);
             });
         };
     

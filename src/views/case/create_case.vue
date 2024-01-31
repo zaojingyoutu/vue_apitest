@@ -40,7 +40,7 @@
   </a-form>
 </template>
 <script>
-import { reactive, toRaw, computed, defineComponent } from 'vue';
+import { reactive, computed, defineComponent } from 'vue';
 import { toArray } from 'lodash-es';
 import { Form } from 'ant-design-vue';
 import {useRouter } from 'vue-router';
@@ -55,7 +55,6 @@ export default defineComponent({
          const router = useRouter();
 
     const project = useRouter().currentRoute.value.query
-// console.log('222222222222222222',( useRouter().currentRoute.value.query.id))
     if (useRouter().currentRoute.value.query.id != undefined){
       cases_get(useRouter().currentRoute.value.query)
       .then(res=>{console.log(res)
@@ -95,10 +94,6 @@ export default defineComponent({
         message: 'Please select method',
         method: 'array',
       }],
-      // project: [{
-      //   required: true,
-      //   message: 'Please input project',
-      // }],
       module: [{
         required: true,
         message: 'Please input module',
@@ -135,12 +130,9 @@ export default defineComponent({
 
 
     const onSubmit = () => {
-      // console.log(useRouter().currentRoute.value.query.projectid)
       validate().then(() => {
-        console.log(toRaw(modelRef));
         var req_method
         if (project.id == undefined) {
-          // console.log('1111111111111111111111',project.id)
           req_method = 'post'
         }else {
           req_method = 'put'
@@ -153,8 +145,6 @@ export default defineComponent({
                 });
                 if (res.code == 200){
                              router.push({path:'case',query:{project_id:project.project_id}})
-
-                  // window.location.href="case?project_id=" + project.project_id ;
                 }
            });
       }).catch(err => {

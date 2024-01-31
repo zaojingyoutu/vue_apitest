@@ -321,9 +321,7 @@ export default defineComponent({
       });
     };
 
-    const onFinish = (values) => {
-      console.log("Received values of form:", values);
-      console.log("dynamicValidateForm.users:", dynamicValidateForm.cases);
+    const onFinish = () => {
     };
 
     const removeAssert = (item) => {
@@ -354,11 +352,9 @@ export default defineComponent({
    
 
     const focus = () => {
-      console.log('focus');
     };
 
-    const handleChange = value => {
-      console.log(`selected ${value}`);
+    const handleChange = () => {
     };
 
     const optionsProject = ref([])
@@ -369,8 +365,6 @@ export default defineComponent({
           optionsProject.value.push({value:res.data[i].id,label:res.data[i].name})
           if ( project.project_id ==res.data[i].id ){modelRef.project = res.data[i].id}
         }
-
-        console.log(optionsProject.value);
      });
 
     return {

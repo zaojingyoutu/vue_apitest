@@ -551,8 +551,7 @@ export default defineComponent({
 
     const formRef = ref();
 
-    const onFinish = (values) => {
-      console.log("Received values of form:", values);
+    const onFinish = () => {
       cases_get(formState).then((res) => {
         data.value = res.data;
         total.value = res.total;
@@ -814,9 +813,6 @@ export default defineComponent({
       assertsVisible.value = true;
     };
     const caseAssertHandleOk = (index) => {
-      console.log(index)
-      console.log(detail.asserts)
-      console.log(caseAssertCode.value)
       detail.asserts[index].value = caseAssertCode.value;
       assertsVisible.value = false;
     };

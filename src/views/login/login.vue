@@ -109,12 +109,10 @@ export default defineComponent({
       remember: true,
     });
 
-    const onFinish = values => {
-      console.log('Success:', values);
+    const onFinish = () => {
     };
 
-    const onFinishFailed = errorInfo => {
-      console.log('Failed:', errorInfo);
+    const onFinishFailed = () => {
     };
 
     const disabled = computed(() => {
@@ -127,11 +125,8 @@ const login = () =>Login(formState).then((res) => {
                 content: res.msg,
                 duration: 5
                 });
-                console.log(res.data)
                 if (res.code == 200){
                   router.push("/project")
-
-                  // window.location.href="project";
                   localStorage.setItem('token','Bearer ' +  res.data.access_token)
                   localStorage.setItem('user',JSON.stringify(res.data))
 }});
@@ -151,10 +146,7 @@ const login = () =>Login(formState).then((res) => {
                 });
                 if (res.code == 200){
                   router.push("//login")
-                  // window.location.href="#/login";
-
                 }
-             console.log(res);
            });
     };
 

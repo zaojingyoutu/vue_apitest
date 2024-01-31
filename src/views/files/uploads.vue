@@ -67,7 +67,6 @@ export default defineComponent({
       upfiles_post(forms, configs).then(res => {
         let len = fileList.value.length -1
         fileList.value[len]={"url":res.data.url,"name":res.data.name.substring(5),"fs_id":res.data.fs_id,"size":res.data.size}
-        console.log(fileList.value)
       })
     }
 

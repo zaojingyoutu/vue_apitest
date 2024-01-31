@@ -219,7 +219,6 @@ export default defineComponent({
       count.cases_count = result.cases_count;
       count.cases_false = result.cases_false;
       count.skip = result.cases_skip
-      console.log(count)
       info.project = res.data[0].project__name;
       info.env = res.data[0].env;
       info.create_time = res.data[0].create_time;
@@ -252,7 +251,6 @@ export default defineComponent({
 
     const showDrawer = (record) => {
       visible.value = true;
-      console.log(record);
       case_details.name = record.name;
       case_details.url = record.url;
       case_details.module = record.module;

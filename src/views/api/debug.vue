@@ -350,7 +350,6 @@ export default defineComponent({
 
     const onSubmit = () => {
       modelRef.relation = dynamicValidateForm.cases;
-      console.log(modelRef)
       const saveData = JSON.parse(JSON.stringify(modelRef));
       delete saveData["response"];
       delete saveData["env"];
@@ -487,11 +486,9 @@ export default defineComponent({
     ]);
 
     const focus = () => {
-      console.log("focus");
     };
 
-    const handleChange = (value) => {
-      console.log(`selected ${value}`);
+    const handleChange = () => {
     };
 
     const optionsProject = ref([]);

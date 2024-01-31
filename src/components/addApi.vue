@@ -232,7 +232,6 @@ export default defineComponent({
   },
   setup(props) {
     const data = ref();
-    // console.log(111111111111122222,props.case_list)
     const modelRef = reactive({
       name: "",
       describe: "",
@@ -261,7 +260,6 @@ export default defineComponent({
       visible.value = true;
       cases_get(formState).then((res) => {
         data.value = res.data;
-        console.log(state.selectedRowKeys);
       });
     };
 
@@ -276,7 +274,6 @@ export default defineComponent({
           [...modelRef.case_list].every((y) => y.id !== x.id)
         );
         modelRef.case_list.push(...addRows);
-        console.log(modelRef.case_list);
       } else {
         modelRef.case_list.push(...tmpCaseIds.selectedRows);
       }
@@ -286,13 +283,7 @@ export default defineComponent({
 
     const formRef = ref();
 
-    const onFinish = (values) => {
-      console.log("Received values of form:", values);
-      console.log(
-        "modelRef.case_list",
-        state.selectedRowKeys,
-        modelRef.case_list
-      );
+    const onFinish = () => {
       cases_get(formState).then((res) => {
         data.value = res.data;
         total.value = res.total;
@@ -343,7 +334,6 @@ export default defineComponent({
     ]);
 
     const focus = () => {
-      console.log("focus");
     };
 
     const handleChange = (value) => {
@@ -365,18 +355,14 @@ export default defineComponent({
           modelRef.project_id = res.data[i].id;
         }
       }
-
-      console.log(optionsProject.value);
     });
 
     // 删除添加的用例
     const deletes = (record) => {
       const index = modelRef.case_list.indexOf(record);
-
       modelRef.case_list.splice(index, 1);
       const keyIndex = state.selectedRowKeys.indexOf(record.id);
       delete state.selectedRowKeys[keyIndex];
-      console.log(index);
     };
     const getCheckboxProps = (record) => ({
       disabled: tmpCaseIds.selectedRowKeys.includes(record.id),

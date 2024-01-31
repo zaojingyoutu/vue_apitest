@@ -23,9 +23,7 @@ export default defineComponent ({
       }else{
         isShow.value= true
       }
-      
-      console.log(isShow.value)
-    })
+          })
     return{
       isShow,
       url

@@ -90,7 +90,6 @@
                     modelRef.name = res.name
                     modelRef['id'] = res.id
                     modelRef.fun_name=res.fun_name
-                    console.log(res, modelRef)
                 })
 
             }
@@ -158,9 +157,7 @@
             const put = () => {
 
                 modelRef['create_user'] = JSON.parse(localStorage.getItem("user")).name
-                // modelRef.content = content
                 customFun_put(modelRef).then((res) => {
-                    // content.value = res.content
                     if (res.status == 200) {
                         message.success({
                                 content: "操作成功！",
@@ -176,12 +173,9 @@
                     }
 
                 })
-
-                console.log(modelRef)
             }
             const del = () => {
                 customFun_del(modelRef.id).then((res) => {
-                    console.log(1111111111, res)
                     if (res == '') {
                         message.success({
                                 content: "删除成功！",

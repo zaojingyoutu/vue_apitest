@@ -51,7 +51,6 @@ export default {
         gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'], // 启用折叠需要的配置
       },
       onChange() {
-        // console.log(code);
       },
     };
   },

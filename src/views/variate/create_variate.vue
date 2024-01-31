@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { reactive, toRaw, computed, defineComponent,ref } from 'vue';
+import { reactive, computed, defineComponent,ref } from 'vue';
 import { toArray } from 'lodash-es';
 import { Form } from 'ant-design-vue';
 import { message } from "ant-design-vue";
@@ -55,7 +55,6 @@ export default defineComponent({
   setup() {
       const router = useRouter();
       const project = useRouter().currentRoute.value.query
-// console.log(useRouter().currentRoute.value.query.projectid)
       if (useRouter().currentRoute.value.query.id != undefined){
         variate_get(useRouter().currentRoute.value.query)
         .then(res=>{console.log(res)
@@ -104,10 +103,8 @@ export default defineComponent({
 
     const onSubmit = () => {
       validate().then(() => {
-        console.log(toRaw(modelRef));
          var req_method
         if (project.id == undefined) {
-          // console.log('1111111111111111111111',project.id)
           req_method = 'post'
         }else {
           req_method = 'put'
@@ -122,7 +119,6 @@ export default defineComponent({
                   // window.location.href="/variate_list";
                   router.push("/variate_list")
                 }
-             console.log(res);
            });
       }).catch(err => {
         console.log('error', err);
@@ -142,11 +138,9 @@ export default defineComponent({
    
 
     const focus = () => {
-      console.log('focus');
     };
 
-    const handleChange = value => {
-      console.log(`selected ${value}`);
+    const handleChange = () => {
     };
 
     const errorInfos = computed(() => {
@@ -161,8 +155,6 @@ export default defineComponent({
           optionsProject.value.push({value:res.data[i].id,label:res.data[i].name})
           if ( project.project_id ==res.data[i].id ){modelRef.project_id = res.data[i].id}
         }
-
-        console.log(optionsProject.value);
      });
 
 

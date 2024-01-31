@@ -77,7 +77,6 @@ export default defineComponent({
   created() {
     project_get().then((res) => {
          this.data =  res.data;
-        console.log('=========',);
      });
 
   },
@@ -99,9 +98,6 @@ export default defineComponent({
                            duration: 5}
                    );
                }
-
-             console.log(res);
-             console.log(res.data.data.result);
            });
     }
 

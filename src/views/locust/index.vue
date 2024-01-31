@@ -160,7 +160,6 @@ export default defineComponent({
         content.value = res.content;
         modelRef.name = res.name;
         modelRef["id"] = res.id;
-        console.log(res, modelRef);
       });
     };
 
@@ -200,7 +199,6 @@ export default defineComponent({
       if (modelRef.mold != "curl") {
         modelRef.content = content;
       }
-      console.log(modelRef);
       if (modelRef.id) {
         locust_put(modelRef).then((res) => {
           content.value = res.content;
@@ -235,7 +233,6 @@ export default defineComponent({
         });
       }
 
-      console.log(modelRef);
     };
     const del = () => {
       locust_del(modelRef.id).then((res) => {

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { reactive, toRaw, computed, defineComponent, ref } from "vue";
+import { reactive, computed, defineComponent, ref } from "vue";
 import { toArray } from "lodash-es";
 import { Form } from "ant-design-vue";
 import { message } from "ant-design-vue";
@@ -31,10 +31,8 @@ export default defineComponent({
     const router = useRouter();
 
     const user = useRouter().currentRoute.value.query;
-    // console.log(useRouter().currentRoute.value.query.projectid)
     if (user.id != undefined) {
       user_get(useRouter().currentRoute.value.query).then((res) => {
-        console.log(res.code )
         if (res.code != 200) {
           message.error({
             content: res.msg,
@@ -61,7 +59,6 @@ export default defineComponent({
     const onSubmit = () => {
       validate()
         .then(() => {
-          console.log(toRaw(modelRef));
           var req_method;
           if (user.id == undefined) {
             req_method = "post";
@@ -75,9 +72,7 @@ export default defineComponent({
             });
             if (res.code == 200) {
               router.push("/userList");
-              // window.location.href="/userList";
             }
-            console.log(res);
           });
         })
         .catch((err) => {

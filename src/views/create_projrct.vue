@@ -66,7 +66,6 @@ export default defineComponent({
     const onSubmit = () => {
       validate()
         .then(() => {
-          console.log(modelRef);
           var req_method = isUpdate ? "put" :"post";
           project_api(modelRef, req_method).then((res) => {
             message.success({
@@ -76,7 +75,6 @@ export default defineComponent({
             if (res.code == 200) {
               router.push("/project");
             }
-            console.log(res);
           });
         })
         .catch((err) => {

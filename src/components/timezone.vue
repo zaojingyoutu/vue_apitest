@@ -130,16 +130,13 @@ export default defineComponent({
 
     const options = ref([]);
 
-    const handleChange = (value) => {
-      console.log(`selected ${value}`);
+    const handleChange = () => {
     };
 
     const handleBlur = () => {
-      console.log("blur");
     };
 
     const handleFocus = () => {
-      console.log("focus");
     };
 
     const filterOption = (input, option) => {

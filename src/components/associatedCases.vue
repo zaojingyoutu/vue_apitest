@@ -186,17 +186,11 @@ export default {
     MenuOutlined,
   },
   setup(props) {
-    const dynamicValidateForm = reactive({
-      cases: [],
-    });
-    const onFinish = (values) => {
-      console.log("Received values of form:", values);
-      console.log("dynamicValidateForm.users:", dynamicValidateForm.cases);
+    const onFinish = () => {
     };
 
     const prop = toRefs(props);
     const association = prop.associations.value;
-    console.log(association);
     const addCase = () => {
       // eslint-disable-next-line vue/no-mutating-props
       association.relation.push({
@@ -253,8 +247,7 @@ export default {
       caseVariableCode.caseId = testcase.case.key;
       caseVariableCode.value = testcase.value;
     };
-    const handleOk = (e) => {
-      console.log(e);
+    const handleOk = () => {
       association.relation.forEach((item) => {
         if (item.case.key === caseVariableCode.caseId) {
           // 检查item的case对象是否包含key字段，并且key值是否等于你想要的值
@@ -264,7 +257,6 @@ export default {
       visible.value = false;
       caseVariableCode.caseId = "";
       caseVariableCode.value = "";
-      console.log(association.relation);
     };
 
     return {

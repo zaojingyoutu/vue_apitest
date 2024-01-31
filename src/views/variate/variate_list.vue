@@ -78,13 +78,10 @@ export default defineComponent({
   },
   created() {
       const queryData = useRouter().currentRoute.value.query;
-      console.log(queryData)
       if (queryData != null){
               variate_get(queryData)
      .then((res) => {
          this.data =  res.data;
-
-        console.log('=========',);
      });
       }
 
@@ -109,9 +106,6 @@ export default defineComponent({
                            duration: 5}
                    );
                }
-
-             console.log(res);
-             console.log(res.data.data.result);
            });
     }
 
@@ -119,14 +113,6 @@ export default defineComponent({
         deletes
     }
   }
-
-// // methods: {
-// //     func(record) {
-// //         this.$router.push({name: '/case', query: {projrctid: record.id}});
-// //
-// //     }
-//
-// }
 });
 </script>
 

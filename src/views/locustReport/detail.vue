@@ -13,10 +13,8 @@
 
         let htmlText =ref()
          const query = useRouter().currentRoute.value.query;
-         console.log(query)
          locustReportDetail(query.id).then((res) => {
            htmlText.value=res
-           console.log(htmlText)
         })
        
      

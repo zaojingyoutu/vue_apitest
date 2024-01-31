@@ -117,9 +117,6 @@ export default defineComponent({
             duration: 5,
           });
         }
-
-        console.log(res);
-        console.log(res.data.data.result);
       });
     };
     const runplan = (record) => {
@@ -140,9 +137,6 @@ export default defineComponent({
             duration: 5,
           });
         }
-
-        console.log(res);
-        console.log(res.data.result);
       });
     };
 
@@ -155,8 +149,7 @@ export default defineComponent({
       visible.value = true;
       checked.value == false
     };
-    const handleOk = (e) => {
-      console.log(e, cronData);
+    const handleOk = () => {
       if (checked.value == true) {
         Deltask(cronData.value.id).then((res) => {
           if (res.code == 200) {

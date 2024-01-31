@@ -193,9 +193,6 @@
                                 }
                             );
                         }
-
-                        console.log(res);
-                        console.log(res.data.result);
                     });
             }
             const copy = (record) => {
@@ -220,11 +217,7 @@
                             }
                         );
                     }
-
-                    console.log(res);
-                    console.log(res.data.result);
                 });
-                console.log(record)
             }
             const expand = ref(false);
             const formRef = ref();
@@ -232,15 +225,13 @@
                 project_id: '',
             });
 
-            const onFinish = values => {
-                console.log('Received values of form: ', values);
-                console.log('formState: ', formState);
+            const onFinish = () => {
+
                 formState['current'] = 1
                 cases_get(formState)
                     .then((res) => {
                         data.value = res.data;
                         total.value = res.total
-                        // console.log("-----------",this.$route.query );
                     });
 
             };
@@ -254,7 +245,6 @@
                     .then((res) => {
                         data.value = res.data;
                         total.value = res.total
-                        // console.log("-----------",this.$route.query );
                     });
             }
             const optionsProject = ref([])
@@ -268,7 +258,6 @@
                     }
                 }
 
-                console.log(optionsProject.value);
             });
 
             const visible = ref(false);
@@ -296,7 +285,6 @@
                         }
                     }
                 );
-                console.log(modelRef);
                 visible.value = false;
             };
 

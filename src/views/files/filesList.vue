@@ -80,7 +80,6 @@ export default defineComponent({
             files_get({"fs_id": record}).then((res) => {
                 if (res.code == 200) {
                     filesUrl.value = res.data[0]
-                    console.log(filesUrl.value)
                 } else {
                     message.error({
                             content: "获取url失败！",
@@ -88,18 +87,14 @@ export default defineComponent({
                         }
                     );
                 }
-
-                console.log(res);
             });
             visible.value = true;
         };
 
-        const handleOk = e => {
-            console.log(e);
+        const handleOk = () => {
             visible.value = false;
         };
-        const uploadFilesOk = e => {
-            console.log(e);
+        const uploadFilesOk = () => {
             uploadFiles.value = false;
         };
         const filesUrl = ref();
@@ -107,8 +102,6 @@ export default defineComponent({
 
         files_get({"current": current, "pageSize": 20}).then((res) => {
             data.value = res.data.list;
-            console.log('=========',);
-
         });
         const handleScroll = (e) => {
             if (e.srcElement.scrollTop + e.srcElement.offsetHeight >= e.srcElement.scrollHeight) {
