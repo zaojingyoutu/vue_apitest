@@ -99,9 +99,10 @@ import { locust_create } from "../../api/locust";
 export default defineComponent({
   setup() {
     const data = ref();
-    testplan_get().then((res) => {
+    const testplanGet = ()=>{testplan_get().then((res) => {
       data.value = res.data;
-    });
+    });} 
+    testplanGet()
     const deletes = (record) => {
       testplan_del(record.id).then((res) => {
         if (res.code == 200) {
@@ -109,7 +110,7 @@ export default defineComponent({
             content: "删除成功！",
             duration: 5,
           });
-          location.reload();
+          testplanGet();
         } else {
           message.success({
             content: "删除失败！",

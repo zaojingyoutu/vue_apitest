@@ -80,6 +80,9 @@
           <a-descriptions-item label="method">{{
             case_details.method
           }}</a-descriptions-item>
+          <a-descriptions-item label="status_code">{{
+            case_details.status_code
+          }}</a-descriptions-item>
           <a-descriptions-item label="URL">{{
             case_details.url
           }}</a-descriptions-item>
@@ -140,13 +143,6 @@ const columns = [
     fixed: "left",
     ellipsis: true,
   },
-  // {
-  //   title: "project",
-  //   width: 150,
-  //   dataIndex: "project",
-  //   key: "project",
-  //   fixed: "left",
-  // },
   {
     title: "module",
     dataIndex: "module",
@@ -164,6 +160,12 @@ const columns = [
     title: "method",
     dataIndex: "method",
     key: "method",
+    width:  '20%',
+  },
+  {
+    title: "status_code",
+    dataIndex: "status_code",
+    key: "status_code",
     width:  '20%',
   },
   {
@@ -255,6 +257,7 @@ export default defineComponent({
       case_details.url = record.url;
       case_details.module = record.module;
       case_details.method = record.method;
+      case_details.status_code = record.status_code;
       case_details.header = record.headers;
       case_details.parameter = record.parameter;
       case_details.data = record.data;
