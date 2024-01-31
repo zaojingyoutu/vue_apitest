@@ -163,6 +163,7 @@ export default defineComponent({
               content: "删除成功！",
               duration: 5,
             });
+            checked.value = false;
             testplan_get().then((res) => {
               data.value = res.data;
             });
