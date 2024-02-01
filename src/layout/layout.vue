@@ -17,10 +17,10 @@
              <router-link to="/project" style="color: white"> 项目管理</router-link>
           </span>
                 </a-menu-item>
-                <a-menu-item key="2">
+                <!-- <a-menu-item key="2">
                     <api-outlined />
                     <span class="nav-text"><router-link to="/api" style="color: white"> 接口管理</router-link></span>
-                </a-menu-item>
+                </a-menu-item> -->
                 <!-- <a-menu-item key="3">
                     <table-outlined/>
                     <span class="nav-text"><router-link to="/case" style="color: white"> 测试用例</router-link></span>
@@ -73,8 +73,10 @@
         </a-layout-sider>
         <a-layout>
             <a-layout-header :style="{ background: '#fff', padding: 0 }">
-                <!--        <router-link to="/login" @click="clear">退出</router-link>-->
+                
                 <div style="right: 3%;position: absolute">
+                    <a-select ref="select" v-model:value="workplace" style="width: 120px" :options="options" @focus="focus"
+            @change="handleChange"></a-select>
                     <a-dropdown>
                         <template #overlay>
                             <a-menu @click="handleMenuClick">
@@ -109,6 +111,7 @@
     </a-layout>
 </template>
 <script>
+import { workplace_user_get } from "@/api/user";
     import {
         UserOutlined,
         CalendarOutlined,
@@ -118,7 +121,7 @@
         MessageOutlined,
         CodeOutlined,
         ToolOutlined,
-        ApiOutlined,
+        // ApiOutlined,
         FundOutlined
 
     } 
@@ -137,7 +140,7 @@ import AiChat from "@/components/aiFloating.vue";
             MessageOutlined,
             CodeOutlined,
             ToolOutlined,
-            ApiOutlined,
+            // ApiOutlined,
             FundOutlined,
             AiChat
         },
@@ -170,8 +173,28 @@ import AiChat from "@/components/aiFloating.vue";
             }
             selectedKeys.value = [path[route.path]]
 
+            const user = JSON.parse(localStorage.getItem("user"))
+            const options = ref([]);
+            workplace_user_get({"user_id":user.id}).then((resp)=>{
+                for(let i=0;i < resp.length;i++){
+                    options.value.push({value: resp[i].workplace.id,
+                    label: resp[i].workplace.name,})
+                }
+                if(localStorage.getItem('workplace')){
+                    workplace.value = JSON.parse(localStorage.getItem('workplace')).label
+                }else{
+                    workplace.value = options.value[0].label
+                    localStorage.setItem('workplace',JSON.stringify(options.value[0]))
+                }
+            })
+
+            const handleChange = (value,workplace) => {
+                localStorage.setItem('workplace',JSON.stringify(workplace))
+                location.reload()
+            };
 
 
+            const workplace = ref();
 
             return {
                 selectedKeys,
@@ -179,6 +202,9 @@ import AiChat from "@/components/aiFloating.vue";
                 onBreakpoint,
                 // clear,
                 handleMenuClick,
+                handleChange,
+                workplace,
+                options
 
             };
         },

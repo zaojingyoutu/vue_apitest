@@ -39,3 +39,13 @@ export function user_del(data){
           data: [data],
     })
 }
+
+
+
+export function workplace_user_get(data){
+    return request.request({
+        method: "get",
+          url: "workplace_user/",
+          params: data,
+    })
+}
