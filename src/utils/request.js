@@ -5,6 +5,7 @@ import notification from 'ant-design-vue/es/notification'
 // import { VueAxios } from './axios'
 // import { token } from '@/store/mutation-types'
 import { useRouter } from 'vue-router';
+// import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
 let allURL;
 if (process.env.VUE_APP_FLAG == "dev") {
@@ -36,6 +37,11 @@ const errorHandler = (error) => {
       // const router = useRouter();
       // router.push("/login")
 
+    }else if (error.response.status === 402){
+      notification.error({
+        message: "没权限！",
+        description: data.msg
+      })
     }
     if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
       notification.error({
@@ -67,7 +73,13 @@ request.interceptors.request.use(config => {
   // 让每个请求携带自定义 token 请根据实际情况自行修改
   if (token) {
     config.headers['Authorization'] = token
+    // if(config.method ==='get'){
+    //   config.params['workplace_id'] = getWorkplaceId()
+    // }else{
+    //   config.data['workplace_id'] = getWorkplaceId()
+    // }
   }
+  
   return config
 }, errorHandler)
 
