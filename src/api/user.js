@@ -1,6 +1,8 @@
 import request from '@/utils/request'
+import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
-export function user_api(data,method){
+export function user_api(data={},method){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: method,
           url: "user/",
@@ -8,7 +10,8 @@ export function user_api(data,method){
     })
 }
 
-export function user_get(data){
+export function user_get(data = {}){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: "get",
           url: "user/",
@@ -24,7 +27,8 @@ export function user_put(data){
     })
 }
 
-export function user_create(data){
+export function user_create(data={}){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: "post",
           url: "user/",

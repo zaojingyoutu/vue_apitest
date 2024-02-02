@@ -75,8 +75,7 @@ export default defineComponent({
     };
   },
   created() {
-    const workplace_id = JSON.parse(localStorage.getItem('workplace')).value
-    project_get({"workplace_id":workplace_id}).then((res) => {
+    project_get().then((res) => {
          this.data =  res.data;
      });
 

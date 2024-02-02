@@ -126,7 +126,7 @@ const login = () =>Login(formState).then((res) => {
                 duration: 5
                 });
                 if (res.code == 200){
-                  router.push("/project")
+                  router.push("/index")
                   localStorage.setItem('token','Bearer ' +  res.data.access_token)
                   localStorage.setItem('user',JSON.stringify(res.data))
 }});

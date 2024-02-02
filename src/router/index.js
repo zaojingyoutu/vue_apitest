@@ -7,9 +7,15 @@ const routes = [
         name: 'Home',
         component: () => import(/* webpackChunkName: "layout" */ '../layout/layout'),
         children: [
-
             {
-
+                path: '/index',
+                name: 'home',
+                meta: {
+                    title: '首页'
+                },
+                component: () => import(/* webpackChunkName: "about" */ '../views/Home')
+            },
+            {
                 path: '/create_projrct',
                 name: 'create_projrct',
                 meta: {

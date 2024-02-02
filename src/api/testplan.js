@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
 export function testplan_api(data,method){
     return request.request({
@@ -8,7 +9,8 @@ export function testplan_api(data,method){
     })
 }
 
-export function testplan_get(data){
+export function testplan_get(data={}){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: "get",
           url: "testplan/",

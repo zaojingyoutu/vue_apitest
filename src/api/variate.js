@@ -1,5 +1,7 @@
 import request from '@/utils/request'
+import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
+let workplace_id = getWorkplaceId()
 export function variate_api(data,method){
     return request.request({
         method: method,
@@ -8,7 +10,8 @@ export function variate_api(data,method){
     })
 }
 
-export function variate_get(data){
+export function variate_get(data={}){
+    data['workplace_id'] = workplace_id
     return request.request({
         method: "get",
           url: "globalsvariate/",

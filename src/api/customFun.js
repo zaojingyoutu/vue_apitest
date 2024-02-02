@@ -1,4 +1,5 @@
 import request from '@/utils/request'
+import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
 export function customFun_api(data,method){
     return request.request({
@@ -8,7 +9,8 @@ export function customFun_api(data,method){
     })
 }
 
-export function customFun_get(data){
+export function customFun_get(data={}){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: "get",
           url: "customFun/",
