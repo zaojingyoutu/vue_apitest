@@ -1,7 +1,8 @@
 import request from '@/utils/request'
 import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
-export function locust_api(data,method){
+export function locust_api(data={},method){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: method,
           url: "locust/",
@@ -32,7 +33,8 @@ export function locust_put(data){
     })
 }
 
-export function locust_create(data){
+export function locust_create(data={}){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: "post",
           url: "locust/",

@@ -1,7 +1,8 @@
 import request from '@/utils/request'
 import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
-export function customFun_api(data,method){
+export function customFun_api(data={},method){
+    data['workplace'] = getWorkplaceId()
     return request.request({
         method: method,
           url: "customFun/",
@@ -10,7 +11,7 @@ export function customFun_api(data,method){
 }
 
 export function customFun_get(data={}){
-    data['workplace_id'] = getWorkplaceId()
+    data['workplace'] = getWorkplaceId()
     return request.request({
         method: "get",
           url: "customFun/",
@@ -32,7 +33,8 @@ export function customFun_put(data){
     })
 }
 
-export function customFun_create(data){
+export function customFun_create(data={}){
+    data['workplace'] = getWorkplaceId()
     return request.request({
         method: "post",
           url: "customFun/",

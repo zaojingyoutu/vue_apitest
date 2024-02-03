@@ -3,7 +3,8 @@ import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
 
 
-export function project_api(data,method){
+export function project_api(data={},method){
+    data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: method,
           url: "project/",
@@ -28,7 +29,8 @@ export function project_put(data){
     })
 }
 
-export function project_create(data){
+export function project_create(data={}){
+data['workplace_id'] = getWorkplaceId()
     return request.request({
         method: "post",
           url: "project/",

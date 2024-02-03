@@ -17,8 +17,8 @@
       </a-space>
     </a-form-item>
     <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }" v-bind="errorInfos">
-      <a-button type="primary" @click.prevent="onSubmit">Create</a-button>
-      <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
+      <a-button type="primary" @click.prevent="onSubmit">保存</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">清除</a-button>
     </a-form-item>
   </a-form>
 </template>
@@ -58,6 +58,7 @@ export default defineComponent({
         modelRef.id = res.data[0].id;
         modelRef.name = res.data[0].name;
         modelRef.describe = res.data[0].describe;
+        modelRef.workplace_id = res.data[0].workplace;
         modelRef.start_time = dayjs(res.data[0].start_time,'YYYY-MM-DD') ;
         modelRef.end_time = dayjs(res.data[0].end_time,'YYYY-MM-DD');
       });
