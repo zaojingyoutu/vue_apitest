@@ -241,7 +241,7 @@ export default defineComponent({
       console.log(workplace);
       workplace_user_put({ id: value, last_active: "T" });
       RefreshToken().then(resp=>{
-        localStorage.setItem('token','Bearer ' +  resp.access)
+        localStorage.setItem('token','Bearer ' +  resp.access_token)
         location.reload();
       })
     };
