@@ -8,3 +8,12 @@ export function Login(data){
     })
 }
 
+export function RefreshToken(){
+    const data = {"refresh":JSON.parse(localStorage.getItem("user")).refresh_token}
+    return request.request({
+        method: "post",
+          url: "refresh/",
+          data: data,
+    })
+}
+
