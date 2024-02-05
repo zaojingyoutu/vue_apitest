@@ -1,11 +1,6 @@
 <template>
   <a-layout>
-    <a-layout-sider
-      breakpoint="lg"
-      collapsed-width="0"
-      @collapse="onCollapse"
-      @breakpoint="onBreakpoint"
-    >
+    <a-layout-sider breakpoint="lg" collapsed-width="0" @collapse="onCollapse" @breakpoint="onBreakpoint">
       <div class="logo" />
 
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
@@ -14,8 +9,7 @@
           <table-outlined />
           <span class="nav-text">
             <router-link to="/project" style="color: white">
-              项目管理</router-link
-            >
+              项目管理</router-link>
           </span>
         </a-menu-item>
         <!-- <a-menu-item key="2">
@@ -28,35 +22,23 @@
                 </a-menu-item> -->
         <a-menu-item key="4">
           <eye-outlined />
-          <span class="nav-text"
-            ><router-link to="/variate_list" style="color: white">
-              变量管理</router-link
-            ></span
-          >
+          <span class="nav-text"><router-link to="/variate_list" style="color: white">
+              变量管理</router-link></span>
         </a-menu-item>
         <a-menu-item key="5">
           <calendar-outlined />
-          <span class="nav-text"
-            ><router-link to="/testplan" style="color: white">
-              测试计划</router-link
-            ></span
-          >
+          <span class="nav-text"><router-link to="/testplan" style="color: white">
+              测试计划</router-link></span>
         </a-menu-item>
         <a-menu-item key="6">
           <user-outlined />
-          <span class="nav-text"
-            ><router-link to="/userList" style="color: white">
-              用户管理</router-link
-            ></span
-          >
+          <span class="nav-text"><router-link to="/userList" style="color: white">
+              用户管理</router-link></span>
         </a-menu-item>
         <a-menu-item key="7">
           <tool-outlined />
-          <span class="nav-text"
-            ><router-link to="/tools" style="color: white">
-              常用工具</router-link
-            ></span
-          >
+          <span class="nav-text"><router-link to="/tools" style="color: white">
+              常用工具</router-link></span>
         </a-menu-item>
 
         <a-sub-menu key="sub1">
@@ -66,50 +48,32 @@
           <template #title>locust</template>
           <a-menu-item key="8">
             <code-sandbox-outlined />
-            <span class="nav-text"
-              ><router-link to="/locust" style="color: white">
-                locust脚本</router-link
-              ></span
-            >
+            <span class="nav-text"><router-link to="/locust" style="color: white">
+                locust脚本</router-link></span>
           </a-menu-item>
           <a-menu-item key="11">
             <fund-outlined />
-            <span class="nav-text"
-              ><router-link to="/locust/web" style="color: white">
-                locust web</router-link
-              ></span
-            >
+            <span class="nav-text"><router-link to="/locust/web" style="color: white">
+                locust web</router-link></span>
           </a-menu-item>
         </a-sub-menu>
         <a-menu-item key="9">
           <code-outlined />
-          <span class="nav-text"
-            ><router-link to="/customFun" style="color: white">
-              内置方法</router-link
-            ></span
-          >
+          <span class="nav-text"><router-link to="/customFun" style="color: white">
+              内置方法</router-link></span>
         </a-menu-item>
         <a-menu-item key="10">
           <message-outlined />
-          <span class="nav-text"
-            ><router-link to="/chat" style="color: white">
-              AiChat</router-link
-            ></span
-          >
+          <span class="nav-text"><router-link to="/chat" style="color: white">
+              AiChat</router-link></span>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
     <a-layout>
       <a-layout-header :style="{ background: '#fff', padding: 0 }">
         <div style="right: 3%; position: absolute">
-          <a-select
-            ref="select"
-            v-model:value="workplace"
-            style="width: 120px"
-            :options="options"
-            @focus="focus"
-            @change="handleChange"
-          ></a-select>
+          <a-select ref="select" v-model:value="workplace" style="width: 120px" :options="options" @focus="focus"
+            @change="handleChange"></a-select>
           <a-dropdown>
             <template #overlay>
               <a-menu @click="handleMenuClick">
@@ -127,16 +91,11 @@
       </a-layout-header>
 
       <a-layout-content :style="{ margin: '24px 16px 0' }">
-        <div
-          :style="{ padding: '10px', background: '#fff', minHeight: '91vh' }"
-        >
+        <div :style="{ padding: '10px', background: '#fff', minHeight: '91vh' }">
           <router-view></router-view>
         </div>
       </a-layout-content>
-      <div
-        class="ai"
-        style="z-index: 999; position: fixed; right: 20px; bottom: 6%"
-      >
+      <div class="ai" style="z-index: 999; position: fixed; right: 20px; bottom: 6%">
         <AiChat />
       </div>
       <!-- <a-layout-footer style="text-align: center">
@@ -149,7 +108,6 @@
 import { workplace_user_get } from "@/api/user";
 import { workplace_user_put } from "@/api/workplaceUser";
 import { RefreshToken } from "@/api/login";
-import { useRouter } from 'vue-router';
 
 import {
   UserOutlined,
@@ -218,7 +176,7 @@ export default defineComponent({
           value: resp[i].workplace.id,
           label: resp[i].workplace.name,
         });
-        if (resp[i].last_active==='T') {
+        if (resp[i].last_active === 'T') {
           workplace.value = resp[i].workplace.name;
           localStorage.setItem(
             "workplace",
@@ -240,13 +198,12 @@ export default defineComponent({
     const handleChange = (value, workplace) => {
       localStorage.setItem("workplace", JSON.stringify(workplace));
       console.log(workplace);
-      workplace_user_put({ id: value, last_active: "T" });
-      RefreshToken().then(resp=>{
-        localStorage.setItem('token','Bearer ' +  resp.access_token) 
-        location.reload()
-        useRouter().push("/index")
-        
-      })
+      workplace_user_put({ id: value, last_active: "T" }).then(() => {
+        RefreshToken().then(resp => {
+          localStorage.setItem('token', 'Bearer ' + resp.access_token)
+        }).then(() => { location.reload() })
+      });
+
     };
 
     const workplace = ref();

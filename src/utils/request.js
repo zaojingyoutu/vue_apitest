@@ -4,7 +4,6 @@ import axios from 'axios'
 import notification from 'ant-design-vue/es/notification'
 // import { VueAxios } from './axios'
 // import { token } from '@/store/mutation-types'
-import { useRouter } from 'vue-router';
 // import {getWorkplaceId} from '@/utils/getWorkplaceId'
 
 let allURL;
@@ -34,14 +33,13 @@ const errorHandler = (error) => {
         description: data.message
       })
       window.location.href="#/login";
-      // const router = useRouter();
-      // router.push("/login")
 
     }else if (error.response.status === 402){
       notification.error({
         message: "没权限！",
         description: data.msg
       })
+      window.location.href="#/login";
     }
     if (error.response.status === 401 && !(data.result && data.result.isLogin)) {
       notification.error({
@@ -49,17 +47,7 @@ const errorHandler = (error) => {
         description: 'Authorization verification failed'
 
       })
-      // if (token) {
-      //   // store.dispatch('Logout').then(() => {
-      //   //   setTimeout(() => {
-      //   //     window.location.reload()
-      //   //   }, 1500)
-      //   window.location.reload()
-      //   // })
-      // }
-      // window.location.href="/login";
-      const router = useRouter();
-      router.push("/login")
+      window.location.href="#/login";
     }
 
   }
@@ -73,11 +61,6 @@ request.interceptors.request.use(config => {
   // 让每个请求携带自定义 token 请根据实际情况自行修改
   if (token) {
     config.headers['Authorization'] = token
-    // if(config.method ==='get'){
-    //   config.params['workplace_id'] = getWorkplaceId()
-    // }else{
-    //   config.data['workplace_id'] = getWorkplaceId()
-    // }
   }
   
   return config
