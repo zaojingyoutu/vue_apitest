@@ -198,7 +198,7 @@ export default defineComponent({
     const handleChange = (value, workplace) => {
       localStorage.setItem("workplace", JSON.stringify(workplace));
       console.log(workplace);
-      workplace_user_put({ id: value, last_active: "T" }).then(() => {
+      workplace_user_put({ workplace_id: value, last_active: "T" }).then(() => {
         RefreshToken().then(resp => {
           localStorage.setItem('token', 'Bearer ' + resp.access_token)
         }).then(() => { location.reload() })

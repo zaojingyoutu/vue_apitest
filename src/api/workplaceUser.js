@@ -22,7 +22,7 @@ export function workplace_user_get(data = {}){
 export function workplace_user_put(data){
     return request.request({
         method: "put",
-          url: "workplace_user/" + data.id,
+          url: "workplace_user/",
           data: data,
     })
 }
