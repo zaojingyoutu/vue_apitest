@@ -149,6 +149,7 @@
 import { workplace_user_get } from "@/api/user";
 import { workplace_user_put } from "@/api/workplaceUser";
 import { RefreshToken } from "@/api/login";
+import { useRouter } from 'vue-router';
 
 import {
   UserOutlined,
@@ -242,7 +243,10 @@ export default defineComponent({
       workplace_user_put({ id: value, last_active: "T" });
       RefreshToken().then(resp=>{
         localStorage.setItem('token','Bearer ' +  resp.access_token) 
-      }).then( location.reload())
+        location.reload()
+        useRouter().push("/index")
+        
+      })
     };
 
     const workplace = ref();
