@@ -27,7 +27,7 @@ const errorHandler = (error) => {
   if (error.response) {
     const data = error.response.data
     // 从 localstorage 获取 token
-    const token = localStorage.getItem("token")
+    // const token = localStorage.getItem("token")
     if (error.response.status === 403) {
       notification.error({
         message: 'Forbidden',
@@ -49,14 +49,14 @@ const errorHandler = (error) => {
         description: 'Authorization verification failed'
 
       })
-      if (token) {
-        // store.dispatch('Logout').then(() => {
-        //   setTimeout(() => {
-        //     window.location.reload()
-        //   }, 1500)
-        window.location.reload()
-        // })
-      }
+      // if (token) {
+      //   // store.dispatch('Logout').then(() => {
+      //   //   setTimeout(() => {
+      //   //     window.location.reload()
+      //   //   }, 1500)
+      //   window.location.reload()
+      //   // })
+      // }
       // window.location.href="/login";
       const router = useRouter();
       router.push("/login")
