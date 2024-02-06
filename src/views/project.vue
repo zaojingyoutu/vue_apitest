@@ -27,7 +27,7 @@
 </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent,ref } from 'vue';
 import {project_get,project_del} from '@/api/project'
 
 const columns = [{
@@ -68,20 +68,14 @@ const columns = [{
 
 import {message} from "ant-design-vue";
 export default defineComponent({
-  data() {
-    return {
-      data:[],
-      columns,
-    };
-  },
-  created() {
-    project_get().then((res) => {
-         this.data =  res.data;
-     });
-
-  },
-
   setup(){
+    const data = ref();
+    const projectGet =()=>{
+      project_get().then((res) => {
+        data.value =  res.data;
+     });
+    }
+    projectGet()
     const deletes = (record) => {
          project_del(record.id).then((res) => {
                if (res.code == 200)
@@ -90,7 +84,7 @@ export default defineComponent({
                            content: "删除成功！",
                            duration: 5}
                    );
-                   location.reload();
+                   projectGet()
                }
                else {
                     message.success({
@@ -102,7 +96,9 @@ export default defineComponent({
     }
 
     return{
-        deletes
+        deletes,
+        columns,
+        data
     }
   }
 

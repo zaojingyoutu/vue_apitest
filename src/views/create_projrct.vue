@@ -69,12 +69,18 @@ export default defineComponent({
         .then(() => {
           var req_method = isUpdate ? "put" :"post";
           project_api(modelRef, req_method).then((res) => {
-            message.success({
+            
+            if (res.code == 200) {
+              message.success({
               content: res.msg,
               duration: 5,
             });
-            if (res.code == 200) {
               router.push("/project");
+            }else{
+              message.success({
+              content: res.msg + res.data,
+              duration: 5,
+            });
             }
           });
         })

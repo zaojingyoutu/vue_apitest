@@ -239,7 +239,7 @@
                   @finish="onFinish"
                 >
                   <a-space
-                    v-for="(assert,index) in detail.asserts"
+                    v-for="(assert, index) in detail.asserts"
                     :key="assert.id"
                     style="display: flex; margin-bottom: 8px"
                     align="baseline"
@@ -274,8 +274,7 @@
                             v-model:value="caseAssertCode.value"
                             style="height: 200px"
                           ></MyCodemirror>
-                          响应数据：response.json()
-                          获取变量：self.get('key')
+                          响应数据：response.json() 获取变量：self.get('key')
                         </a-modal>
                       </div>
                     </div>
@@ -506,12 +505,17 @@ export default defineComponent({
         req_method = "put";
       }
       testplan_api(modelRef, req_method).then((res) => {
-        message.success({
-          content: res.msg,
-          duration: 5,
-        });
         if (res.code == 200) {
+          message.success({
+            content: res.msg,
+            duration: 5,
+          });
           router.push("/testplan");
+        } else {
+          message.success({
+            content: res.msg + res.data,
+            duration: 5,
+          });
         }
       });
     };
@@ -816,7 +820,6 @@ export default defineComponent({
       detail.asserts[index].value = caseAssertCode.value;
       assertsVisible.value = false;
     };
-
 
     const reportUrl = "/reportList?testplan_id=" + planid.id;
     return {
