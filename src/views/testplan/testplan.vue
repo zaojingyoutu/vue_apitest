@@ -1,7 +1,7 @@
 
 <template>
   <a-button type="primary">
-    <router-link to="create_testplan">Create </router-link>
+    <router-link to="create_testplan">新增 </router-link>
   </a-button>
   <a-table :columns="columns" :data-source="data" :scroll="{ y: 800 }">
     <template #bodyCell="{ record, column, text }">
@@ -18,15 +18,15 @@
         <router-link
           :to="{ path: '/create_testplan', query: { id: record.id } }"
         >
-          <a>Edit</a>
+          <a>编辑</a>
         </router-link>
         |
         <router-link
           :to="{ path: '/reportList', query: { testplan_id: record.id } }"
         >
-          <a>report</a>
+          <a>测试报告</a>
         </router-link>
-        |<a @click="runplan(record.id)"> run</a> |
+        |<a @click="runplan(record.id)"> 运行</a> |
         <a type="primary" @click="showModal(record)">添加定时任务</a>
         <a-dropdown>
           <a class="ant-dropdown-link" @click.prevent>
@@ -36,7 +36,7 @@
           <template #overlay>
             <a-menu>
               <a-menu-item>
-                <a @click="deletes(record)">Delete</a> 
+                <a @click="deletes(record)">删除</a> 
               </a-menu-item>
               <a-menu-item>
                 <a @click="toLocust(record)">转locust</a>
@@ -60,35 +60,35 @@ import { testplan_get, testplan_del } from "@/api/testplan";
 import { runTestplan_post, taskTestplanPost, Deltask } from "@/api/runTestplan";
 const columns = [
   {
-    title: "Full Name",
+    title: "名称",
     width: "20%",
     dataIndex: "name",
     key: "name",
     ellipsis: true,
   },
   {
-    title: "describe",
+    title: "描述",
     width: "20%",
     dataIndex: "describe",
     key: "describe",
     ellipsis: true,
   },
   {
-    title: "project",
+    title: "项目",
     dataIndex: "project__name",
     key: "project__name",
     width: "20%",
     ellipsis: true,
   },
   {
-    title: "createtime",
+    title: "创建时间",
     dataIndex: "create_time",
     key: "create_time",
     width: "20%",
     ellipsis: true,
   },
   {
-    title: "Action",
+    title: "操作",
     key: "operation",
     width: 120,
   },

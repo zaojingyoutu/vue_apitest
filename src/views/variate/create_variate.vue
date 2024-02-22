@@ -33,8 +33,8 @@
     </a-form-item>
 
     <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }" v-bind="errorInfos">
-      <a-button type="primary" @click.prevent="onSubmit">Create</a-button>
-      <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
+      <a-button type="primary" @click.prevent="onSubmit">保存</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">清除</a-button>
     </a-form-item>
   </a-form>
 </template>

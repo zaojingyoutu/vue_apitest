@@ -9,7 +9,7 @@
       ">
       <a-button type="primary">
         <router-link to="/createUser">
-          <a style="color: white">Create</a>
+          <a style="color: white">新增</a>
         </router-link>
       </a-button>
     </div>
@@ -22,9 +22,9 @@
         </template>
 
         <template v-if="column.key === 'operation'">
-          <a @click="deletes(record)">Delete</a> |
+          <a @click="deletes(record)">删除</a> |
           <router-link :to="{ path: '/createUser', query: { id: record.id } }">
-            <a>Edit</a>
+            <a>编辑</a>
           </router-link>
         </template>
       </template>
@@ -37,31 +37,31 @@ import { user_get, user_del } from "@/api/user";
 
 const columns = [
   {
-    title: "Full Name",
+    title: "用户名",
     width: "20%",
     dataIndex: "username",
     key: "namusernamee",
   },
   {
-    title: "email",
+    title: "邮箱",
     width: "20%",
     dataIndex: "email",
     key: "email",
   },
   {
-    title: "date_joined",
+    title: "创建时间",
     dataIndex: "date_joined",
     key: "date_joined",
     width: "20%",
   },
   {
-    title: "last_login",
+    title: "最近登录时间",
     dataIndex: "last_login",
     key: "last_login",
     width: "20%",
   },
   {
-    title: "Action",
+    title: "操作",
     key: "operation",
     width: 120,
   },

@@ -1,6 +1,6 @@
 <template>
   <a-button type="primary">
-    <router-link to="create_variate">Create </router-link>
+    <router-link to="create_variate">新增 </router-link>
   </a-button>
   <a-table :columns="columns" :data-source="data" :scroll="{ x: 1200, y: 800 }">
     <template #bodyCell="{ record, column, text }">
@@ -9,13 +9,16 @@
           <a>{{ text }}</a>
         </router-link>
       </template>
+      <template v-if="column.key==='env'">
+        {{ statusMap[record.env] }}
 
+      </template>
       <template v-if="column.key === 'operation'">
-        <a @click="deletes(record)">Delete</a> |
+        <a @click="deletes(record)">删除</a> |
         <router-link
           :to="{ path: '/create_variate', query: { id: record.id } }"
         >
-          <a>Edit</a>
+          <a>编辑</a>
         </router-link>
       </template>
     </template>
@@ -56,14 +59,14 @@ const columns = [
   },
 
   {
-    title: "createtime",
+    title: "创建时间",
     dataIndex: "create_time",
     key: "create_time",
     ellipsis: true,
     width: "20%",
   },
   {
-    title: "Action",
+    title: "操作",
     key: "operation",
     ellipsis: true,
     width: 120,
@@ -100,11 +103,17 @@ export default defineComponent({
         }
       });
     };
+    const statusMap ={
+        0: '开发环境',
+        1: '测试环境',
+        2: '线上环境'
+      }
 
     return {
       deletes,
       data,
       columns,
+      statusMap
     };
   },
 });

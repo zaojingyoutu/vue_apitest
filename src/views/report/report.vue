@@ -136,7 +136,7 @@ import { useRouter } from "vue-router";
 
 const columns = [
   {
-    title: "Full Name",
+    title: "名称",
     width: 250,
     dataIndex: "name",
     key: "name",
@@ -144,7 +144,7 @@ const columns = [
     ellipsis: true,
   },
   {
-    title: "module",
+    title: "模块",
     dataIndex: "module",
     key: "module",
     width: 150,
@@ -169,20 +169,20 @@ const columns = [
     width:  '20%',
   },
   {
-    title: "result",
+    title: "结果",
     dataIndex: "result",
     key: "result",
     width:  '20%',
     ellipsis: true,
   },
   {
-    title: "runtime(ms)",
+    title: "运行时间(ms)",
     dataIndex: "run_time",
     key: "runtime",
     width:  '20%',
   },
   {
-    title: "Action",
+    title: "操作",
     key: "operation",
     fixed: "right",
     width: 100,

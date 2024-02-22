@@ -12,7 +12,7 @@
             <a-row :gutter="24" style="float: left;height: 32px">
                 <a-form-item
                         :name="`name` "
-                        :label="`name`"
+                        :label="`名称`"
                         :rules="[{ message: 'input something' }]"
                 >
                     <a-input v-model:value="formState[`name`]" placeholder="请输入用例名称！"></a-input>
@@ -20,7 +20,7 @@
                 <a-form-item
                         style="margin-left: 20px"
                         :name="`project`"
-                        :label="`project`"
+                        :label="`项目`"
                         :rules="[{  message: 'input something' }]"
                 >
                     <!-- <a-input v-model:value="formState[`project_id`]" placeholder="placeholder"></a-input> -->
@@ -37,8 +37,8 @@
             </a-row>
             <a-row>
                 <a-col :span="24" style="text-align: right">
-                    <a-button type="primary" html-type="submit">Search</a-button>
-                    <a-button style="margin: 0 8px" @click="() => formRef.resetFields()">Clear</a-button>
+                    <a-button type="primary" html-type="submit">搜索</a-button>
+                    <a-button style="margin: 0 8px" @click="() => formRef.resetFields()">清除</a-button>
                 </a-col>
             </a-row>
         </a-form>
@@ -46,7 +46,7 @@
     margin-left: 10px;float: left;margin-top: 5px;">
             <a-button type="primary">
                 <router-link :to="{path:'/apiDetail',query:{project_id:this.$route.query.project_id}}">
-                    <a style="color: white">Create</a>
+                    <a style="color: white">新增</a>
                 </router-link>
             </a-button>
             <a-button type="primary" @click="showModal" style="margin-left: 10px">导入</a-button>
@@ -74,14 +74,11 @@
                         </router-link>
                     </template>
                     <template v-if="column.key === 'operation'">
-                        <router-link :to="{path:'/apiDetail',query:{project_id: record.project,id:record.id}}"><a>Debug</a>
-                        </router-link>
-                        |
-                        <a @click="deletes(record)">Delete</a> |
+                        <a @click="deletes(record)">删除</a> |
                         <router-link :to="{path:'/apiDetail',query:{project_id: record.project,id:record.id}}">
-                            <a>Edit</a> |
+                            <a>编辑</a> |
                         </router-link>
-                        <a @click="copy(record)">Copy</a>
+                        <a @click="copy(record)">复制</a>
                     </template>
                 </template>
             </a-table>
@@ -95,7 +92,7 @@
     import {cases_get, cases_del, cases_create} from '@/api/cases'
 
     const columns = [{
-        title: 'Full Name',
+        title: '名称',
         width: 300,
         dataIndex: 'name',
         key: 'name',
@@ -103,14 +100,14 @@
         ellipsis: true,
     },
         {
-            title: 'project',
+            title: '项目',
             width: 100,
             dataIndex: 'project__name',
             key: 'project__name',
             fixed: 'left',
         },
         {
-            title: 'module',
+            title: '模块',
             dataIndex: 'module',
             key: 'module',
             width: 150,
@@ -152,12 +149,12 @@
 //   ellipsis: true,
 // },
         {
-            title: 'createtime',
+            title: '创建时间',
             dataIndex: 'create_time',
             key: 'create_time',
             ellipsis: true,
         }, {
-            title: 'Action',
+            title: '操作',
             key: 'operation',
             fixed: 'right',
             width: 220,
