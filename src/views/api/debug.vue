@@ -297,7 +297,7 @@ export default defineComponent({
           (modelRef.url = res.data[0].url),
           (modelRef.method = res.data[0].method),
           (modelRef.module = res.data[0].module),
-          (modelRef.parameter = res.data[0].parameter),
+          (modelRef.parameter = JSON.stringify(JSON.parse(res.data[0].parameter, null, 2))),
           (modelRef.id = res.data[0].id),
           (modelRef.setup = res.data[0].setup),
           (modelRef.describe = res.data[0].describe),
@@ -325,9 +325,9 @@ export default defineComponent({
       module: "",
       url: "",
       method: [],
-      header: "",
-      parameter: "",
-      data: "",
+      header: "{}",
+      parameter: "{}",
+      data: "{}",
       asserts: [],
       id: "",
       response: "",
@@ -339,7 +339,7 @@ export default defineComponent({
       run_time: "",
       status,
       describe: "",
-      variables: "",
+      variables: "{}",
     });
 
     const rulesRef = reactive({
