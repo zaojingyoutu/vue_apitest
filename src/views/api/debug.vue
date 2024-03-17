@@ -396,11 +396,9 @@ export default defineComponent({
             } else {
               modelRef.response = res.data.response;
             }
-            log.request = res.data.request_data;
           } catch {
             modelRef.response = res.data;
           }
-
           modelRef.result = JSON.stringify(res.data.result, null, 2);
           res.data.request_data.forEach((obj) => {
             if (obj.id == project.id) {
@@ -412,12 +410,13 @@ export default defineComponent({
           resp_loading.value = true;
         } else {
           message.error({
-            content: res.data,
+            content: res.msg,
             duration: 5,
           });
           modelRef.response = res.data;
           resp_loading.value = true;
         }
+        log.request = res.data.request_data;
       });
     };
 
