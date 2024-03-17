@@ -5,7 +5,7 @@
    <a-button  type="primary" >
 <!--      <a href="create_projrct">Create</a>-->
       <router-link to="create_projrct" >
-        <a  style="color: white">Create</a>
+        <a  style="color: white">新增</a>
       </router-link>
     </a-button>
   <a-table :columns="columns" :data-source="data" :scroll="{ x: 1200, y: 700 }">
@@ -17,9 +17,9 @@
       </template>
 
       <template v-if="column.key === 'operation'">
-        <a @click="deletes(record)" >Delete</a> |
+        <a @click="deletes(record)" >删除</a> |
           <router-link :to="{path:'/create_projrct',query:{id: record.id,}}" >
-              <a  >Edit</a>
+              <a  >编辑</a>
           </router-link>
       </template>
     </template>
@@ -27,28 +27,28 @@
 </div>
 </template>
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent,ref } from 'vue';
 import {project_get,project_del} from '@/api/project'
 
 const columns = [{
-  title: 'Full Name',
+  title: '项目名',
   width: '20%' ,
   dataIndex: 'name',
   key: 'name',
 
 }, {
-  title: 'describe',
+  title: '描述',
   width: '20%',
   dataIndex: 'describe',
   key: 'describe',
 
 }, {
-  title: 'start_time',
+  title: '开始时间',
   dataIndex: 'start_time',
   key: 'start_time',
   width: '20%',
 }, {
-  title: 'end_time',
+  title: '结束时间',
   dataIndex: 'end_time',
   key: 'end_time',
   width: '20%',
@@ -56,32 +56,26 @@ const columns = [{
 
 
   {
-  title: 'createtime',
+  title: '创建时间',
   dataIndex: 'create_time',
   key: 'create_time',
   width: '20%',
 }, {
-  title: 'Action',
+  title: '操作',
   key: 'operation',
   width: 120,
 }];
 
 import {message} from "ant-design-vue";
 export default defineComponent({
-  data() {
-    return {
-      data:[],
-      columns,
-    };
-  },
-  created() {
-    project_get().then((res) => {
-         this.data =  res.data;
-     });
-
-  },
-
   setup(){
+    const data = ref();
+    const projectGet =()=>{
+      project_get().then((res) => {
+        data.value =  res.data;
+     });
+    }
+    projectGet()
     const deletes = (record) => {
          project_del(record.id).then((res) => {
                if (res.code == 200)
@@ -90,7 +84,7 @@ export default defineComponent({
                            content: "删除成功！",
                            duration: 5}
                    );
-                   location.reload();
+                   projectGet()
                }
                else {
                     message.success({
@@ -102,7 +96,9 @@ export default defineComponent({
     }
 
     return{
-        deletes
+        deletes,
+        columns,
+        data
     }
   }
 

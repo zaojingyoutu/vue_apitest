@@ -2,26 +2,34 @@
   <div class="Breadcrumb" style="text-align: left; height: 30px">
     <a-breadcrumb style="float: left">
       <a-breadcrumb-item>
-        <router-link :to="{ path: '/api', query: { project_id: project.project_id } }">
+        <router-link
+          :to="{ path: '/api', query: { project_id: project.project_id } }"
+        >
           <a>接口列表</a>
         </router-link>
       </a-breadcrumb-item>
       <a-breadcrumb-item>接口详情</a-breadcrumb-item>
     </a-breadcrumb>
-    <div class="describe" style="
-        float: right;
-        width: 40%;
-        text-align: center;
-        right: 0;
-      ">
+    <div
+      class="describe"
+      style="float: right; width: 40%; text-align: center; right: 0"
+    >
       <a-collapse ghost>
         <a-collapse-panel key="1" header="描述">
-          <a-textarea v-model:value="modelRef.describe" placeholder="请添加" :rows="4" />
+          <a-textarea
+            v-model:value="modelRef.describe"
+            placeholder="请添加"
+            :rows="4"
+          />
         </a-collapse-panel>
-        <router-link :to="{
-          path: '/variate_list',
-          query: { project: modelRef.project },
-        }" target="_blank">全局变量管理</router-link>
+        <router-link
+          :to="{
+            path: '/variate_list',
+            query: { project: modelRef.project },
+          }"
+          target="_blank"
+          >全局变量管理</router-link
+        >
         |
         <button id="copyButton" @click="copyButton">Copy</button>
       </a-collapse>
@@ -37,16 +45,28 @@
       </div>
       <div class="type" style="width: 30%; float: left; height: 32px">
         <a-form-item label="环境：">
-          <a-select ref="select" v-model:value="modelRef.env" style="width: 120px" :options="options1" @focus="focus"
-            @change="handleChange"></a-select>
+          <a-select
+            ref="select"
+            v-model:value="modelRef.env"
+            style="width: 120px"
+            :options="options1"
+            @focus="focus"
+            @change="handleChange"
+          ></a-select>
           <br /><br />
         </a-form-item>
       </div>
       <div class="project">
         <a-form-item label="项目：">
           <div class="selectEnv" style="float: left">
-            <a-select ref="select" v-model:value="modelRef.project" style="width: 120px" :options="optionsProject"
-              @focus="focus" @change="handleChange"></a-select>
+            <a-select
+              ref="select"
+              v-model:value="modelRef.project"
+              style="width: 120px"
+              :options="optionsProject"
+              @focus="focus"
+              @change="handleChange"
+            ></a-select>
           </div>
         </a-form-item>
       </div>
@@ -124,17 +144,40 @@
             <template #tab>
               <span> asserts </span>
             </template>
-            <a-form ref="formRef" name="dynamic_form_nest_item" :model="dynamicValidateForm" @finish="onFinish">
-              <a-space v-for="assert in modelRef.asserts" :key="assert.id" style="display: flex; margin-bottom: 8px"
-                align="baseline">
-                <a-select ref="select" v-model:value="assert.mold" style="width: 120px" @focus="focus" placeholder="断言类型">
+            <a-form
+              ref="formRef"
+              name="dynamic_form_nest_item"
+              :model="dynamicValidateForm"
+              @finish="onFinish"
+            >
+              <a-space
+                v-for="assert in modelRef.asserts"
+                :key="assert.id"
+                style="display: flex; margin-bottom: 8px"
+                align="baseline"
+              >
+                <a-select
+                  ref="select"
+                  v-model:value="assert.mold"
+                  style="width: 120px"
+                  @focus="focus"
+                  placeholder="断言类型"
+                >
                   <a-select-option value="response">response</a-select-option>
                   <a-select-option value="Status">响应状态</a-select-option>
                   <a-select-option value="None">无</a-select-option>
                 </a-select>
                 <a-form-item>
-                  <a-input v-model:value="assert.value" v-if="assert.mold == 'response'" placeholder="请填写断言json" />
-                  <a-input v-model:value="assert.value" v-else placeholder="请填写响应状态码" />
+                  <a-input
+                    v-model:value="assert.value"
+                    v-if="assert.mold == 'response'"
+                    placeholder="请填写断言json"
+                  />
+                  <a-input
+                    v-model:value="assert.value"
+                    v-else
+                    placeholder="请填写响应状态码"
+                  />
                 </a-form-item>
                 <MinusCircleOutlined @click="removeAssert(assert)" />
               </a-space>
@@ -150,8 +193,10 @@
             <template #tab>
               <span> setup </span>
             </template>
-            <associatedCases :associations="modelRef.setup"
-              @update:associations="(setup) => (associations = modelRef.setup)"></associatedCases>
+            <associatedCases
+              :associations="modelRef.setup"
+              @update:associations="(setup) => (associations = modelRef.setup)"
+            ></associatedCases>
           </a-tab-pane>
           <a-tab-pane key="6">
             <template #tab>
@@ -162,10 +207,10 @@
             </p>
             <div v-if="resp_loading">
               <MyCodemirror
-              v-model:value="modelRef.response"
-              mode="javascript"
-              style="height: 460px"
-            ></MyCodemirror>
+                v-model:value="modelRef.response"
+                mode="javascript"
+                style="height: 460px"
+              ></MyCodemirror>
             </div>
             <div v-else>
               <a-spin />
@@ -175,22 +220,33 @@
             <template #tab>
               <span> teardown </span>
             </template>
-            <associatedCases :associations="modelRef.teardown" @update:associations="(teardown) => (associations = modelRef.teardown)
-              "></associatedCases>
+            <associatedCases
+              :associations="modelRef.teardown"
+              @update:associations="
+                (teardown) => (associations = modelRef.teardown)
+              "
+            ></associatedCases>
           </a-tab-pane>
           <a-tab-pane key="8">
             <template #tab>
               <span> asserts result </span>
             </template>
-            <a-textarea v-model:value="modelRef.result" style="margin-top: 0px; margin-bottom: 0px; height: 300px" />
+            <a-textarea
+              v-model:value="modelRef.result"
+              style="margin-top: 0px; margin-bottom: 0px; height: 300px"
+            />
           </a-tab-pane>
           <a-tab-pane key="9">
             <template #tab>
               <span> request data </span>
             </template>
             <a-collapse v-model:activeKey="reqActiveKey">
-              <a-collapse-panel v-for:="request in log.request" :key="request.id" :header="`${request.name}  ${request.status_code}`"
-                style="text-align: left">
+              <a-collapse-panel
+                v-for:="request in log.request"
+                :key="request.id"
+                :header="`${request.name}  ${request.status_code}`"
+                style="text-align: left"
+              >
                 <p>url: {{ request.url }}</p>
                 <p>method: {{ request.method }}</p>
                 <p>run_time: {{ request.run_time }}</p>
@@ -227,7 +283,7 @@ export default defineComponent({
     MinusCircleOutlined,
     PlusOutlined,
     associatedCases,
-    MyCodemirror
+    MyCodemirror,
   },
   setup() {
     const dynamicValidateForm = reactive({
@@ -241,25 +297,22 @@ export default defineComponent({
           (modelRef.url = res.data[0].url),
           (modelRef.method = res.data[0].method),
           (modelRef.module = res.data[0].module),
-          (modelRef.parameter = res.data[0].parameter),
+          (modelRef.parameter = JSON.stringify(JSON.parse(res.data[0].parameter, null, 2))),
           (modelRef.id = res.data[0].id),
           (modelRef.setup = res.data[0].setup),
           (modelRef.describe = res.data[0].describe),
           (modelRef.teardown = res.data[0].teardown),
-          (modelRef.variables = res.data[0].variables),
+          (modelRef.variables = JSON.stringify(
+            JSON.parse(res.data[0].variables),
+            null,
+            2
+          )),
           (modelRef.header = JSON.stringify(
             JSON.parse(res.data[0].header),
             null,
             2
           ));
-
-        const a = res.data[0].data;
-
-        if (typeof a === "object") {
-          modelRef.data = JSON.stringify(JSON.parse(a), null, 2);
-        } else {
-          modelRef.data = res.data[0].data;
-        }
+        modelRef.data = JSON.stringify(JSON.parse(res.data[0].data), null, 2);
         if (res.data[0].asserts != null) {
           modelRef.asserts = res.data[0].asserts;
         }
@@ -272,9 +325,9 @@ export default defineComponent({
       module: "",
       url: "",
       method: [],
-      header: "",
-      parameter: "",
-      data: "",
+      header: "{}",
+      parameter: "{}",
+      data: "{}",
       asserts: [],
       id: "",
       response: "",
@@ -286,7 +339,7 @@ export default defineComponent({
       run_time: "",
       status,
       describe: "",
-      variables: ""
+      variables: "{}",
     });
 
     const rulesRef = reactive({
@@ -358,7 +411,7 @@ export default defineComponent({
       delete saveData["status"];
 
       var req_method;
-      if (modelRef.id == '') {
+      if (modelRef.id == "") {
         req_method = "post";
       } else {
         req_method = "put";
@@ -368,8 +421,8 @@ export default defineComponent({
           content: res.msg,
           duration: 5,
         });
-        if(req_method == "post"){
-          modelRef.id=res.data.id
+        if (req_method == "post") {
+          modelRef.id = res.data.id;
         }
       });
     };
@@ -484,11 +537,9 @@ export default defineComponent({
       },
     ]);
 
-    const focus = () => {
-    };
+    const focus = () => {};
 
-    const handleChange = () => {
-    };
+    const handleChange = () => {};
 
     const optionsProject = ref([]);
 

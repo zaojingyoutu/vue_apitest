@@ -1,17 +1,17 @@
 <template>
   <a-form :label-col="{span: 4}" :wrapper-col="{span: 14}">
-    <a-form-item label="name" required>
+    <a-form-item label="项目名" required>
       <a-input v-model:value="modelRef.name" />
     </a-form-item>
-    <a-form-item label="describe">
+    <a-form-item label="描述">
       <a-input v-model:value="modelRef.describe" />
     </a-form-item>
-    <a-form-item label="start_time" required>
+    <a-form-item label="开始时间" required>
       <a-space direction="vertical" :size="12" style="float: left">
         <a-date-picker v-model:value="modelRef.start_time" :locale="locale"/>
       </a-space>
     </a-form-item>
-    <a-form-item label="end_time" required>
+    <a-form-item label="结束时间" required>
       <a-space direction="vertical" :size="12" style="float: left">
         <a-date-picker v-model:value="modelRef.end_time" :locale="locale"/>
       </a-space>
@@ -69,12 +69,18 @@ export default defineComponent({
         .then(() => {
           var req_method = isUpdate ? "put" :"post";
           project_api(modelRef, req_method).then((res) => {
-            message.success({
+            
+            if (res.code == 200) {
+              message.success({
               content: res.msg,
               duration: 5,
             });
-            if (res.code == 200) {
               router.push("/project");
+            }else{
+              message.success({
+              content: res.msg + res.data,
+              duration: 5,
+            });
             }
           });
         })

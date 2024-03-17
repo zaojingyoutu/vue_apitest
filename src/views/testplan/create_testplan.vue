@@ -1,19 +1,19 @@
 <template>
   <a-tabs v-model:activeKey="activeKey">
     <template #rightExtra>
-      <a-button type="primary" @click.prevent="onSubmit">Submit</a-button>
-      <a-button style="margin-left: 10px" @click="resetFields">Reset </a-button>
+      <a-button type="primary" @click.prevent="onSubmit">保存</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">清除 </a-button>
     </template>
     <a-tab-pane key="1" tab="基本信息">
       <div>
         <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
-          <a-form-item label="name" required>
+          <a-form-item label="名称" required>
             <a-input v-model:value="modelRef.name" />
           </a-form-item>
-          <a-form-item label="describe">
+          <a-form-item label="描述">
             <a-input v-model:value="modelRef.describe" />
           </a-form-item>
-          <a-form-item label="env">
+          <a-form-item label="环境">
             <!-- <a-input v-model:value="modelRef.env" /> -->
             <div class="selectEnv" style="float: left">
               <a-select
@@ -26,7 +26,7 @@
               ></a-select>
             </div>
           </a-form-item>
-          <a-form-item label="project">
+          <a-form-item label="项目">
             <div class="selectEnv" style="float: left">
               <a-select
                 ref="select"
@@ -75,7 +75,7 @@
               </router-link>
             </template>
             <template v-if="column.dataIndex === 'operation'">
-              <a @click="deletes(record)">Delete</a>
+              <a @click="deletes(record)">删除</a>
               <a
                 @click="showModal(record)"
                 type="primary"
@@ -239,7 +239,7 @@
                   @finish="onFinish"
                 >
                   <a-space
-                    v-for="(assert,index) in detail.asserts"
+                    v-for="(assert, index) in detail.asserts"
                     :key="assert.id"
                     style="display: flex; margin-bottom: 8px"
                     align="baseline"
@@ -274,8 +274,7 @@
                             v-model:value="caseAssertCode.value"
                             style="height: 200px"
                           ></MyCodemirror>
-                          响应数据：response.json()
-                          获取变量：self.get('key')
+                          响应数据：response.json() 获取变量：self.get('key')
                         </a-modal>
                       </div>
                     </div>
@@ -307,14 +306,14 @@
         </div>
 
         <a-drawer
-          title="Basic Drawer"
+          title="添加接口"
           :size="size"
           :visible="visible"
           @close="onClose"
         >
           <template #extra>
-            <a-button style="margin-right: 8px" @click="Close">Cancel</a-button>
-            <a-button type="primary" @click="onClose">Submit</a-button>
+            <a-button style="margin-right: 8px" @click="Close">关闭</a-button>
+            <a-button type="primary" @click="onClose">保存</a-button>
           </template>
 
           <div>
@@ -329,15 +328,15 @@
                 <a-row :gutter="24" style="float: left; height: 32px">
                   <a-form-item
                     :name="`name`"
-                    :label="`name`"
+                    :label="`名称`"
                     :rules="[{ message: 'input something' }]"
                   >
                     <a-input
                       v-model:value="formState[`name`]"
-                      placeholder="placeholder"
+                      placeholder="请输入名称！"
                     ></a-input>
                   </a-form-item>
-                  <a-form-item label="project">
+                  <a-form-item label="项目">
                     <div class="selectEnv" style="float: left">
                       <a-select
                         ref="select"
@@ -351,12 +350,12 @@
                 <a-row>
                   <a-col :span="24" style="text-align: right">
                     <a-button type="primary" html-type="submit"
-                      >Search
+                      >搜索
                     </a-button>
                     <a-button
                       style="margin: 0 8px"
                       @click="() => formRef.resetFields()"
-                      >Clear
+                      >清除
                     </a-button>
                   </a-col>
                 </a-row>
@@ -395,15 +394,15 @@ import MyCodemirror from "@/components/VueCodemirror.vue";
 
 const columns = [
   {
-    title: "Name",
+    title: "名称",
     dataIndex: "name",
   },
   {
-    title: "project",
+    title: "项目",
     dataIndex: "project__name",
   },
   {
-    title: "module",
+    title: "模块",
     dataIndex: "module",
   },
   {
@@ -506,12 +505,17 @@ export default defineComponent({
         req_method = "put";
       }
       testplan_api(modelRef, req_method).then((res) => {
-        message.success({
-          content: res.msg,
-          duration: 5,
-        });
         if (res.code == 200) {
+          message.success({
+            content: res.msg,
+            duration: 5,
+          });
           router.push("/testplan");
+        } else {
+          message.success({
+            content: res.msg + res.data,
+            duration: 5,
+          });
         }
       });
     };
@@ -816,7 +820,6 @@ export default defineComponent({
       detail.asserts[index].value = caseAssertCode.value;
       assertsVisible.value = false;
     };
-
 
     const reportUrl = "/reportList?testplan_id=" + planid.id;
     return {

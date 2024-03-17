@@ -1,18 +1,18 @@
 <template>
   <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
-    <a-form-item label="name" required>
+    <a-form-item label="用户名" required>
       <a-input v-model:value="modelRef.username" />
     </a-form-item>
-    <a-form-item label="email">
+    <a-form-item label="邮箱">
       <a-input v-model:value="modelRef.email" />
     </a-form-item>
-    <a-form-item label="password" required>
+    <a-form-item label="密码" required>
       <a-input-password v-model:value="modelRef.password" />
     </a-form-item>
 
     <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }">
-      <a-button type="primary" @click.prevent="onSubmit">Create</a-button>
-      <a-button style="margin-left: 10px" @click="resetFields">Reset</a-button>
+      <a-button type="primary" @click.prevent="onSubmit">保存</a-button>
+      <a-button style="margin-left: 10px" @click="resetFields">清除</a-button>
     </a-form-item>
   </a-form>
 </template>

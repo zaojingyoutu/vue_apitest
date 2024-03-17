@@ -132,7 +132,7 @@ export default defineComponent({
     const content = ref("");
     const treeData = ref([
       {
-        title: "locustFiles",
+        title: "locust脚本",
         key: "0-0",
         children: [],
       },

@@ -12,7 +12,7 @@
       </template>
 
       <template v-if="column.key === 'operation'">
-        <a @click="deletes(record)">Delete</a>
+        <a @click="deletes(record)">删除</a>
       </template>
     </template>
   </a-table>
@@ -24,35 +24,35 @@ import { useRouter } from "vue-router";
 
 const columns = [
   {
-    title: "Full Name",
+    title: "名称",
     width: "20%",
     dataIndex: "name",
     key: "name",
     ellipsis: true,
   },
   {
-    title: "result",
+    title: "结果",
     width: "20%",
     dataIndex: "result",
     key: "result",
     ellipsis: true,
   },
   {
-    title: "project",
+    title: "项目",
     dataIndex: "project__name",
     key: "project__name",
     width: "20%",
     ellipsis: true,
   },
   {
-    title: "createtime",
+    title: "创建时间",
     dataIndex: "create_time",
     key: "create_time",
     width: "20%",
     ellipsis: true,
   },
   {
-    title: "Action",
+    title: "操作",
     key: "operation",
     width: 120,
   },

@@ -20,7 +20,7 @@
   
   const columns = [
     {
-      title: "Full Name",
+      title: "名称",
       width: "20%",
       dataIndex: "name",
       key: "name",
@@ -34,14 +34,14 @@
       ellipsis: true,
     },
     {
-      title: "createtime",
+      title: "创建时间",
       dataIndex: "create_time",
       key: "create_time",
       width: "20%",
       ellipsis: true,
     },
     {
-      title: "Action",
+      title: "操作",
       key: "operation",
       width: 120,
     },
