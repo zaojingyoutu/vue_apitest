@@ -112,7 +112,7 @@
           </a-tab-pane>
           <a-tab-pane key="1">
             <template #tab>
-              <span> header </span>
+              <span> 请求头 </span>
             </template>
             <MyCodemirror
               v-model:value="modelRef.header"
@@ -122,7 +122,7 @@
           </a-tab-pane>
           <a-tab-pane key="2">
             <template #tab>
-              <span> parameter </span>
+              <span> 路径参数 </span>
             </template>
             <MyCodemirror
               v-model:value="modelRef.parameter"
@@ -132,7 +132,7 @@
           </a-tab-pane>
           <a-tab-pane key="3">
             <template #tab>
-              <span> data </span>
+              <span> 请求体 </span>
             </template>
             <MyCodemirror
               v-model:value="modelRef.data"
@@ -142,7 +142,7 @@
           </a-tab-pane>
           <a-tab-pane key="4">
             <template #tab>
-              <span> asserts </span>
+              <span> 断言 </span>
             </template>
             <a-form
               ref="formRef"
@@ -191,7 +191,7 @@
           </a-tab-pane>
           <a-tab-pane key="5">
             <template #tab>
-              <span> setup </span>
+              <span> 前置处理 </span>
             </template>
             <associatedCases
               :associations="modelRef.setup"
@@ -200,7 +200,7 @@
           </a-tab-pane>
           <a-tab-pane key="6">
             <template #tab>
-              <span> response </span>
+              <span> 响应 </span>
             </template>
             <p style="float: right">
               响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}
@@ -218,7 +218,7 @@
           </a-tab-pane>
           <a-tab-pane key="7">
             <template #tab>
-              <span> teardown </span>
+              <span> 后置处理 </span>
             </template>
             <associatedCases
               :associations="modelRef.teardown"
@@ -229,7 +229,7 @@
           </a-tab-pane>
           <a-tab-pane key="8">
             <template #tab>
-              <span> asserts result </span>
+              <span> 断言结果 </span>
             </template>
             <a-textarea
               v-model:value="modelRef.result"
@@ -238,7 +238,7 @@
           </a-tab-pane>
           <a-tab-pane key="9">
             <template #tab>
-              <span> request data </span>
+              <span> 请求日志 </span>
             </template>
             <a-collapse v-model:activeKey="reqActiveKey">
               <a-collapse-panel
