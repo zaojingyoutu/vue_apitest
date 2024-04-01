@@ -1,5 +1,5 @@
 <template>
-  <a-form :label-col="{span: 4}" :wrapper-col="{span: 14}">
+  <a-form :label-col="{ span: 4 }" :wrapper-col="{ span: 14 }">
     <a-form-item label="项目名" required>
       <a-input v-model:value="modelRef.name" />
     </a-form-item>
@@ -8,15 +8,19 @@
     </a-form-item>
     <a-form-item label="开始时间" required>
       <a-space direction="vertical" :size="12" style="float: left">
-        <a-date-picker v-model:value="modelRef.start_time" :locale="locale"/>
+        <a-date-picker v-model:value="modelRef.start_time" :locale="locale" />
       </a-space>
     </a-form-item>
     <a-form-item label="结束时间" required>
       <a-space direction="vertical" :size="12" style="float: left">
-        <a-date-picker v-model:value="modelRef.end_time" :locale="locale"/>
+        <a-date-picker v-model:value="modelRef.end_time" :locale="locale" />
       </a-space>
     </a-form-item>
-    <a-form-item class="error-infos" :wrapper-col="{ span: 14, offset: 4 }" v-bind="errorInfos">
+    <a-form-item
+      class="error-infos"
+      :wrapper-col="{ span: 14, offset: 4 }"
+      v-bind="errorInfos"
+    >
       <a-button type="primary" @click.prevent="onSubmit">保存</a-button>
       <a-button style="margin-left: 10px" @click="resetFields">清除</a-button>
     </a-form-item>
@@ -24,14 +28,14 @@
 </template>
 
 <script>
-import locale from 'ant-design-vue/es/date-picker/locale/zh_CN';
-import { reactive, computed, defineComponent} from "vue";
+import locale from "ant-design-vue/es/date-picker/locale/zh_CN";
+import { reactive, computed, defineComponent } from "vue";
 import { toArray } from "lodash-es";
 import { Form } from "ant-design-vue";
 import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
 import { project_get, project_api } from "@/api/project";
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
 
 const useForm = Form.useForm;
 export default defineComponent({
@@ -59,28 +63,27 @@ export default defineComponent({
         modelRef.name = res.data[0].name;
         modelRef.describe = res.data[0].describe;
         modelRef.workplace_id = res.data[0].workplace;
-        modelRef.start_time = dayjs(res.data[0].start_time,'YYYY-MM-DD') ;
-        modelRef.end_time = dayjs(res.data[0].end_time,'YYYY-MM-DD');
+        modelRef.start_time = dayjs(res.data[0].start_time, "YYYY-MM-DD");
+        modelRef.end_time = dayjs(res.data[0].end_time, "YYYY-MM-DD");
       });
     }
 
     const onSubmit = () => {
       validate()
         .then(() => {
-          var req_method = isUpdate ? "put" :"post";
+          var req_method = isUpdate ? "put" : "post";
           project_api(modelRef, req_method).then((res) => {
-            
             if (res.code == 200) {
               message.success({
-              content: res.msg,
-              duration: 5,
-            });
+                content: res.msg,
+                duration: 5,
+              });
               router.push("/project");
-            }else{
+            } else {
               message.success({
-              content: res.msg + res.data,
-              duration: 5,
-            });
+                content: res.msg + res.data,
+                duration: 5,
+              });
             }
           });
         })
@@ -95,7 +98,7 @@ export default defineComponent({
       onSubmit,
       errorInfos,
       locale,
-      dayjs
+      dayjs,
     };
   },
 });
