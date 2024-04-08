@@ -72,7 +72,16 @@
       </div>
       <div class="module" style="width: 40%">
         <a-form-item label="模块：">
-          <a-input v-model:value="modelRef.module" placeholder="模块" />
+          <!-- <a-input v-model:value="modelRef.module" placeholder="模块" /> -->
+
+          <a-select
+            v-model:value="modelRef.module"
+            mode="tags"
+            style="width: 100%"
+            placeholder="Tags Mode"
+            @change="handleChangeModule"
+            :options="optionsModule"
+          ></a-select>
         </a-form-item>
       </div>
     </div>
@@ -270,7 +279,7 @@ import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 import { ref } from "vue";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
-import { cases_get, cases_api } from "@/api/cases";
+import { cases_get, cases_api, cases_module } from "@/api/cases";
 import { project_get } from "@/api/project";
 import { deBug_post } from "@/api/deBug";
 import associatedCases from "@/components/associatedCases.vue";
@@ -297,7 +306,9 @@ export default defineComponent({
           (modelRef.url = res.data[0].url),
           (modelRef.method = res.data[0].method),
           (modelRef.module = res.data[0].module),
-          (modelRef.parameter = JSON.stringify(JSON.parse(res.data[0].parameter, null, 2))),
+          (modelRef.parameter = JSON.stringify(
+            JSON.parse(res.data[0].parameter, null, 2)
+          )),
           (modelRef.id = res.data[0].id),
           (modelRef.setup = res.data[0].setup),
           (modelRef.describe = res.data[0].describe),
@@ -559,6 +570,22 @@ export default defineComponent({
       navigator.clipboard.writeText(centent);
     };
     const reqActiveKey = ref([]);
+
+    const optionsModule = ref([]);
+
+    cases_module({ project_id: project.project_id }).then((res) => {
+      for (var i = 0; i < res.data.length; i++) {
+        optionsModule.value.push({
+          value: res.data[i].module,
+          label: res.data[i].module,
+        });
+      }
+    });
+
+    const handleChangeModule = (value) => {
+      modelRef.module = value[0];
+    };
+
     return {
       copyButton,
       addAssert,
@@ -591,6 +618,8 @@ export default defineComponent({
       resp_loading,
       log,
       reqActiveKey,
+      optionsModule,
+      handleChangeModule,
     };
   },
 });

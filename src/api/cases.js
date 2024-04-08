@@ -39,3 +39,11 @@ export function cases_del(data){
           data: [data],
     })
 }
+
+export function cases_module(data){
+    return request.request({
+        method: "get",
+        url: "caseModule/",
+        params: data,
+    })
+}
