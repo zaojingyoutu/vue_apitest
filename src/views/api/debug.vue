@@ -299,6 +299,14 @@ export default defineComponent({
       cases: [],
     });
     const project = useRouter().currentRoute.value.query;
+    const jsonStringify = (jsonData) => {
+      try {
+        return JSON.stringify(JSON.parse(jsonData), null, 2);
+      } catch (e) {
+        return jsonData;
+      }
+    };
+
     if (project.id != undefined) {
       cases_get(useRouter().currentRoute.value.query).then((res) => {
         (modelRef.name = res.data[0].name),
@@ -306,24 +314,14 @@ export default defineComponent({
           (modelRef.url = res.data[0].url),
           (modelRef.method = res.data[0].method),
           (modelRef.module = res.data[0].module),
-          (modelRef.parameter = JSON.stringify(
-            JSON.parse(res.data[0].parameter, null, 2)
-          )),
+          (modelRef.parameter = jsonStringify(res.data[0].parameter)),
           (modelRef.id = res.data[0].id),
           (modelRef.setup = res.data[0].setup),
           (modelRef.describe = res.data[0].describe),
           (modelRef.teardown = res.data[0].teardown),
-          (modelRef.variables = JSON.stringify(
-            JSON.parse(res.data[0].variables),
-            null,
-            2
-          )),
-          (modelRef.header = JSON.stringify(
-            JSON.parse(res.data[0].header),
-            null,
-            2
-          ));
-        modelRef.data = JSON.stringify(JSON.parse(res.data[0].data), null, 2);
+          (modelRef.variables = jsonStringify(res.data[0].variables)),
+          (modelRef.header = jsonStringify(res.data[0].header));
+        modelRef.data = jsonStringify(res.data[0].data);
         if (res.data[0].asserts != null) {
           modelRef.asserts = res.data[0].asserts;
         }
