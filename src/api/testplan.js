@@ -41,3 +41,12 @@ export function testplan_del(data){
           data: [data],
     })
 }
+
+
+export function testplan_cases_get(data={}){
+    return request.request({
+        method: "get",
+          url: "test_plan_cases/",
+          params: data,
+    })
+}

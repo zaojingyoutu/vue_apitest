@@ -385,7 +385,7 @@ import { toArray } from "lodash-es";
 import { Form } from "ant-design-vue";
 import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
-import { testplan_get, testplan_api } from "@/api/testplan";
+import { testplan_get, testplan_api,testplan_cases_get } from "@/api/testplan";
 import { cases_get } from "@/api/cases";
 import axios from "axios";
 import { project_get } from "@/api/project";
@@ -433,14 +433,18 @@ export default defineComponent({
         modelRef.alert_on_failure = res.data[0].alert_on_failure;
         modelRef.user_variables = res.data[0].user_variables || "";
         formState.project_id = res.data[0].project;
-        modelRef.case_list = res.data[0].case_list;
-        if (modelRef.case_list.length != 0) {
+        modelRef.env = res.data[0].env;
+        testplan_cases_get({'testplan_id': planid.id,}).then((res) => {
+          modelRef.case_list = res.data;       
+        }).then(()=>{
+          if (modelRef.case_list.length != 0) {
           for (let i = 0; i < modelRef.case_list.length; i++) {
             state.selectedRowKeys.push(modelRef.case_list[i].id);
             tmpCaseIds.selectedRowKeys.push(modelRef.case_list[i].id);
           }
         }
-        modelRef.env = res.data[0].env;
+        });
+    
       });
     }
     const data = ref();
