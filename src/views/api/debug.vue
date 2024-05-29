@@ -240,10 +240,7 @@
             <template #tab>
               <span> 断言结果 </span>
             </template>
-            <a-textarea
-              v-model:value="modelRef.result"
-              style="margin-top: 0px; margin-bottom: 0px; height: 300px"
-            />
+            <a-table :dataSource="asserts_result" :columns="columns" :pagination="false"/>
           </a-tab-pane>
           <a-tab-pane key="9">
             <template #tab>
@@ -461,7 +458,7 @@ export default defineComponent({
           } catch {
             modelRef.response = res.data;
           }
-          modelRef.result = JSON.stringify(res.data.result, null, 2);
+          asserts_result.value=res.data.result
           res.data.request_data.forEach((obj) => {
             if (obj.id == project.id) {
               modelRef.run_time = obj.run_time;
@@ -584,6 +581,8 @@ export default defineComponent({
       modelRef.module = value[0];
     };
 
+    const asserts_result = ref();
+
     return {
       copyButton,
       addAssert,
@@ -618,6 +617,21 @@ export default defineComponent({
       reqActiveKey,
       optionsModule,
       handleChangeModule,
+      asserts_result,
+      columns: [
+          {
+            title: '用例名',
+            dataIndex: 'name',
+            key: 'id',
+          },{
+            title: '结果',
+            dataIndex: 'result',
+            key: 'result',
+          },{
+            title: 'msg',
+            dataIndex: 'msg',
+            key: 'msg',
+          }]
     };
   },
 });
