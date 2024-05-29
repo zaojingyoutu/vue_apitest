@@ -301,6 +301,15 @@
                   </a-form-item>
                 </a-form>
               </a-tab-pane>
+              <a-tab-pane key="9" tab="测试数据">
+                <h9>表格第一行表示测试数据变量</h9>
+                <excel
+                  style="height: 200px"
+                  :data="detail.test_data"
+                  :key="detail.id"
+                  @update:data="(testData) => (data = detail.test_data)"
+                ></excel>
+              </a-tab-pane>
             </a-tabs>
           </a-modal>
         </div>
@@ -349,9 +358,7 @@
                 </a-row>
                 <a-row>
                   <a-col :span="24" style="text-align: right">
-                    <a-button type="primary" html-type="submit"
-                      >搜索
-                    </a-button>
+                    <a-button type="primary" html-type="submit">搜索 </a-button>
                     <a-button
                       style="margin: 0 8px"
                       @click="() => formRef.resetFields()"
@@ -385,12 +392,12 @@ import { toArray } from "lodash-es";
 import { Form } from "ant-design-vue";
 import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
-import { testplan_get, testplan_api,testplan_cases_get } from "@/api/testplan";
+import { testplan_get, testplan_api, testplan_cases_get } from "@/api/testplan";
 import { cases_get } from "@/api/cases";
-import axios from "axios";
 import { project_get } from "@/api/project";
 import { MinusCircleOutlined, MenuOutlined } from "@ant-design/icons-vue";
 import MyCodemirror from "@/components/VueCodemirror.vue";
+import excel from "@/components/excel.vue";
 
 const columns = [
   {
@@ -417,6 +424,7 @@ export default defineComponent({
     MinusCircleOutlined,
     MenuOutlined,
     MyCodemirror,
+    excel,
   },
   setup() {
     const router = useRouter();
@@ -434,17 +442,18 @@ export default defineComponent({
         modelRef.user_variables = res.data[0].user_variables || "";
         formState.project_id = res.data[0].project;
         modelRef.env = res.data[0].env;
-        testplan_cases_get({'testplan_id': planid.id,}).then((res) => {
-          modelRef.case_list = res.data;       
-        }).then(()=>{
-          if (modelRef.case_list.length != 0) {
-          for (let i = 0; i < modelRef.case_list.length; i++) {
-            state.selectedRowKeys.push(modelRef.case_list[i].id);
-            tmpCaseIds.selectedRowKeys.push(modelRef.case_list[i].id);
-          }
-        }
-        });
-    
+        testplan_cases_get({ testplan_id: planid.id })
+          .then((res) => {
+            modelRef.case_list = res.data;
+          })
+          .then(() => {
+            if (modelRef.case_list.length != 0) {
+              for (let i = 0; i < modelRef.case_list.length; i++) {
+                state.selectedRowKeys.push(modelRef.case_list[i].id);
+                tmpCaseIds.selectedRowKeys.push(modelRef.case_list[i].id);
+              }
+            }
+          });
       });
     }
     const data = ref();
@@ -566,29 +575,6 @@ export default defineComponent({
       });
     };
 
-    const runplan = () => {
-      axios({
-        method: "post",
-        headers: { Authorization: localStorage.getItem("token") },
-        url: "runtestplan/",
-        data: planid,
-      }).then((res) => {
-        if (res.data.code == 200) {
-          count.cases_count = res.data.data.count.cases_count;
-          count.cases_result = res.data.data.count.cases_result;
-          message.success({
-            content: "运行成功！",
-            duration: 5,
-          });
-          //  location.reload();
-        } else {
-          message.success({
-            content: "运行失败！",
-            duration: 5,
-          });
-        }
-      });
-    };
 
     const state = reactive({
       selectedRowKeys: [],
@@ -685,10 +671,12 @@ export default defineComponent({
       parameter: "",
       variable: "",
       asserts: [],
+      test_data: [],
     });
 
     const visible2 = ref({ record: "", state: false });
     const showModal = (record) => {
+      console.log(record.test_data );
       visible2.value.state = true;
       visible2.value.record = record;
       detail.id = record.id;
@@ -700,8 +688,11 @@ export default defineComponent({
       detail.asserts = record.asserts || [];
       detail.project__name = record.project__name;
       detail.module = record.module;
+      detail.test_data = record.test_data ? record.test_data : [[''],[''],['']];
+      console.log(detail.test_data  );
     };
     const handleOk2 = () => {
+      console.log(detail);
       let details = { ...detail };
       const index = modelRef.case_list.indexOf(visible2.value.record);
       modelRef.case_list[index] = details;
@@ -826,6 +817,7 @@ export default defineComponent({
     };
 
     const reportUrl = "/reportList?testplan_id=" + planid.id;
+
     return {
       removeAssert,
       reportUrl,
@@ -834,7 +826,6 @@ export default defineComponent({
       formState,
       data,
       columns,
-      runplan,
       activeKey: ref("1"),
       labelCol: {
         span: 4,
