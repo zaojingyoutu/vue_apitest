@@ -13,8 +13,7 @@
           <a-form-item label="描述">
             <a-input v-model:value="modelRef.describe" />
           </a-form-item>
-          <a-form-item label="环境">
-            <!-- <a-input v-model:value="modelRef.env" /> -->
+          <a-form-item label="环境" required>
             <div class="selectEnv" style="float: left">
               <a-select
                 ref="select"
@@ -26,7 +25,7 @@
               ></a-select>
             </div>
           </a-form-item>
-          <a-form-item label="项目">
+          <a-form-item label="项目" required>
             <div class="selectEnv" style="float: left">
               <a-select
                 ref="select"
