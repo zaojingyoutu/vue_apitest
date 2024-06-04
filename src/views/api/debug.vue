@@ -328,7 +328,8 @@ export default defineComponent({
           (modelRef.teardown = res.data[0].teardown),
           (modelRef.variables = jsonStringify(res.data[0].variables)),
           (modelRef.header = jsonStringify(res.data[0].header));
-        modelRef.data = jsonStringify(res.data[0].data);
+          modelRef.data.method = res.data[0].data.method;
+        modelRef.data.content = jsonStringify(res.data[0].data.content);
         if (res.data[0].asserts != null) {
           modelRef.asserts = res.data[0].asserts;
         }
