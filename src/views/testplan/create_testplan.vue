@@ -97,8 +97,20 @@
           >
             <a-tabs v-model:activeKey="activeKey2" style="padding: 4px">
               <a-tab-pane key="4" tab="data">
+                <div>
+                  <a-select
+                    v-model:value="detail.data.method"
+                    style="width: 120px; left: 81%"
+                    placeholder="请求体格式"
+                  >
+                    <a-select-option value="json">json</a-select-option>
+                    <a-select-option value="form-data"
+                      >form-data</a-select-option
+                    >
+                  </a-select>
+                </div>
                 <a-textarea
-                  v-model:value="detail.data"
+                  v-model:value="detail.data.content"
                   style="margin-top: 0px; margin-bottom: 0px; height: 300px"
                 />
               </a-tab-pane>
@@ -574,7 +586,6 @@ export default defineComponent({
       });
     };
 
-
     const state = reactive({
       selectedRowKeys: [],
       // Check here to configure the default column
@@ -675,7 +686,7 @@ export default defineComponent({
 
     const visible2 = ref({ record: "", state: false });
     const showModal = (record) => {
-      console.log(record.test_data );
+      console.log(record.test_data);
       visible2.value.state = true;
       visible2.value.record = record;
       detail.id = record.id;
@@ -687,8 +698,10 @@ export default defineComponent({
       detail.asserts = record.asserts || [];
       detail.project__name = record.project__name;
       detail.module = record.module;
-      detail.test_data = record.test_data ? record.test_data : [[''],[''],['']];
-      console.log(detail.test_data  );
+      detail.test_data = record.test_data
+        ? record.test_data
+        : [[""], [""], [""]];
+      console.log(detail.test_data);
     };
     const handleOk2 = () => {
       console.log(detail);
