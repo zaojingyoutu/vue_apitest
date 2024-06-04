@@ -143,8 +143,18 @@
             <template #tab>
               <span> 请求体 </span>
             </template>
+            <div>
+              <a-select
+                v-model:value="modelRef.data.method"
+                style="width: 120px;left: 45%"
+                placeholder="请求体格式"
+              >
+                <a-select-option value="json">json</a-select-option>
+                <a-select-option value="form-data">form-data</a-select-option>
+                </a-select>
+            </div>
             <MyCodemirror
-              v-model:value="modelRef.data"
+              v-model:value="modelRef.data.content"
               mode="javascript"
               style="height: 460px"
             ></MyCodemirror>
@@ -258,7 +268,7 @@
                 <p>run_time: {{ request.run_time }}</p>
                 <p>status_code: {{ request.status_code }}</p>
                 <p>parameter: {{ request.parameter }}</p>
-                <p>data: {{ request.data }}</p>
+                <p>data: {{ request.data.content }}</p>
                 <p>response: {{ request.response }}</p>
               </a-collapse-panel>
             </a-collapse>
@@ -333,7 +343,7 @@ export default defineComponent({
       method: [],
       header: "{}",
       parameter: "{}",
-      data: "{}",
+      data: {"method": "json","content": "{}"},
       asserts: [],
       id: "",
       response: "",
