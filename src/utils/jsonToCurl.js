@@ -15,7 +15,7 @@ export function curl_dumps(requestData) {
     }
     
     if (requestData.data) {
-      curl += ` --data-raw '${requestData.data}'` 
+      curl += ` --data-raw '${requestData.data.content}'` 
     } 
     
     curl += ' --compressed'
