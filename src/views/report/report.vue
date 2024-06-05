@@ -93,7 +93,7 @@
             case_details.parameter
           }}</a-descriptions-item>
           <a-descriptions-item label="data">{{
-            case_details.data
+            case_details.data.content
           }}</a-descriptions-item>
           <a-descriptions v-if="case_details.result != 'PASS'">
             <a-descriptions-item label="response">msg: {{
