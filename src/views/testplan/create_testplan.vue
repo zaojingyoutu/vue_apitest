@@ -701,10 +701,11 @@ export default defineComponent({
       detail.test_data = record.test_data
         ? record.test_data
         : [[""], [""], [""]];
-      console.log(detail.test_data);
     };
     const handleOk2 = () => {
-      console.log(detail);
+      if (detail.test_data && detail.test_data[0] === undefined || detail.test_data[0] === null) {
+        detail.test_data = null;
+      }
       let details = { ...detail };
       const index = modelRef.case_list.indexOf(visible2.value.record);
       modelRef.case_list[index] = details;
