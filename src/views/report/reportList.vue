@@ -1,6 +1,6 @@
 
 <template>
-  <a-table :columns="columns" :data-source="data" :scroll="{ y: 800 }">
+  <a-table :columns="columns" :data-source="data"  :pagination="pagination" :scroll="{ y: 800 }" @change="handleTableChange">
     <template #bodyCell="{ record, column, text }">
       <template v-if="column.dataIndex === 'name'">
         <router-link :to="{ path: '/report', query: { id: record.id } }">
@@ -18,7 +18,7 @@
   </a-table>
 </template>
 <script>
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref,computed } from "vue";
 import { report_get, report_del } from "@/api/report";
 import { useRouter } from "vue-router";
 
@@ -61,10 +61,14 @@ import { message } from "ant-design-vue";
 export default defineComponent({
   setup() {
     const data = ref();
+    const current = ref(1)
+    const pageSize = ref(10)
+    const total = ref()
     const id = useRouter().currentRoute.value.query;
     const reportGet = () => {
-      report_get(id).then((res) => {
+      report_get({...id,current:current.value,pageSize:pageSize.value}).then((res) => {
         data.value = res.data;
+        total.value = res.total
       });
     };
     reportGet();
@@ -84,11 +88,25 @@ export default defineComponent({
         }
       });
     };
+    
+    const pagination = computed(() => ({
+      total: total.value,
+      current: current.value,
+      pageSize: pageSize.value,
+    }));
+
+    const handleTableChange = (pag)=>{
+      current.value = pag.current
+      pageSize.value = pag.pageSize
+      reportGet();
+    }
 
     return {
       deletes,
       data,
       columns,
+      pagination,
+      handleTableChange
     };
   },
 });
