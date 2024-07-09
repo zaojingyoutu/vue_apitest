@@ -1,18 +1,17 @@
-
 <template>
-  <div style="margin-right: 20px; margin-left: 20px">
-    <div style="
+  <div style="
         margin-right: 10px;
         margin-left: 10px;
         float: left;
         margin-top: 5px;
       ">
-      <a-button type="primary">
-        <router-link to="/createUser">
-          <a style="color: white">新增</a>
-        </router-link>
-      </a-button>
-    </div>
+    <a-button type="primary">
+      <router-link to="/createUser">
+        新增
+      </router-link>
+    </a-button>
+  </div>
+  <div>
     <a-table :columns="columns" :data-source="data" :scroll="{ x: 1200, y: 700 }">
       <template #bodyCell="{ record, column, text }">
         <template v-if="column.dataIndex === 'username'">
@@ -102,4 +101,3 @@ export default defineComponent({
   },
 });
 </script>
-

@@ -3,7 +3,7 @@
   <div class="info" style="width: 40%; float: left">
     <a-descriptions title="" bordered :column="1">
       <a-descriptions-item label="项目">{{ info.project }}</a-descriptions-item>
-      <a-descriptions-item label="环境">{{ info.env }}</a-descriptions-item>
+      <a-descriptions-item label="环境">{{ envName[info.env] }}</a-descriptions-item>
       <a-descriptions-item label="用例数">{{
         info.cases_count
       }}</a-descriptions-item>
@@ -264,7 +264,7 @@ export default defineComponent({
       case_details.runtaime = record.run_time;
       case_details.assert_msg = record.assert_msg
     };
-
+    const envName=["开发环境","测试环境","生产环境"]
     return {
       columns,
       data,
@@ -274,6 +274,7 @@ export default defineComponent({
       afterVisibleChange,
       showDrawer,
       case_details,
+      envName
     };
   },
 });

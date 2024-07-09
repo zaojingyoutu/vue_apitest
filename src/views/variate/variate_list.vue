@@ -1,7 +1,12 @@
 <template>
-  <a-button type="primary">
-    <router-link to="create_variate">新增 </router-link>
-  </a-button>
+  <div style="
+        margin-right: 10px;
+        margin-left: 10px;
+        float: left;
+        margin-top: 5px;
+      "><a-button type="primary">
+      <router-link to="create_variate">新增 </router-link>
+    </a-button></div>
   <a-table :columns="columns" :data-source="data" :scroll="{ x: 1200, y: 800 }">
     <template #bodyCell="{ record, column, text }">
       <template v-if="column.dataIndex === 'name'">
@@ -9,15 +14,13 @@
           <a>{{ text }}</a>
         </router-link>
       </template>
-      <template v-if="column.key==='env'">
+      <template v-if="column.key === 'env'">
         {{ statusMap[record.env] }}
 
       </template>
       <template v-if="column.key === 'operation'">
         <a @click="deletes(record)">删除</a> |
-        <router-link
-          :to="{ path: '/create_variate', query: { id: record.id } }"
-        >
+        <router-link :to="{ path: '/create_variate', query: { id: record.id } }">
           <a>编辑</a>
         </router-link>
       </template>
@@ -79,7 +82,7 @@ export default defineComponent({
   setup() {
     const data = ref();
     const queryData = useRouter().currentRoute.value.query;
-    const variateGet = () => {    
+    const variateGet = () => {
       if (queryData != null) {
         variate_get(queryData).then((res) => {
           data.value = res.data;
@@ -103,11 +106,11 @@ export default defineComponent({
         }
       });
     };
-    const statusMap ={
-        0: '开发环境',
-        1: '测试环境',
-        2: '线上环境'
-      }
+    const statusMap = {
+      0: '开发环境',
+      1: '测试环境',
+      2: '线上环境'
+    }
 
     return {
       deletes,

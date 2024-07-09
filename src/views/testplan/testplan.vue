@@ -1,29 +1,27 @@
-
 <template>
-  <a-button type="primary">
-    <router-link to="create_testplan">新增 </router-link>
-  </a-button>
+  <div style="
+        margin-right: 10px;
+        margin-left: 10px;
+        float: left;
+        margin-top: 5px;
+      "><a-button type="primary">
+      <router-link to="create_testplan">新增 </router-link>
+    </a-button></div>
   <a-table :columns="columns" :data-source="data" :scroll="{ y: 800 }">
     <template #bodyCell="{ record, column, text }">
       <template v-if="column.dataIndex === 'name'">
-        <router-link
-          :to="{ path: '/create_testplan', query: { id: record.id } }"
-        >
+        <router-link :to="{ path: '/create_testplan', query: { id: record.id } }">
           <a>{{ text }}</a>
         </router-link>
       </template>
 
       <template v-if="column.key === 'operation'">
-        
-        <router-link
-          :to="{ path: '/create_testplan', query: { id: record.id } }"
-        >
+
+        <router-link :to="{ path: '/create_testplan', query: { id: record.id } }">
           <a>编辑</a>
         </router-link>
         |
-        <router-link
-          :to="{ path: '/reportList', query: { testplan_id: record.id } }"
-        >
+        <router-link :to="{ path: '/reportList', query: { testplan_id: record.id } }">
           <a>测试报告</a>
         </router-link>
         |<a @click="runplan(record.id)"> 运行</a> |
@@ -36,7 +34,7 @@
           <template #overlay>
             <a-menu>
               <a-menu-item>
-                <a @click="deletes(record)">删除</a> 
+                <a @click="deletes(record)">删除</a>
               </a-menu-item>
               <a-menu-item>
                 <a @click="toLocust(record)">转locust</a>
@@ -99,9 +97,11 @@ import { locust_create } from "../../api/locust";
 export default defineComponent({
   setup() {
     const data = ref();
-    const testplanGet = ()=>{testplan_get().then((res) => {
-      data.value = res.data;
-    });} 
+    const testplanGet = () => {
+      testplan_get().then((res) => {
+        data.value = res.data;
+      });
+    }
     testplanGet()
     const deletes = (record) => {
       testplan_del(record.id).then((res) => {
@@ -193,27 +193,27 @@ export default defineComponent({
     const cronData = reactive({});
     const checked = ref(false);
 
-    const toLocust =(record)=>{
-    const  requstData ={
-                "mold": "tofile",
-                "name": record.name + ".py",
-                "testplan_id": record.id,
-                "create_user":JSON.parse(localStorage.user).name
-            }
+    const toLocust = (record) => {
+      const requstData = {
+        "mold": "tofile",
+        "name": record.name + ".py",
+        "testplan_id": record.id,
+        "create_user": JSON.parse(localStorage.user).name
+      }
 
       locust_create(requstData).then((res) => {
-          if (res.code == 200) {
-            message.success({
-              content: "添加成功！",
-              duration: 5,
-            });
-          } else {
-            message.error({
-              content: "添加失败！" +res.msg ,
-              duration: 5,
-            });
-          }
-        });
+        if (res.code == 200) {
+          message.success({
+            content: "添加成功！",
+            duration: 5,
+          });
+        } else {
+          message.error({
+            content: "添加失败！" + res.msg,
+            duration: 5,
+          });
+        }
+      });
 
     }
     return {
@@ -231,4 +231,3 @@ export default defineComponent({
   },
 });
 </script>
-
