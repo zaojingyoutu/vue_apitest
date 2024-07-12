@@ -15,23 +15,23 @@
         </a-collapse-panel>
       </a-collapse>
       <router-link :to="{
-          path: '/variate_list',
-          query: { project: modelRef.project },
-        }" target="_blank">全局变量管理</router-link>
-        |
-        <button id="copyButton" @click="copyButton">Copy</button>
+        path: '/variate_list',
+        query: { project: modelRef.project },
+      }" target="_blank">全局变量管理</router-link>
+      |
+      <button id="copyButton" @click="copyButton">Copy</button>
     </div>
   </div>
   <div>
     <div class="basicInfo" style="width: 50%; text-align: left">
-      <div class="name" style="width: 75%">
+      <div class="name" style="width: 75%;">
         <a-form-item label="用例名称：">
           <a-input v-model:value="modelRef.name" placeholder="用例标题" />
           <br /><br />
         </a-form-item>
       </div>
       <div style="display: flex;">
-        <div class="type" style="margin-right: 10px;">
+        <div class="type" style="margin-right: 10px;height: 32px;">
           <a-form-item label="环境：">
             <a-select ref="select" v-model:value="modelRef.env" style="width: 120px" :options="options1" @focus="focus"
               @change="handleChange"></a-select>
@@ -577,9 +577,5 @@ export default defineComponent({
 .requestInfo {
   display: flex;
   flex-direction: column;
-}
-
-.error-infos :deep(.ant-form-explain) {
-  white-space: pre-line;
 }
 </style>
