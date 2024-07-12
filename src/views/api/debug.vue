@@ -2,37 +2,24 @@
   <div class="Breadcrumb" style="text-align: left; height: 30px">
     <a-breadcrumb style="float: left">
       <a-breadcrumb-item>
-        <router-link
-          :to="{ path: '/api', query: { project_id: project.project_id } }"
-        >
+        <router-link :to="{ path: '/api', query: { project_id: project.project_id } }">
           <a>接口列表</a>
         </router-link>
       </a-breadcrumb-item>
       <a-breadcrumb-item>接口详情</a-breadcrumb-item>
     </a-breadcrumb>
-    <div
-      class="describe"
-      style="float: right; width: 40%; text-align: center; right: 0"
-    >
+    <div class="describe" style="float: right; width: 25%;">
       <a-collapse ghost>
         <a-collapse-panel key="1" header="描述">
-          <a-textarea
-            v-model:value="modelRef.describe"
-            placeholder="请添加"
-            :rows="4"
-          />
+          <a-textarea v-model:value="modelRef.describe" placeholder="请添加" :rows="4" />
         </a-collapse-panel>
-        <router-link
-          :to="{
-            path: '/variate_list',
-            query: { project: modelRef.project },
-          }"
-          target="_blank"
-          >全局变量管理</router-link
-        >
+      </a-collapse>
+      <router-link :to="{
+          path: '/variate_list',
+          query: { project: modelRef.project },
+        }" target="_blank">全局变量管理</router-link>
         |
         <button id="copyButton" @click="copyButton">Copy</button>
-      </a-collapse>
     </div>
   </div>
   <div>
@@ -43,45 +30,28 @@
           <br /><br />
         </a-form-item>
       </div>
-      <div class="type" style="width: 30%; float: left; height: 32px">
-        <a-form-item label="环境：">
-          <a-select
-            ref="select"
-            v-model:value="modelRef.env"
-            style="width: 120px"
-            :options="options1"
-            @focus="focus"
-            @change="handleChange"
-          ></a-select>
-          <br /><br />
-        </a-form-item>
+      <div style="display: flex;">
+        <div class="type" style="margin-right: 10px;">
+          <a-form-item label="环境：">
+            <a-select ref="select" v-model:value="modelRef.env" style="width: 120px" :options="options1" @focus="focus"
+              @change="handleChange"></a-select>
+            <br /><br />
+          </a-form-item>
+        </div>
+        <div class="project">
+          <a-form-item label="项目：">
+            <div class="selectEnv" style="float: left">
+              <a-select ref="select" v-model:value="modelRef.project" style="width: 120px" :options="optionsProject"
+                @focus="focus" @change="handleChange"></a-select>
+            </div>
+          </a-form-item>
+        </div>
       </div>
-      <div class="project">
-        <a-form-item label="项目：">
-          <div class="selectEnv" style="float: left">
-            <a-select
-              ref="select"
-              v-model:value="modelRef.project"
-              style="width: 120px"
-              :options="optionsProject"
-              @focus="focus"
-              @change="handleChange"
-            ></a-select>
-          </div>
-        </a-form-item>
-      </div>
+
       <div class="module" style="width: 40%">
         <a-form-item label="模块：">
-          <!-- <a-input v-model:value="modelRef.module" placeholder="模块" /> -->
-
-          <a-select
-            v-model:value="modelRef.module"
-            mode="tags"
-            style="width: 100%"
-            placeholder="Tags Mode"
-            @change="handleChangeModule"
-            :options="optionsModule"
-          ></a-select>
+          <a-select v-model:value="modelRef.module" mode="tags" style="width: 100%" placeholder="Tags Mode"
+            @change="handleChangeModule" :options="optionsModule"></a-select>
         </a-form-item>
       </div>
     </div>
@@ -113,90 +83,48 @@
             <template #tab>
               <span> 用户变量 </span>
             </template>
-            <MyCodemirror
-              v-model:value="modelRef.variables"
-              mode="javascript"
-              style="height: 460px"
-            ></MyCodemirror>
+            <MyCodemirror v-model:value="modelRef.variables" mode="javascript" style="height: 460px"></MyCodemirror>
           </a-tab-pane>
           <a-tab-pane key="1">
             <template #tab>
               <span> 请求头 </span>
             </template>
-            <MyCodemirror
-              v-model:value="modelRef.header"
-              mode="javascript"
-              style="height: 460px"
-            ></MyCodemirror>
+            <MyCodemirror v-model:value="modelRef.header" mode="javascript" style="height: 460px"></MyCodemirror>
           </a-tab-pane>
           <a-tab-pane key="2">
             <template #tab>
               <span> 路径参数 </span>
             </template>
-            <MyCodemirror
-              v-model:value="modelRef.parameter"
-              mode="javascript"
-              style="height: 460px"
-            ></MyCodemirror>
+            <MyCodemirror v-model:value="modelRef.parameter" mode="javascript" style="height: 460px"></MyCodemirror>
           </a-tab-pane>
           <a-tab-pane key="3">
             <template #tab>
               <span> 请求体 </span>
             </template>
             <div>
-              <a-select
-                v-model:value="modelRef.data.method"
-                style="width: 120px;left: 45%"
-                placeholder="请求体格式"
-              >
+              <a-select v-model:value="modelRef.data.method" style="width: 120px;left: 45%" placeholder="请求体格式">
                 <a-select-option value="json">json</a-select-option>
                 <a-select-option value="form-data">form-data</a-select-option>
-                </a-select>
+              </a-select>
             </div>
-            <MyCodemirror
-              v-model:value="modelRef.data.content"
-              mode="javascript"
-              style="height: 460px"
-            ></MyCodemirror>
+            <MyCodemirror v-model:value="modelRef.data.content" mode="javascript" style="height: 460px"></MyCodemirror>
           </a-tab-pane>
           <a-tab-pane key="4">
             <template #tab>
               <span> 断言 </span>
             </template>
-            <a-form
-              ref="formRef"
-              name="dynamic_form_nest_item"
-              :model="dynamicValidateForm"
-              @finish="onFinish"
-            >
-              <a-space
-                v-for="assert in modelRef.asserts"
-                :key="assert.id"
-                style="display: flex; margin-bottom: 8px"
-                align="baseline"
-              >
-                <a-select
-                  ref="select"
-                  v-model:value="assert.mold"
-                  style="width: 120px"
-                  @focus="focus"
-                  placeholder="断言类型"
-                >
+            <a-form ref="formRef" name="dynamic_form_nest_item" :model="dynamicValidateForm" @finish="onFinish">
+              <a-space v-for="assert in modelRef.asserts" :key="assert.id" style="display: flex; margin-bottom: 8px"
+                align="baseline">
+                <a-select ref="select" v-model:value="assert.mold" style="width: 120px" @focus="focus"
+                  placeholder="断言类型">
                   <a-select-option value="response">response</a-select-option>
                   <a-select-option value="Status">响应状态</a-select-option>
                   <a-select-option value="None">无</a-select-option>
                 </a-select>
                 <a-form-item>
-                  <a-input
-                    v-model:value="assert.value"
-                    v-if="assert.mold == 'response'"
-                    placeholder="请填写断言json"
-                  />
-                  <a-input
-                    v-model:value="assert.value"
-                    v-else
-                    placeholder="请填写响应状态码"
-                  />
+                  <a-input v-model:value="assert.value" v-if="assert.mold == 'response'" placeholder="请填写断言json" />
+                  <a-input v-model:value="assert.value" v-else placeholder="请填写响应状态码" />
                 </a-form-item>
                 <MinusCircleOutlined @click="removeAssert(assert)" />
               </a-space>
@@ -212,10 +140,9 @@
             <template #tab>
               <span> 前置处理 </span>
             </template>
-            <associatedCases
-              :associations="modelRef.setup"
-              @update:associations="(setup) => (associations = modelRef.setup)"
-            ></associatedCases>
+            <associatedCases :associations="modelRef.setup"
+              @update:associations="(setup) => (associations = modelRef.setup)">
+            </associatedCases>
           </a-tab-pane>
           <a-tab-pane key="6">
             <template #tab>
@@ -225,11 +152,7 @@
               响应状态：{{ modelRef.status }} 运行时间：{{ modelRef.run_time }}
             </p>
             <div v-if="resp_loading">
-              <MyCodemirror
-                v-model:value="modelRef.response"
-                mode="javascript"
-                style="height: 460px"
-              ></MyCodemirror>
+              <MyCodemirror v-model:value="modelRef.response" mode="javascript" style="height: 460px"></MyCodemirror>
             </div>
             <div v-else>
               <a-spin />
@@ -239,30 +162,22 @@
             <template #tab>
               <span> 后置处理 </span>
             </template>
-            <associatedCases
-              :associations="modelRef.teardown"
-              @update:associations="
-                (teardown) => (associations = modelRef.teardown)
-              "
-            ></associatedCases>
+            <associatedCases :associations="modelRef.teardown" @update:associations="(teardown) => (associations = modelRef.teardown)
+              "></associatedCases>
           </a-tab-pane>
           <a-tab-pane key="8">
             <template #tab>
               <span> 断言结果 </span>
             </template>
-            <a-table :dataSource="asserts_result" :columns="columns" :pagination="false"/>
+            <a-table :dataSource="asserts_result" :columns="columns" :pagination="false" />
           </a-tab-pane>
           <a-tab-pane key="9">
             <template #tab>
               <span> 请求日志 </span>
             </template>
             <a-collapse v-model:activeKey="reqActiveKey">
-              <a-collapse-panel
-                v-for:="request in log.request"
-                :key="request.id"
-                :header="`${request.name}  ${request.status_code}`"
-                style="text-align: left"
-              >
+              <a-collapse-panel v-for:="request in log.request" :key="request.id"
+                :header="`${request.name}  ${request.status_code}`" style="text-align: left">
                 <p>url: {{ request.url }}</p>
                 <p>method: {{ request.method }}</p>
                 <p>run_time: {{ request.run_time }}</p>
@@ -273,8 +188,13 @@
               </a-collapse-panel>
             </a-collapse>
           </a-tab-pane>
+          <template #rightExtra>
+            <a type="primary" @click="formatJson"> json格式化 </a>
+          </template>
         </a-tabs>
+
       </div>
+
     </div>
   </div>
 </template>
@@ -328,7 +248,7 @@ export default defineComponent({
           (modelRef.teardown = res.data[0].teardown),
           (modelRef.variables = jsonStringify(res.data[0].variables)),
           (modelRef.header = jsonStringify(res.data[0].header));
-          modelRef.data.method = res.data[0].data.method;
+        modelRef.data.method = res.data[0].data.method;
         modelRef.data.content = jsonStringify(res.data[0].data.content);
         if (res.data[0].asserts != null) {
           modelRef.asserts = res.data[0].asserts;
@@ -344,7 +264,7 @@ export default defineComponent({
       method: [],
       header: "{}",
       parameter: "{}",
-      data: {"method": "json","content": "{}"},
+      data: { "method": "json", "content": "{}" },
       asserts: [],
       id: "",
       response: "",
@@ -469,7 +389,7 @@ export default defineComponent({
           } catch {
             modelRef.response = res.data;
           }
-          asserts_result.value=res.data.result
+          asserts_result.value = res.data.result
           res.data.request_data.forEach((obj) => {
             if (obj.id == project.id) {
               modelRef.run_time = obj.run_time;
@@ -554,9 +474,9 @@ export default defineComponent({
       },
     ]);
 
-    const focus = () => {};
+    const focus = () => { };
 
-    const handleChange = () => {};
+    const handleChange = () => { };
 
     const optionsProject = ref([]);
 
@@ -593,6 +513,11 @@ export default defineComponent({
     };
 
     const asserts_result = ref();
+    const formatJson = () => {
+      modelRef.parameter = jsonStringify(modelRef.parameter)
+      modelRef.header = jsonStringify(modelRef.header)
+      modelRef.data.content = jsonStringify(modelRef.data.content)
+    };
 
     return {
       copyButton,
@@ -627,22 +552,23 @@ export default defineComponent({
       log,
       reqActiveKey,
       optionsModule,
+      formatJson,
       handleChangeModule,
       asserts_result,
       columns: [
-          {
-            title: '用例名',
-            dataIndex: 'name',
-            key: 'id',
-          },{
-            title: '结果',
-            dataIndex: 'result',
-            key: 'result',
-          },{
-            title: 'msg',
-            dataIndex: 'msg',
-            key: 'msg',
-          }]
+        {
+          title: '用例名',
+          dataIndex: 'name',
+          key: 'id',
+        }, {
+          title: '结果',
+          dataIndex: 'result',
+          key: 'result',
+        }, {
+          title: 'msg',
+          dataIndex: 'msg',
+          key: 'msg',
+        }]
     };
   },
 });
