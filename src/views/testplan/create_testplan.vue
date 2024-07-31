@@ -318,7 +318,7 @@
                   style="height: 200px"
                   :data="detail.test_data"
                   :key="detail.id"
-                  @update:data="(testData) => (data = detail.test_data)"
+                  @update:data="() => (data = detail.test_data)"
                 ></excel>
               </a-tab-pane>
             </a-tabs>
@@ -698,9 +698,7 @@ export default defineComponent({
       detail.asserts = record.asserts || [];
       detail.project__name = record.project__name;
       detail.module = record.module;
-      detail.test_data = record.test_data
-        ? record.test_data
-        : [[""], [""], [""]];
+      detail.test_data = record.test_data;
     };
     const handleOk2 = () => {
       if (detail.test_data && detail.test_data[0] === undefined || detail.test_data[0] === null) {
