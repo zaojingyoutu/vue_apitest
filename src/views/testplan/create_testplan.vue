@@ -15,24 +15,14 @@
           </a-form-item>
           <a-form-item label="环境" required>
             <div class="selectEnv" style="float: left">
-              <a-select
-                ref="select"
-                v-model:value="modelRef.env"
-                style="width: 120px"
-                :options="options1"
-                @focus="focus"
-                @change="handleChange"
-              ></a-select>
+              <a-select ref="select" v-model:value="modelRef.env" style="width: 120px" :options="options1"
+                @focus="focus" @change="handleChange"></a-select>
             </div>
           </a-form-item>
           <a-form-item label="项目" required>
             <div class="selectEnv" style="float: left">
-              <a-select
-                ref="select"
-                v-model:value="modelRef.project_id"
-                style="width: 120px"
-                :options="optionsProject"
-              ></a-select>
+              <a-select ref="select" v-model:value="modelRef.project_id" style="width: 120px"
+                :options="optionsProject"></a-select>
             </div>
           </a-form-item>
           <a-form-item label="通知邮件">
@@ -45,149 +35,82 @@
             </div>
           </a-form-item>
           <a-form-item label="用户变量">
-            <a-textarea
-              v-model:value="modelRef.user_variables"
-              style="margin-top: 0px; margin-bottom: 0px; height: 150px"
-            />
+            <a-textarea v-model:value="modelRef.user_variables"
+              style="margin-top: 0px; margin-bottom: 0px; height: 150px" />
           </a-form-item>
         </a-form>
       </div>
     </a-tab-pane>
     <a-tab-pane key="2" tab="添加用例" force-render>
       <div>
-        <a-button type="primary" @click="showDrawer('large')"
-          >添加用例
+        <a-button type="primary" @click="showDrawer('large')">添加用例
         </a-button>
 
-        <a-table
-          :dataSource="modelRef.case_list"
-          :columns="columns"
-          :pagination="false"
-          :customRow="customRow"
-        >
+        <a-table :dataSource="modelRef.case_list" :columns="columns" :pagination="false" :customRow="customRow">
           <template #bodyCell="{ record, column, text }">
             <template v-if="column.dataIndex === 'name'">
-              <router-link
-                :to="{ path: '/apiDetail', query: { id: record.id } }"
-              >
+              <router-link :to="{ path: '/apiDetail', query: { id: record.cases_id? record.cases_id : record.id } }">
                 <a>{{ text }}</a>
               </router-link>
             </template>
             <template v-if="column.dataIndex === 'operation'">
               <a @click="deletes(record)">删除</a>
-              <a
-                @click="showModal(record)"
-                type="primary"
-                style="padding-right: 15px"
-              >
-                | 编辑</a
-              >
+              <a @click="showModal(record)" type="primary" style="padding-right: 15px">
+                | 编辑</a>
               <MenuOutlined />
             </template>
           </template>
         </a-table>
 
         <div>
-          <a-modal
-            wrap-class-name="full-modal"
-            v-model:visible="visible2.state"
-            :title="detail.name"
-            width="680px"
-            @ok="handleOk2(record)"
-          >
+          <a-modal wrap-class-name="full-modal" v-model:visible="visible2.state" :title="detail.name" width="680px"
+            @ok="handleOk2(record)">
+            <h3>url：{{ detail.url }}</h3>
             <a-tabs v-model:activeKey="activeKey2" style="padding: 4px">
+
               <a-tab-pane key="4" tab="data">
                 <div>
-                  <a-select
-                    v-model:value="detail.data.method"
-                    style="width: 120px; left: 81%"
-                    placeholder="请求体格式"
-                  >
+                  <a-select v-model:value="detail.data.method" style="width: 120px; left: 81%" placeholder="请求体格式">
                     <a-select-option value="json">json</a-select-option>
-                    <a-select-option value="form-data"
-                      >form-data</a-select-option
-                    >
+                    <a-select-option value="form-data">form-data</a-select-option>
                   </a-select>
                 </div>
-                <a-textarea
-                  v-model:value="detail.data.content"
-                  style="margin-top: 0px; margin-bottom: 0px; height: 300px"
-                />
+                <a-textarea v-model:value="detail.data.content"
+                  style="margin-top: 0px; margin-bottom: 0px; height: 300px" />
               </a-tab-pane>
               <a-tab-pane key="5" tab="header" force-render>
-                <a-textarea
-                  v-model:value="detail.header"
-                  style="margin-top: 0px; margin-bottom: 0px; height: 300px"
-                />
+                <a-textarea v-model:value="detail.header" style="margin-top: 0px; margin-bottom: 0px; height: 300px" />
               </a-tab-pane>
               <a-tab-pane key="6" tab="parameter">
-                <a-textarea
-                  v-model:value="detail.parameter"
-                  style="margin-top: 0px; margin-bottom: 0px; height: 300px"
-                />
+                <a-textarea v-model:value="detail.parameter"
+                  style="margin-top: 0px; margin-bottom: 0px; height: 300px" />
               </a-tab-pane>
               <a-tab-pane key="7" tab="变量提取">
                 <div style="height: 300px">
-                  <a-form
-                    ref="formRef"
-                    name="dynamic_form_nest_item"
-                    :model="modelRef.case_list"
-                    @finish="onFinish"
-                  >
-                    <a-space
-                      v-for="(variable, index) in detail.variable"
-                      :key="variable.id"
-                      style="display: flex; margin-bottom: 8px"
-                      align="baseline"
-                    >
-                      <a-select
-                        ref="select"
-                        v-model:value="variable.mold"
-                        style="width: 100px"
-                        @focus="focus"
-                        placeholder="提取类型"
-                      >
-                        <a-select-option value="response"
-                          >response</a-select-option
-                        >
-                        <a-select-option value="parameter"
-                          >parameter</a-select-option
-                        >
+                  <a-form ref="formRef" name="dynamic_form_nest_item" :model="modelRef.case_list" @finish="onFinish">
+                    <a-space v-for="(variable, index) in detail.variable" :key="variable.id"
+                      style="display: flex; margin-bottom: 8px" align="baseline">
+                      <a-select ref="select" v-model:value="variable.mold" style="width: 100px" @focus="focus"
+                        placeholder="提取类型">
+                        <a-select-option value="response">response</a-select-option>
+                        <a-select-option value="parameter">parameter</a-select-option>
                         <a-select-option value="data">data</a-select-option>
                         <a-select-option value="None">无</a-select-option>
                       </a-select>
 
-                      <a-select
-                        ref="select"
-                        v-model:value="variable.type"
-                        style="width: 100px"
-                        @focus="focus"
-                        placeholder="提取方式"
-                      >
-                        <a-select-option value="jmespath"
-                          >jmespath</a-select-option
-                        >
+                      <a-select ref="select" v-model:value="variable.type" style="width: 100px" @focus="focus"
+                        placeholder="提取方式">
+                        <a-select-option value="jmespath">jmespath</a-select-option>
                         <a-select-option value="re">正则</a-select-option>
                         <a-select-option value="json">json提取</a-select-option>
                         <a-select-option value="code">code提取</a-select-option>
                       </a-select>
                       <div v-if="variable.type === 'code'">
                         <div>
-                          <a-button
-                            type="primary"
-                            @click="caseVariableShowModal(variable)"
-                            >查看/编辑</a-button
-                          >
-                          <a-modal
-                            v-model:visible="caseVisible"
-                            style="width: 50%"
-                            title="variable code"
-                            @ok="caseVariableHandleOk(index)"
-                          >
-                            <MyCodemirror
-                              v-model:value="caseVariableCode.value"
-                              style="height: 200px"
-                            ></MyCodemirror>
+                          <a-button type="primary" @click="caseVariableShowModal(variable)">查看/编辑</a-button>
+                          <a-modal v-model:visible="caseVisible" style="width: 50%" title="variable code"
+                            @ok="caseVariableHandleOk(index)">
+                            <MyCodemirror v-model:value="caseVariableCode.value" style="height: 200px"></MyCodemirror>
                             响应数据：response.json()
                             全局变量设置：set_global_svariate(dict)
                             局部变量设置：self.set_variate(key,value)
@@ -195,44 +118,24 @@
                         </div>
                       </div>
                       <div class="extractVariable" v-else>
-                        <a-form-item
-                          class="item"
-                          :name="['cases', index, 'value']"
-                          :rules="{
-                            // required: true,
-                            message: 'Missing value',
-                          }"
-                        >
-                          <a-input
-                            v-model:value="variable.value"
-                            placeholder="公式"
-                          />
+                        <a-form-item class="item" :name="['cases', index, 'value']" :rules="{
+                          // required: true,
+                          message: 'Missing value',
+                        }">
+                          <a-input v-model:value="variable.value" placeholder="公式" />
                         </a-form-item>
-                        <a-form-item
-                          class="item"
-                          :name="['cases', index, 'name']"
-                          :rules="{
-                            // required: true,
-                            message: 'Missing  name',
-                          }"
-                        >
-                          <a-input
-                            v-model:value="variable.name"
-                            placeholder="变量名称"
-                          />
+                        <a-form-item class="item" :name="['cases', index, 'name']" :rules="{
+                          // required: true,
+                          message: 'Missing  name',
+                        }">
+                          <a-input v-model:value="variable.name" placeholder="变量名称" />
                         </a-form-item>
                       </div>
 
-                      <MinusCircleOutlined
-                        @click="removeVariable(detail.variable, variable)"
-                      />
+                      <MinusCircleOutlined @click="removeVariable(detail.variable, variable)" />
                     </a-space>
                     <a-form-item>
-                      <a-button
-                        type="dashed"
-                        block
-                        @click="addVariable(detail)"
-                      >
+                      <a-button type="dashed" block @click="addVariable(detail)">
                         <PlusOutlined />
                         添加变量
                       </a-button>
@@ -244,63 +147,29 @@
                 <template #tab>
                   <span> asserts </span>
                 </template>
-                <a-form
-                  ref="formRef"
-                  name="dynamic_form_nest_item"
-                  @finish="onFinish"
-                >
-                  <a-space
-                    v-for="(assert, index) in detail.asserts"
-                    :key="assert.id"
-                    style="display: flex; margin-bottom: 8px"
-                    align="baseline"
-                  >
-                    <a-select
-                      ref="select"
-                      v-model:value="assert.mold"
-                      style="width: 120px"
-                      @focus="focus"
-                      placeholder="断言类型"
-                    >
-                      <a-select-option value="response"
-                        >response</a-select-option
-                      >
+                <a-form ref="formRef" name="dynamic_form_nest_item" @finish="onFinish">
+                  <a-space v-for="(assert, index) in detail.asserts" :key="assert.id"
+                    style="display: flex; margin-bottom: 8px" align="baseline">
+                    <a-select ref="select" v-model:value="assert.mold" style="width: 120px" @focus="focus"
+                      placeholder="断言类型">
+                      <a-select-option value="response">response</a-select-option>
                       <a-select-option value="Status">响应状态</a-select-option>
                       <a-select-option value="code">code</a-select-option>
                     </a-select>
                     <div v-if="assert.mold === 'code'">
                       <div>
-                        <a-button
-                          type="primary"
-                          @click="caseAssertShowModal(assert)"
-                          >查看/编辑</a-button
-                        >
-                        <a-modal
-                          v-model:visible="assertsVisible"
-                          style="width: 50%"
-                          title="assert code"
-                          @ok="caseAssertHandleOk(index)"
-                        >
-                          <MyCodemirror
-                            v-model:value="caseAssertCode.value"
-                            style="height: 200px"
-                          ></MyCodemirror>
+                        <a-button type="primary" @click="caseAssertShowModal(assert)">查看/编辑</a-button>
+                        <a-modal v-model:visible="assertsVisible" style="width: 50%" title="assert code"
+                          @ok="caseAssertHandleOk(index)">
+                          <MyCodemirror v-model:value="caseAssertCode.value" style="height: 200px"></MyCodemirror>
                           响应数据：response.json() 获取变量：self.get('key')
                         </a-modal>
                       </div>
                     </div>
 
                     <a-form-item v-else>
-                      <a-input
-                        v-model:value="assert.value"
-                        v-if="assert.mold == 'response'"
-                        placeholder="请填写断言json"
-                      />
-                      <a-input
-                        v-model:value="assert.value"
-                        v-else
-                        placeholder="请填写响应状态码"
-                      />
+                      <a-input v-model:value="assert.value" v-if="assert.mold == 'response'" placeholder="请填写断言json" />
+                      <a-input v-model:value="assert.value" v-else placeholder="请填写响应状态码" />
                     </a-form-item>
                     <MinusCircleOutlined @click="removeAssert(assert)" />
                   </a-space>
@@ -313,24 +182,15 @@
                 </a-form>
               </a-tab-pane>
               <a-tab-pane key="9" tab="测试数据">
-                <h9>表格第一行表示测试数据变量</h9>
-                <excel
-                  style="height: 200px"
-                  :data="detail.test_data"
-                  :key="detail.id"
-                  @update:data="() => (data = detail.test_data)"
-                ></excel>
+                <h9>表格第一行表示测试数据变量，后面代表变量获取的值</h9>
+                <excel style="height: 200px" :data="detail.test_data" :key="detail.id"
+                  @update:data="() => { data = detail.test_data; console.log(data) }"></excel>
               </a-tab-pane>
             </a-tabs>
           </a-modal>
         </div>
 
-        <a-drawer
-          title="添加接口"
-          :size="size"
-          :visible="visible"
-          @close="onClose"
-        >
+        <a-drawer title="添加接口" :size="size" :visible="visible" @close="onClose">
           <template #extra>
             <a-button style="margin-right: 8px" @click="Close">关闭</a-button>
             <a-button type="primary" @click="onClose">保存</a-button>
@@ -338,59 +198,34 @@
 
           <div>
             <div class="SearchCases" style="margin-bottom: 10px">
-              <a-form
-                ref="formRef"
-                name="advanced_search"
-                class="ant-advanced-search-form"
-                :model="formState"
-                @finish="onFinish"
-              >
+              <a-form ref="formRef" name="advanced_search" class="ant-advanced-search-form" :model="formState"
+                @finish="onFinish">
                 <a-row :gutter="24" style="float: left; height: 32px">
-                  <a-form-item
-                    :name="`name`"
-                    :label="`名称`"
-                    :rules="[{ message: 'input something' }]"
-                  >
-                    <a-input
-                      v-model:value="formState[`name`]"
-                      placeholder="请输入名称！"
-                    ></a-input>
+                  <a-form-item :name="`name`" :label="`名称`" :rules="[{ message: 'input something' }]">
+                    <a-input v-model:value="formState[`name`]" placeholder="请输入名称！"></a-input>
                   </a-form-item>
                   <a-form-item label="项目">
                     <div class="selectEnv" style="float: left">
-                      <a-select
-                        ref="select"
-                        v-model:value="formState[`project_id`]"
-                        style="width: 120px"
-                        :options="optionsProject"
-                      ></a-select>
+                      <a-select ref="select" v-model:value="formState[`project_id`]" style="width: 120px"
+                        :options="optionsProject"></a-select>
                     </div>
                   </a-form-item>
                 </a-row>
                 <a-row>
                   <a-col :span="24" style="text-align: right">
                     <a-button type="primary" html-type="submit">搜索 </a-button>
-                    <a-button
-                      style="margin: 0 8px"
-                      @click="() => formRef.resetFields()"
-                      >清除
+                    <a-button style="margin: 0 8px" @click="() => formRef.resetFields()">清除
                     </a-button>
                   </a-col>
                 </a-row>
               </a-form>
             </div>
 
-            <a-table
-              :row-selection="{
-                selectedRowKeys: selectedRowKeys,
-                onChange: onSelectChange,
-                getCheckboxProps: getCheckboxProps,
-              }"
-              :row-key="(record) => record.id"
-              :columns="columns"
-              :data-source="data"
-              :pagination="false"
-            />
+            <a-table :row-selection="{
+              selectedRowKeys: selectedRowKeys,
+              onChange: onSelectChange,
+              getCheckboxProps: getCheckboxProps,
+            }" :row-key="(record) => record.id" :columns="columns" :data-source="data" :pagination="false" />
           </div>
         </a-drawer>
       </div>
@@ -638,7 +473,7 @@ export default defineComponent({
       },
     ]);
 
-    const focus = () => {};
+    const focus = () => { };
 
     const handleChange = (value) => {
       console.log(`selected ${value}`);
@@ -681,15 +516,15 @@ export default defineComponent({
       parameter: "",
       variable: "",
       asserts: [],
-      test_data: [],
+      test_data: [['']],
+      url: "",
     });
 
     const visible2 = ref({ record: "", state: false });
     const showModal = (record) => {
-      console.log(record.test_data);
       visible2.value.state = true;
       visible2.value.record = record;
-      detail.id = record.id;
+      detail.id = record.cases_id;
       detail.name = record.name;
       detail.header = record.header;
       detail.data = record.data;
@@ -698,10 +533,11 @@ export default defineComponent({
       detail.asserts = record.asserts || [];
       detail.project__name = record.project__name;
       detail.module = record.module;
-      detail.test_data = record.test_data;
+      detail.test_data = record.test_data ? record.test_data : [[""]];
+      detail.url = record.url;
     };
     const handleOk2 = () => {
-      if (detail.test_data && detail.test_data[0] === undefined || detail.test_data[0] === null) {
+      if (detail.test_data && detail.test_data[0] === undefined || detail.test_data[0] === null || JSON.stringify(detail.test_data) == JSON.stringify([['']])) {
         detail.test_data = null;
       }
       let details = { ...detail };
@@ -890,12 +726,13 @@ export default defineComponent({
 });
 </script>
 
-<style >
+<style>
 .extractVariable {
   display: flex;
   flex-wrap: nowrap;
   margin-bottom: 0%;
 }
+
 .item {
   flex: 0 0 auto;
   border: "";
