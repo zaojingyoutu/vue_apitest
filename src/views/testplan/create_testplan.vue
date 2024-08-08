@@ -524,7 +524,7 @@ export default defineComponent({
     const showModal = (record) => {
       visible2.value.state = true;
       visible2.value.record = record;
-      detail.id = record.cases_id;
+      detail.id = record.id;
       detail.name = record.name;
       detail.header = record.header;
       detail.data = record.data;
