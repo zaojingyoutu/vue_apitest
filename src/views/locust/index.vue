@@ -261,8 +261,10 @@ export default defineComponent({
               content: "运行成功！",
               duration: 5,
             },
-
-            router.push("/locust/web")
+            setTimeout(() => {
+              router.push("/locust/web")
+            }, 5000)
+            
           );
         } else {
           message.success({
