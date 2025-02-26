@@ -18,7 +18,7 @@
         path: '/variate_list',
         query: { project: modelRef.project },
       }" target="_blank">全局变量管理</router-link>
-      |
+      |<a @click="commonCaseCreate">设置常用</a>|
       <button id="copyButton" @click="copyButton">Copy</button>
     </div>
   </div>
@@ -212,6 +212,7 @@ import { deBug_post } from "@/api/deBug";
 import associatedCases from "@/components/associatedCases.vue";
 import { curl_dumps } from "@/utils/jsonToCurl";
 import MyCodemirror from "@/components/VueCodemirror.vue";
+import { common_case_create } from '@/api/common_case'
 
 const useForm = Form.useForm;
 export default defineComponent({
@@ -519,6 +520,18 @@ export default defineComponent({
       modelRef.data.content = jsonStringify(modelRef.data.content)
     };
 
+    const commonCaseCreate = () => {
+      common_case_create({"cases":modelRef.id, "create_user":JSON.parse( localStorage.getItem('user')).name}).then((res) => {
+        console.log(res)
+        if (res.status == 201) {
+          message.success({
+            content: "添加成功！",
+            duration: 5,
+          });
+        } 
+      })
+    }
+
     return {
       copyButton,
       addAssert,
@@ -554,6 +567,7 @@ export default defineComponent({
       optionsModule,
       formatJson,
       handleChangeModule,
+      commonCaseCreate,
       asserts_result,
       columns: [
         {

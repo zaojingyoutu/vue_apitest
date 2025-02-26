@@ -232,6 +232,14 @@ const routes = [
                 },
                 component: () => import(/* webpackChunkName: "tools" */ '../components/aiChat.vue'),
 
+            }, {
+                path: '/common_case',
+                name: 'common_case',
+                 meta: {
+                    title: 'common case'
+                },
+                component: () => import(/* webpackChunkName: "tools" */ '../views/case/common_case.vue'),
+
             },
 
         ]

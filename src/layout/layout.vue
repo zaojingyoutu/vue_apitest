@@ -5,6 +5,13 @@
 
       <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
         <img style="height: 60px; width: 200px" src="./../../public/R.jpeg" />
+        <a-menu-item key="3">
+          <bars-outlined />
+          <span class="nav-text">
+            <router-link to="/index" style="color: white">
+              首页</router-link>
+          </span>
+        </a-menu-item>
         <a-menu-item key="1">
           <table-outlined />
           <span class="nav-text">
@@ -12,10 +19,10 @@
               项目管理</router-link>
           </span>
         </a-menu-item>
-        <!-- <a-menu-item key="2">
-                    <api-outlined />
-                    <span class="nav-text"><router-link to="/api" style="color: white"> 接口管理</router-link></span>
-                </a-menu-item> -->
+        <a-menu-item key="2">
+          <bars-outlined />
+            <span class="nav-text"><router-link to="/common_case" style="color: white"> 常用接口</router-link></span>
+        </a-menu-item>
         <!-- <a-menu-item key="3">
                     <table-outlined/>
                     <span class="nav-text"><router-link to="/case" style="color: white"> 测试用例</router-link></span>
@@ -118,6 +125,7 @@ import {
   MessageOutlined,
   CodeOutlined,
   ToolOutlined,
+  BarsOutlined,
   // ApiOutlined,
   FundOutlined,
 } from "@ant-design/icons-vue";
@@ -135,6 +143,7 @@ export default defineComponent({
     MessageOutlined,
     CodeOutlined,
     ToolOutlined,
+    BarsOutlined,
     // ApiOutlined,
     FundOutlined,
     AiChat,

@@ -48,6 +48,14 @@ const errorHandler = (error) => {
 
       })
       window.location.href="#/login";
+    }else if (error.response.status === 400){
+      console.log(data)
+      notification.error({
+        message: "请求错误！",
+        description: data.non_field_errors,
+        duration: 3
+      })
+
     }
 
   }
