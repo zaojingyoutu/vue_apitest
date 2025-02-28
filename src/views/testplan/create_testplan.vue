@@ -183,8 +183,8 @@
               </a-tab-pane>
               <a-tab-pane key="9" tab="测试数据">
                 <h9>表格第一行表示测试数据变量，后面代表变量获取的值</h9>
-                <excel style="height: 200px" :data="detail.test_data" :key="detail.id"
-                  @update:data="() => { data = detail.test_data; console.log(data) }"></excel>
+                <excel style="height: 200px;overflow: auto;"  :data="detail.test_data" :key="detail.id"
+                  @update:data="() => { data = detail.test_data; console.log(data) }" ></excel>
               </a-tab-pane>
             </a-tabs>
           </a-modal>
