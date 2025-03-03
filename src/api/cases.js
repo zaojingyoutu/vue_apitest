@@ -47,3 +47,12 @@ export function cases_module(data){
         params: data,
     })
 }
+
+
+export function case_to_plan(data){
+    return request.request({
+        method: "post",
+        url: "/case_to_plan/",
+        data: data,
+    })
+}

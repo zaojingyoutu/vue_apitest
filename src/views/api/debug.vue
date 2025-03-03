@@ -19,6 +19,7 @@
         query: { project: modelRef.project },
       }" target="_blank">全局变量管理</router-link>
       |<a @click="commonCaseCreate">设置常用</a>|
+      <a @click="caseToPlan">转测试计划</a>|
       <button id="copyButton" @click="copyButton">Copy</button>
     </div>
   </div>
@@ -206,7 +207,7 @@ import { useRouter } from "vue-router";
 import { message } from "ant-design-vue";
 import { ref } from "vue";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
-import { cases_get, cases_api, cases_module } from "@/api/cases";
+import { cases_get, cases_api, cases_module,case_to_plan } from "@/api/cases";
 import { project_get } from "@/api/project";
 import { deBug_post } from "@/api/deBug";
 import associatedCases from "@/components/associatedCases.vue";
@@ -532,6 +533,18 @@ export default defineComponent({
       })
     }
 
+    const caseToPlan = () => {
+      case_to_plan(modelRef).then((res) => {
+        console.log(res)
+        if (res.status == 200) {
+          message.success({
+            content: "转换成功！",
+            duration: 3,
+          });
+        }
+      })
+    }
+
     return {
       copyButton,
       addAssert,
@@ -569,6 +582,7 @@ export default defineComponent({
       handleChangeModule,
       commonCaseCreate,
       asserts_result,
+      caseToPlan,
       columns: [
         {
           title: '用例名',
