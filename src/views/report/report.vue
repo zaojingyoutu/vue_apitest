@@ -131,7 +131,7 @@
 import { defineComponent, reactive, ref } from "vue";
 // import axios from "axios";
 import { message } from "ant-design-vue";
-import { report_get } from "@/api/report";
+import { report_get,case_run_record_get } from "@/api/report";
 import { useRouter } from "vue-router";
 
 const columns = [
@@ -207,6 +207,7 @@ export default defineComponent({
     });
     const id = useRouter().currentRoute.value.query;
     report_get(id).then((res) => {
+      console.log(res);
       if (res.code == 201) {
         message.error({
           content: res.msg,
@@ -214,15 +215,13 @@ export default defineComponent({
         });
       }
 
-      data.value = eval("(" + res.data[0].details + ")");
-      const result = eval("(" + res.data[0].result + ")");
-      count.cases_count = result.cases_count;
-      count.cases_false = result.cases_false;
-      count.skip = result.cases_skip
+      count.cases_count = res.data[0].len_count;
+      count.cases_false = res.data[0].failed_count;
+      count.skip = res.data[0].skip_count
       info.project = res.data[0].project__name;
       info.env = res.data[0].env;
       info.create_time = res.data[0].create_time;
-      info.cases_count = result.cases_count;
+      info.cases_count =  res.data[0].len_count;
       info.name = res.data[0].name;
       case_details.project = res.data[0].project__name;
     });
@@ -256,7 +255,7 @@ export default defineComponent({
       case_details.module = record.module;
       case_details.method = record.method;
       case_details.status_code = record.status_code;
-      case_details.header = record.headers;
+      case_details.header = record.header;
       case_details.parameter = record.parameter;
       case_details.data = record.data;
       case_details.response = record.response;
@@ -265,6 +264,36 @@ export default defineComponent({
       case_details.assert_msg = record.assert_msg
     };
     const envName=["开发环境","测试环境","生产环境"]
+
+    const case_run_record=()=>{
+      case_run_record_get({"report":id.id}).then((res)=>{
+        delete res.status
+        const data_source=[]
+        for(let i in res){
+          const case_detail= JSON.parse(res[i].data)
+          console.log(case_detail)
+
+          data_source.push({
+            name:case_detail.name,
+            url:case_detail.url,
+            method:case_detail.method,
+            module:case_detail.module,
+            header:case_detail.headers,
+            parameter:case_detail.parameter,
+            data:case_detail.data,
+            response:case_detail.response,
+            run_time:case_detail.run_time,
+            result:res[i].result,
+            assert_msg:case_detail.assert_msg,
+            status_code:case_detail.status_code,
+          })
+        }
+        console.log(data_source)
+        data.value=data_source
+      })
+    }
+    case_run_record()
+
     return {
       columns,
       data,
@@ -274,7 +303,8 @@ export default defineComponent({
       afterVisibleChange,
       showDrawer,
       case_details,
-      envName
+      envName,
+      case_run_record
     };
   },
 });

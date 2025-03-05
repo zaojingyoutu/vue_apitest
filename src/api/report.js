@@ -39,3 +39,12 @@ export function report_del(data){
           data: [data],
     })
 }
+
+
+export function case_run_record_get(data={}){
+    return request.request({
+        method: "get",
+          url: "case_run_record/",
+          params: data,
+    })
+}

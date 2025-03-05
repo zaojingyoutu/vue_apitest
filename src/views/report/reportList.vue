@@ -8,7 +8,7 @@
         </router-link>
       </template>
       <template v-if="column.dataIndex === 'result'">
-        {{ JSON.parse(text).cases_false > 0 ? "失败" : "通过" }}
+        {{ record.failed_count > 0 ? "失败" : "通过" }}
       </template>
 
       <template v-if="column.key === 'operation'">
