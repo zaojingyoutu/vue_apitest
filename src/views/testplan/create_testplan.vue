@@ -28,6 +28,14 @@
           <a-form-item label="通知邮件">
             <a-input v-model:value="modelRef.email" />
           </a-form-item>
+          <div  style="display: grid; grid-template-columns: auto auto; margin-left: 10.6%;width: 73.6%;">
+            <a-form-item label="重试次数">
+              <a-input v-model:value="modelRef.retry_count" />
+            </a-form-item>
+            <a-form-item label="间隔(s)">
+              <a-input v-model:value="modelRef.retry_times" />
+            </a-form-item>
+          </div>
           <a-form-item label=" 失败通知">
             <div style="width: fit-content">
               <a-switch v-model:checked="modelRef.alert_on_failure" />
@@ -288,6 +296,8 @@ export default defineComponent({
         modelRef.user_variables = res.data[0].user_variables || "";
         formState.project_id = res.data[0].project;
         modelRef.env = res.data[0].env;
+        modelRef.retry_count = res.data[0].retry_count;
+        modelRef.retry_times = res.data[0].retry_times;
         testplan_cases_get({ testplan_id: planid.id })
           .then((res) => {
             modelRef.case_list = res.data;
@@ -313,6 +323,8 @@ export default defineComponent({
       email: "",
       user_variables: "",
       alert_on_failure: false,
+      retry_count:0,
+      retry_times:0
     });
     const count = reactive({
       cases_count: 0,
