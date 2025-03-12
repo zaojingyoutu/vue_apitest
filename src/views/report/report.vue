@@ -286,6 +286,7 @@ export default defineComponent({
             result:res[i].result,
             assert_msg:case_detail.assert_msg,
             status_code:case_detail.status_code,
+            id:res[i].id
           })
         }
         console.log(data_source)
